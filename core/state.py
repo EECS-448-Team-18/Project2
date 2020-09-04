@@ -4,6 +4,8 @@ Tracks game state and contains game events.
 
 from core.board import Board
 from core import peripherals  # checks for mouse and keyboard stuff
+from data.assets import colors
+from time import time
 
 class State:
 
@@ -13,22 +15,20 @@ class State:
 		self.p2_board = Board()
 
 		self.events = {  # these events are all just examples, replace with actual events as needed
-					"start": {"run_event": self.start, "is_time_dependent": False},
-					"end_turn": {"run_event": self.end_turn, "is_time_dependent": False},
-					"place_ships": {"run_event": self.place_ships, "is_time_dependent": False},
-					"loop": {"run_event": self.loop, "is_time_dependent": False},
+					"start": Event(self.start, False),
+					"end_turn": Event(self.end_turn, False),
+					"place_ships": Event(self.place_ships, False),
+					"loop": Event(self.loop, False),
 				}
 		
 		# game state attributes
 		self.prev_event = None
 		self.curr_event = "start"
 
+		self.timer = time()
+
 	def run_event(self, dt):
-		if self.events[self.curr_event]["is_time_dependent"]:
-			self.events[self.curr_event]["run_event"](dt)
-		else:
-			self.events[self.curr_event]["run_event"]()
-		
+		self.events[self.curr_event](dt)
 		self.prev_event = self.curr_event
 		self.curr_event = self.get_next_event()
 	
@@ -49,13 +49,20 @@ class State:
 
 	def get_text_to_display(self):
 		# test values to show function, change later
-		test_values = ("test_1", "test_2", "test_3")
-		return test_values
+		output = []
+		if self.curr_event == "loop" and int(self.get_game_time())%2==0:
+			output.append(Text("test_1", (100, 100), 36, colors["green"]))
+			output.append(Text("test_2", (200, 175), 30, (255, 0, 255)))
+
+		return tuple(output)
 
 	def update(self):
 		return
 
-	# events... examples right now, implement real events as needed. They shouldnt return anything
+	def get_game_time(self):
+		return round(time()-self.timer, 3)
+
+	# events... examples right now, implement real events as needed
 	def start(self):
 		pass
 
@@ -67,3 +74,27 @@ class State:
 
 	def loop(self):
 		pass
+
+class Event:
+	
+	def __init__(self, func, is_time_dependent):
+		self.func = func
+		self.is_time_dependent = is_time_dependent
+		self.output = None
+		
+	def __call__(self, dt):
+		if self.is_time_dependent:
+			self.output = self.func(dt)
+		else:
+			self.output = self.func()
+		return self.output
+
+class Text:
+		
+	def __init__(self, string, pos, font_size, text_color, text_background=None):
+		self.string = string
+		self.pos = pos
+		self.font_size = font_size
+		self.text_color = text_color
+		self.text_background = text_background
+

@@ -44,18 +44,8 @@ class Engine:
 	def clear_screen(self):
 		self.screen.blit(self.background, (0, 0))
 
-	def update_text(self, text):
-		x_0 = 300
-		y_0 = 250
-		x = x_0
-		y = y_0
-		dx = 50
-		dy = 100
-		
-		for t in text:
-			self.write_to_screen(t, (x, y), 48, colors["green"])
-			x += dx			
-			y += dy
+	def update_text(self, text):	
+		[self.write_to_screen(t.string, t.pos, t.font_size, t.text_color, t.text_background) for t in text]
 	
 	def update_screen(self, text):
 		self.update_text(text)
