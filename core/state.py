@@ -5,6 +5,7 @@ Tracks game state and contains game events.
 from core.board import Board
 from core import peripherals  # checks for mouse and keyboard stuff
 from data.assets import colors
+from data.render_definitions import *
 from time import time
 
 class State:
@@ -88,13 +89,4 @@ class Event:
 		else:
 			self.output = self.func()
 		return self.output
-
-class Text:
-		
-	def __init__(self, string, pos, font_size, text_color, text_background=None):
-		self.string = string
-		self.pos = pos
-		self.font_size = font_size
-		self.text_color = text_color
-		self.text_background = text_background
 

@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 
 """
-This module is called to start overall program.
+File name: __main__.py
+Authors:
+Description:
+Date:
+Description: Entrypoint to game
 """
 
 import sys

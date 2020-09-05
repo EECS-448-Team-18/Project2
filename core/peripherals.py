@@ -16,10 +16,8 @@ keys = {
 def getLeftClick():
     return pygame.mouse.get_pressed()[0]
 
-
 def getRightClick():
     return pygame.mouse.get_pressed()[2]
-
 
 def getMousePos():
     return pygame.mouse.get_pos()
@@ -39,7 +37,6 @@ def getKey(key):
         return keys[key]
     else:
         raise ValueError("Peripheral key not available...")
-
 
 def get_mouse():
     return {"left_click": getLeftClick(), "right_click": getRightClick(), "pos": getMousePos()}

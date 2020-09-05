@@ -1,12 +1,26 @@
 """
-Driver of game, this modules keeps game running and calls for events to run.
+File name: game.py
+Authors:
+Description:
+Date:
+Description: Game driver
+
+Classes
+----------
+Game - Represents overall game
 """
 
 from core.engine import Engine
 from core.state import State
 
 class Game:
+	"""
+	Game()
 	
+	Provides a game entity that represents the entirety of the game. Game is composed of engine
+		to render graphics and to maintain frame rate and a state which handles game logic.
+	"""
+
 	engine = Engine()
 	state = State()
 
@@ -14,6 +28,10 @@ class Game:
 		pass
 
 	def run(self):
+		"""
+		Runs game. Calls run_event from state to signal that next event should be executed.
+		keep_running returns false when "X" in top right corner of game window is clicked
+		"""
 		while self.engine.keep_running():
 			self.engine.clear_screen()
 			self.state.run_event(self.engine.get_dt())
