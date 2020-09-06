@@ -5,7 +5,7 @@ File name: __main__.py
 Authors:
 Description:
 Date:
-Description: Entrypoint to game
+Description: Entrypoint to game.
 """
 
 import sys

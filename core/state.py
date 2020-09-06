@@ -1,4 +1,15 @@
 """
+File name:
+Authors:
+Description:
+Date:
+Description:
+
+Classes
+----------
+"""
+
+"""
 Tracks game state and contains game events.
 """
 
