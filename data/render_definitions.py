@@ -1,3 +1,13 @@
+"""
+File name:
+Authors:
+Description:
+Date:
+Description:
+
+Classes:
+"""
+
 class Text:
 		
 	def __init__(self, string, pos, font_size, text_color, text_background=None):

@@ -22,7 +22,7 @@ class Engine:
 	Methods:
 		make_background(size, color) -> pygame.Surface
 		get_dt() -> float
-		should_run() -> None
+		should_run() -> bool
 		handle_events() -> None
 		clear_screen() -> None
 		update_screen(objects) -> None
@@ -60,7 +60,7 @@ class Engine:
 	def get_dt(self) -> float:
 		return self.dt
 
-	def should_run(self) -> None:
+	def should_run(self) -> bool:
 		"""
 		Makes call to handle_events. Returns self.running.
 		"""

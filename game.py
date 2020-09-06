@@ -37,4 +37,4 @@ class Game:
 		while self.engine.should_run():
 			self.engine.clear_screen()
 			self.state.run_event(self.engine.get_dt())
-			self.engine.update_screen(self.state.get_text_to_display())
+			self.engine.update_screen(self.state.get_objects_to_render())

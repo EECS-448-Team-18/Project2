@@ -3,14 +3,11 @@ File name:
 Authors:
 Description:
 Date:
-Description:
+Description: Tracks game state and implements game events. Handles game logic.
 
-Classes
-----------
-"""
-
-"""
-Tracks game state and contains game events.
+Classes:
+	State
+	Event
 """
 
 from core.board import Board
@@ -20,11 +17,28 @@ from data.render_definitions import *
 from time import time
 
 class State:
+	"""
+	State()
+
+	Tracks and manages state of game. Handles game logic.
+
+	Methods:
+		run_event(dt) -> None
+		get_next_event() -> str
+		get_objects_to_render(self) -> tuple
+		get_time_since_start(self) -> float
+
+		Events:
+			
+		
+	"""
 
 	def __init__(self):
 		# main game components
 		self.p1_board = Board()
 		self.p2_board = Board()
+
+		self.objects_to_render = []
 
 		self.events = {  # these events are all just examples, replace with actual events as needed
 					"start": Event(self.start, False),
@@ -39,14 +53,20 @@ class State:
 
 		self.timer = time()
 
-	def run_event(self, dt):
+	def run_event(self, dt) -> None:
+		"""
+		Runs event from event dictionary. Updates event sequence.
+		"""	
+		self.objects_to_render.clear()
 		self.events[self.curr_event](dt)
 		self.prev_event = self.curr_event
 		self.curr_event = self.get_next_event()
-	
-		self.update()
 
-	def get_next_event(self):
+	def get_next_event(self) -> str:
+		"""
+		Conditionals determining game event logic. Decides next event based on previous event
+			that has just been completed and any other necessary logic.
+		"""
 		if self.prev_event == "start":
 			return "place_ships"
 
@@ -58,20 +78,14 @@ class State:
 
 		if self.prev_event == "loop":
 			return "loop"
+	
+	def get_objects_to_render(self) -> tuple:
+		return tuple(self.objects_to_render)
 
-	def get_text_to_display(self):
-		# test values to show function, change later
-		output = []
-		if self.curr_event == "loop" and int(self.get_game_time())%2==0:
-			output.append(Text("test_1", (100, 100), 36, colors["green"]))
-			output.append(Text("test_2", (200, 175), 30, (255, 0, 255)))
-
-		return tuple(output)
-
-	def update(self):
-		return
-
-	def get_game_time(self):
+	def get_time_since_start(self) -> float:
+		"""
+		Returns time passed rounded to 3 decimals since game has started
+		"""
 		return round(time()-self.timer, 3)
 
 	# events... examples right now, implement real events as needed
@@ -85,10 +99,19 @@ class State:
 		pass
 
 	def loop(self):
-		pass
+		if self.curr_event == "loop" and int(self.get_time_since_start())%2==0:
+			self.objects_to_render.append(Text("test_1", (100, 100), 36, colors["green"]))
+			self.objects_to_render.append(Text("test_2", (200, 175), 30, (255, 0, 255)))
 
 class Event:
-	
+	"""
+	Event(func, is_time_dependent)
+
+	Wrapper for function to be used as event.
+
+	Methods:
+		__call__(dt)
+	"""
 	def __init__(self, func, is_time_dependent):
 		self.func = func
 		self.is_time_dependent = is_time_dependent
