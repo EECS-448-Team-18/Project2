@@ -7,13 +7,15 @@ Description: Tracks game state and implements game events. Handles game logic.
 
 Classes:
 	State
+	RenderQueue
 	Event
 """
 
 from core.board import Board
 from core import peripherals  # checks for mouse and keyboard stuff
 from data.assets import colors
-from data.render_definitions import *
+from data import render_definitions
+from data.render_definitions import Text, Rectangle
 from time import time
 
 class State:
@@ -35,18 +37,19 @@ class State:
 
 	def __init__(self):
 		peripherals.init()
+		render_definitions.init()
 
 		# main game components
 		self.p1_board = Board()
 		self.p2_board = Board()
 
-		self.objects_to_render = []
+		self.objects_to_render = RenderQueue()
 
 		self.events = {  # these events are all just examples, replace with actual events as needed
-					"start": Event(self.start, False),
-					"end_turn": Event(self.end_turn, False),
-					"place_ships": Event(self.place_ships, False),
-					"loop": Event(self.loop, False),
+					"start": Event(self.start),
+					"end_turn": Event(self.end_turn),
+					"place_ships": Event(self.place_ships),
+					"loop": Event(self.loop),
 				}
 		
 		# game state attributes
@@ -101,10 +104,32 @@ class State:
 		pass
 
 	def loop(self):
+		# these are random examples, delete and do acutal stuff
 		if self.curr_event == "loop" and int(self.get_time_since_start())%2==0:
-			self.objects_to_render.append(Text("test_1", (100, 100), 36, colors["green"]))
-			self.objects_to_render.append(Text("test_2", (200, 175), 30, (255, 0, 255)))
-			self.objects_to_render.append(Rectangle((200, 200), (25, 25), colors["blue"], 200))
+			self.objects_to_render.add(Text("test_1", (100, 100), 36, colors["green"]))
+			self.objects_to_render.add(Text("test_2", (200, 175), 30, (255, 0, 255)))
+			self.objects_to_render.add(Rectangle((200, 200), (175, 25), colors["blue"], 200))
+
+class RenderQueue(list):
+	"""
+	Render_Queue()
+	
+	Queue wrapper to store objects ready to be rendered to screen.
+
+	Methods:
+		add() -> None
+	"""
+	def __init__(self):
+		list.__init__(self)
+
+	def add(self, render_object) -> None:
+		"""
+		Makes sure render_object is correctly defined and can be rendered then adds to queue.
+		"""
+		if type(render_object) in render_definitions.definition_types:
+			self.append(render_object)
+		else:
+			raise TypeError("Incorrectly wrapped...")
 
 class Event:
 	"""
@@ -115,7 +140,7 @@ class Event:
 	Methods:
 		__call__(dt) -> None
 	"""
-	def __init__(self, func, is_time_dependent):
+	def __init__(self, func, is_time_dependent=False):
 		self.func = func
 		self.is_time_dependent = is_time_dependent
 		self.output = None

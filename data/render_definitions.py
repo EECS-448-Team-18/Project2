@@ -7,7 +7,14 @@ Description: Contains definitions for objects that contain necessary data to be 
 
 Classes:
 	Text
+	Rectangle
 """
+
+definition_types = set()
+
+def init():
+	definition_types.add(Text)
+	definition_types.add(Rectangle)
 
 class Render_Definition:
 	
