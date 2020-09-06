@@ -104,6 +104,7 @@ class State:
 		if self.curr_event == "loop" and int(self.get_time_since_start())%2==0:
 			self.objects_to_render.append(Text("test_1", (100, 100), 36, colors["green"]))
 			self.objects_to_render.append(Text("test_2", (200, 175), 30, (255, 0, 255)))
+			self.objects_to_render.append(Rectangle((200, 200), (25, 25), colors["blue"], 200))
 
 class Event:
 	"""

@@ -27,7 +27,8 @@ class Engine:
 		clear_screen() -> None
 		update_screen(objects) -> None
 		render_objects(objects_to_render) -> None
-		print_to_screen(text, pos, font_size, text_color, background_color=None)
+		render_rect(self, pos, size, fill_color, alpha) -> None
+		print_to_screen(text, pos, font_size, text_color, background_color=None) -> None
 		display_fps() -> None
 		"""
 
@@ -102,6 +103,17 @@ class Engine:
 		for obj in objects_to_render:
 			if obj.render_type == "text":
 				self.print_to_screen(obj.text, obj.pos, obj.font_size, obj.text_color, obj.text_background)
+			elif obj.render_type == "rect":
+				self.render_rect(obj.pos, obj.size, obj.fill_color, obj.alpha)
+
+	def render_rect(self, pos, size, fill_color, alpha) -> None:
+		"""
+		Blits rect to screen. Alpha is opacity and ranges from 0-255.
+		"""
+		surface = pygame.Surface(size)
+		surface.set_alpha(alpha)
+		surface.fill(fill_color)
+		self.screen.blit(surface, pos)
 
 	def print_to_screen(self, text, pos, font_size, text_color, background_color=None) -> None:
 		"""
