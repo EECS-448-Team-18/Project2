@@ -34,6 +34,8 @@ class State:
 	"""
 
 	def __init__(self):
+		peripherals.init()
+
 		# main game components
 		self.p1_board = Board()
 		self.p2_board = Board()
@@ -110,14 +112,14 @@ class Event:
 	Wrapper for function to be used as event.
 
 	Methods:
-		__call__(dt)
+		__call__(dt) -> None
 	"""
 	def __init__(self, func, is_time_dependent):
 		self.func = func
 		self.is_time_dependent = is_time_dependent
 		self.output = None
 		
-	def __call__(self, dt):
+	def __call__(self, dt) -> None:
 		if self.is_time_dependent:
 			self.output = self.func(dt)
 		else:

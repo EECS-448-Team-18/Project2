@@ -4,45 +4,35 @@ Authors:
 Description:
 Date:
 Description:
-
-Classes:
 """
 
 import pygame
 
-keys = {
-    "up": False,
-    "right": False,
-    "down": False,
-    "left": False,
-    "space": False,
+keys = {}
+
+def init() -> None:
+	keys = {
+		"w": pygame.key.get_pressed()[pygame.K_w],
+		"s": pygame.key.get_pressed()[pygame.K_s],
+		"a": pygame.key.get_pressed()[pygame.K_a],
+		"d": pygame.key.get_pressed()[pygame.K_d],
+		"space": pygame.key.get_pressed()[pygame.K_SPACE],
 }
 
+def get_left_click() -> bool:
+	return pygame.mouse.get_pressed()[0]
 
-def getLeftClick():
-    return pygame.mouse.get_pressed()[0]
+def get_right_click() -> bool:
+	return pygame.mouse.get_pressed()[2]
 
-def getRightClick():
-    return pygame.mouse.get_pressed()[2]
-
-def getMousePos():
-    return pygame.mouse.get_pos()
-
-def update_keys():
-	keys["up"] = pygame.key.get_pressed()[pygame.K_w]
-	keys["right"] = pygame.key.get_pressed()[pygame.K_d]
-	keys["down"] = pygame.key.get_pressed()[pygame.K_s]
-	keys["left"] = pygame.key.get_pressed()[pygame.K_a]
-	keys["space"] = pygame.key.get_pressed()[pygame.K_SPACE]
-	# can add more...
+def get_mouse_pos() -> tuple:
+	return pygame.mouse.get_pos()
 	
-def getKey(key):
-    update_keys()
+def get_key(key) -> bool:
+	if key in keys:
+	  return keys[key]()
+	else:
+	  raise ValueError("Peripheral key not available...")
 
-    if key in keys:
-        return keys[key]
-    else:
-        raise ValueError("Peripheral key not available...")
-
-def get_mouse():
-    return {"left_click": getLeftClick(), "right_click": getRightClick(), "pos": getMousePos()}
+def get_mouse() -> dict:
+	return {"left_click": getLeftClick(), "right_click": getRightClick(), "pos": getMousePos()}
