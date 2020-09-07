@@ -43,7 +43,7 @@ class State:
 		self.p1_board = Board()
 		self.p2_board = Board()
 
-		self.objects_to_render = RenderQueue()
+		self.render_queue = RenderQueue()
 
 		self.events = {  # these events are all just examples, replace with actual events as needed
 					"start": Event(self.start),
@@ -62,7 +62,7 @@ class State:
 		"""
 		Runs event from event dictionary. Updates event sequence.
 		"""	
-		self.objects_to_render.clear()
+		self.render_queue.clear()
 		self.events[self.curr_event](dt)
 		self.prev_event = self.curr_event
 		self.curr_event = self.get_next_event()
@@ -85,7 +85,7 @@ class State:
 			return "loop"
 	
 	def get_objects_to_render(self) -> tuple:
-		return tuple(self.objects_to_render)
+		return tuple(self.render_queue)
 
 	def get_time_since_start(self) -> float:
 		"""
@@ -106,13 +106,13 @@ class State:
 	def loop(self):
 		# these are random examples, delete and do acutal stuff
 		if self.curr_event == "loop" and int(self.get_time_since_start())%2==0:
-			self.objects_to_render.add(Text("test_1", (100, 100), 36, colors["green"]))
-			self.objects_to_render.add(Text("test_2", (200, 175), 30, (255, 0, 255)))
-			self.objects_to_render.add(Rectangle((200, 200), (175, 25), colors["blue"], 200))
+			self.render_queue.add(Text("test_1", (100, 100), 36, colors["green"]))
+			self.render_queue.add(Text("test_2", (200, 175), 30, (255, 0, 255)))
+			self.render_queue.add(Rectangle((200, 200), (175, 25), colors["blue"], 200))
 
 class RenderQueue(list):
 	"""
-	Render_Queue()
+	RenderQueue()
 	
 	Queue wrapper to store objects ready to be rendered to screen.
 

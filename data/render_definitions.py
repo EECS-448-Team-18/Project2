@@ -17,7 +17,6 @@ def init():
 	definition_types.add(Rectangle)
 
 class Render_Definition:
-	
 	def __init__(self):
 		self.render_type = None
 
