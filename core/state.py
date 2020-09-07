@@ -36,7 +36,7 @@ class State:
 	"""
 
 	def __init__(self):
-		peripherals.init()
+		peripherals.keys.initialize()
 		render_definitions.init()
 
 		# main game components
