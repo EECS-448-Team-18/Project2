@@ -4,20 +4,29 @@ Authors:
 Description:
 Date:
 Description:
+
+classes:
+	Keys
 """
 
 import pygame
 
-keys = {}
+class Keys(dict):
+	"""
+	Keys()
 
-def init() -> None:
-	keys = {
-		"w": pygame.key.get_pressed()[pygame.K_w],
-		"s": pygame.key.get_pressed()[pygame.K_s],
-		"a": pygame.key.get_pressed()[pygame.K_a],
-		"d": pygame.key.get_pressed()[pygame.K_d],
-		"space": pygame.key.get_pressed()[pygame.K_SPACE],
-}
+	Method:
+		initialize() -> None
+	"""
+	def __init(self):
+		dict.__init__(self)
+
+	def initialize(self) -> None:
+		self["w"] = lambda: pygame.key.get_pressed()[pygame.K_w]
+		self["s"] = lambda: pygame.key.get_pressed()[pygame.K_s]
+		self["a"] = lambda: pygame.key.get_pressed()[pygame.K_a]
+		self["d"] = lambda: pygame.key.get_pressed()[pygame.K_d]
+		self["space"] = lambda: pygame.key.get_pressed()[pygame.K_SPACE]
 
 def get_left_click() -> bool:
 	return pygame.mouse.get_pressed()[0]
@@ -36,3 +45,6 @@ def get_key(key) -> bool:
 
 def get_mouse() -> dict:
 	return {"left_click": getLeftClick(), "right_click": getRightClick(), "pos": getMousePos()}
+
+keys = Keys()
+
