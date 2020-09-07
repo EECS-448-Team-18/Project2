@@ -68,7 +68,7 @@ class Engine:
 		"""
 		self.handle_events()
 
-		# dt is milliseconds passed between frames, used to achieve 
+		# dt is milliseconds passed between frames, used to achieve frame rate independence
 		self.dt = self.clock.tick(settings.target_frame_rate) / 1000 * settings.normalized_frame_rate
 
 		return self.running
