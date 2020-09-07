@@ -11,7 +11,7 @@ Classes:
 	Event
 """
 
-from core.board import Board
+# from core.board import Board
 from core import peripherals  # checks for mouse and keyboard stuff
 from data.assets import colors
 from data import render_definitions
@@ -40,8 +40,8 @@ class State:
 		render_definitions.init()
 
 		# main game components
-		self.p1_board = Board()
-		self.p2_board = Board()
+		# self.p1_board = Board()
+		# self.p2_board = Board()
 
 		self.render_queue = RenderQueue()
 
@@ -105,6 +105,9 @@ class State:
 
 	def loop(self):
 		# these are random examples, delete and do acutal stuff
+		space_pressed = peripherals.get_key("space")
+		if space_pressed:
+			print("Space is pressed: "+str(self.get_time_since_start()))
 		if self.curr_event == "loop" and int(self.get_time_since_start())%2==0:
 			self.render_queue.add(Text("test_1", (100, 100), 36, colors["green"]))
 			self.render_queue.add(Text("test_2", (200, 175), 30, (255, 0, 255)))

@@ -11,12 +11,13 @@ import pygame
 keys = {}
 
 def init() -> None:
+	global keys
 	keys = {
-		"w": pygame.key.get_pressed()[pygame.K_w],
-		"s": pygame.key.get_pressed()[pygame.K_s],
-		"a": pygame.key.get_pressed()[pygame.K_a],
-		"d": pygame.key.get_pressed()[pygame.K_d],
-		"space": pygame.key.get_pressed()[pygame.K_SPACE],
+		"w": lambda: pygame.key.get_pressed()[pygame.K_w],
+		"s": lambda: pygame.key.get_pressed()[pygame.K_s],
+		"a": lambda: pygame.key.get_pressed()[pygame.K_a],
+		"d": lambda: pygame.key.get_pressed()[pygame.K_d],
+		"space": lambda: pygame.key.get_pressed()[pygame.K_SPACE],
 }
 
 def get_left_click() -> bool:
