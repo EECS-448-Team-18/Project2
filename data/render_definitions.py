@@ -15,6 +15,7 @@ definition_types = set()
 def init():
 	definition_types.add(Text)
 	definition_types.add(Rectangle)
+	definition_types.add(Circle)
 
 class Render_Definition:
 	def __init__(self):
@@ -39,7 +40,7 @@ class Rectangle(Render_Definition):
 	"""
 	Rectangle(pos, size, fill_color, alpha=255)
 	
-	Definition for Pygame Rect.
+	Definition for rectangle.
 	"""
 	def __init__(self, pos, size, fill_color, alpha=255):
 		Render_Definition.__init__(self)
@@ -48,5 +49,19 @@ class Rectangle(Render_Definition):
 		self.size = size
 		self.fill_color = fill_color
 		self.alpha = alpha
-		
+
+class Circle(Render_Definition):
+	"""
+	Circle(pos, radius, fill_color, alpha=255)
+
+	Definition for circle.
+	"""
+	def __init__(self, pos, radius, fill_color, alpha=255):
+		Render_Definition.__init__(self)
+		self.render_type = "circle"
+		self.pos = pos
+		self.radius = radius
+		self.fill_color = fill_color
+		self.alpha = alpha
+
 	

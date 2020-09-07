@@ -15,7 +15,7 @@ from core.board import Board
 from core import peripherals  # checks for mouse and keyboard stuff
 from data.assets import colors
 from data import render_definitions
-from data.render_definitions import Text, Rectangle
+from data.render_definitions import *
 from time import time
 
 class State:
@@ -109,6 +109,7 @@ class State:
 			self.render_queue.add(Text("test_1", (100, 100), 36, colors["green"]))
 			self.render_queue.add(Text("test_2", (200, 175), 30, (255, 0, 255)))
 			self.render_queue.add(Rectangle((200, 200), (175, 25), colors["blue"], 200))
+			self.render_queue.add(Circle((400, 50), 50, colors["red"]))
 
 class RenderQueue(list):
 	"""

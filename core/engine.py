@@ -27,7 +27,8 @@ class Engine:
 		clear_screen() -> None
 		update_screen(objects) -> None
 		render_objects(objects_to_render) -> None
-		render_rect(self, pos, size, fill_color, alpha) -> None
+		render_rect(pos, size, fill_color, alpha) -> None
+		render_circle(pos, radius, fill_color, alpha) -> None
 		print_to_screen(text, pos, font_size, text_color, background_color=None) -> None
 		display_fps() -> None
 		"""
@@ -105,6 +106,8 @@ class Engine:
 				self.print_to_screen(obj.text, obj.pos, obj.font_size, obj.text_color, obj.text_background)
 			elif obj.render_type == "rect":
 				self.render_rect(obj.pos, obj.size, obj.fill_color, obj.alpha)
+			elif obj.render_type == "circle":
+				self.render_circle(obj.pos, obj.radius, obj.fill_color, obj.alpha)
 
 	def render_rect(self, pos, size, fill_color, alpha) -> None:
 		"""
@@ -112,9 +115,28 @@ class Engine:
 		"""
 		if size not in self.surface_cache:
 			self.surface_cache[size] = pygame.Surface(size)
+
 		surface = self.surface_cache[size]
 		surface.set_alpha(alpha)
 		surface.fill(fill_color)
+		self.screen.blit(surface, pos)
+
+	def render_circle(self, pos, radius, fill_color, alpha) -> None:
+		"""
+		Blits circle to screen. Alpha is opacity and ranges from 0-255.
+		"""
+		frame_size = (radius*2, radius*2)
+		rel_x = radius
+		rel_y = radius
+
+		if frame_size not in self.surface_cache:
+			self.surface_cache[frame_size] = pygame.Surface(frame_size)
+
+		surface = self.surface_cache[frame_size]
+		surface.fill(colors["white"])
+		surface.set_colorkey(colors["white"])
+
+		pygame.draw.circle(surface, fill_color, (rel_x, rel_y), radius)
 		self.screen.blit(surface, pos)
 
 	def print_to_screen(self, text, pos, font_size, text_color, background_color=None) -> None:
