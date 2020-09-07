@@ -110,7 +110,9 @@ class Engine:
 		"""
 		Blits rect to screen. Alpha is opacity and ranges from 0-255.
 		"""
-		surface = pygame.Surface(size)
+		if size not in self.surface_cache:
+			self.surface_cache[size] = pygame.Surface(size)
+		surface = self.surface_cache[size]
 		surface.set_alpha(alpha)
 		surface.fill(fill_color)
 		self.screen.blit(surface, pos)
