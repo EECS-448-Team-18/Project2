@@ -50,11 +50,20 @@ class State:
 					"end_turn": Event(self.end_turn),
 					"place_ships": Event(self.place_ships),
 					"loop": Event(self.loop),
+                                        "menu" : Event(self.menu)
 				}
 		
 		# game state attributes
 		self.prev_event = None
-		self.curr_event = "start"
+		self.curr_event = "menu"
+
+		self.user_selection = 0
+
+		# for rectangles
+		self.buttonHeight = 200
+		self.buttonWidth = 500
+		self.x= 200 #margin in the x direction
+		self.y = 50 #margin in the y direction
 
 		self.timer = time()
 
@@ -72,7 +81,9 @@ class State:
 		Conditionals determining game event logic. Decides next event based on previous event
 			that has just been completed and any other necessary logic.
 		"""
-		if self.prev_event == "start":
+		if self.prev_event == "menu" and self.user_selection == 0:
+			return "menu"
+		if self.prev_event == "menu" and self.user_selection != 0:
 			return "place_ships"
 
 		if self.prev_event == "place_ships":
@@ -94,6 +105,21 @@ class State:
 		return round(time()-self.timer, 3)
 
 	# events... examples right now, implement real events as needed
+	def menu (self):
+		self.render_queue.add(Rectangle((self.x,self.y ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
+		self.render_queue.add(Text("One Ship", (self.x + 200, self.y +75), 50, (255, 255, 255)))
+		
+		self.render_queue.add(Rectangle((self.buttonWidth +400,self.y ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
+		self.render_queue.add(Text("Two Ships", (self.buttonWidth + 600, self.y +75), 50, (255, 255, 255)))
+		
+		self.render_queue.add(Rectangle((self.x,self.buttonHeight+100 ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
+		self.render_queue.add(Text("Three Ships", (self.x + 200,  self.buttonHeight +180), 50, (255, 255, 255)))
+		
+		self.render_queue.add(Rectangle((self.buttonWidth +400,self.buttonHeight+100 ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
+		self.render_queue.add(Text("Four Ships", (self.buttonWidth + 600, self.buttonHeight +180), 50, (255, 255, 255)))
+		
+		self.render_queue.add(Rectangle((550,2*self.buttonHeight+150 ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
+		self.render_queue.add(Text("Five Ships", (800, 2*self.buttonHeight +250), 50, (255, 255, 255)))
 	def start(self):
 		pass
 
