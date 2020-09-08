@@ -65,12 +65,13 @@ class Image(Render_Definition):
 
 	Definition for image graphics.
 	"""
-	def __init__(self, image_name, pos, scale=100):
+	def __init__(self, image_name, pos, scale=100, angle=0):
 		Render_Definition.__init__(self)
 		self.render_type = "image"
 		self.image_name = image_name
 		self.pos = pos
 		self.scale = scale
+		self.angle = angle
 
 render_types = [Text, Rectangle, Circle, Image]
 	

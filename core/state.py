@@ -104,7 +104,7 @@ class State:
 		space_pressed = get_key("space")
 		if space_pressed:
 			print("Space is pressed: "+str(self.get_time_since_start()))
-		self.render_queue.add(Image("ship", (300, 300), 95))
+		self.render_queue.add(Image("ship", (300, 300), 95, 45))
 		if self.curr_event == "loop" and int(self.get_time_since_start())%2==0:
 			self.render_queue.add(Text("test_1", (100, 100), 36, colors["green"]))
 			self.render_queue.add(Text("test_2", (200, 175), 30, (255, 0, 255)))

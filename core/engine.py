@@ -30,7 +30,7 @@ class Engine:
 		render_objects(objects_to_render) -> None
 		render_rect(pos, size, fill_color, alpha) -> None
 		render_circle(pos, radius, fill_color, alpha) -> None
-		render_image(image, pos, scale) -> None
+		render_image(image, pos, scale, angle) -> None
 		print_to_screen(text, pos, font_size, text_color, background_color=None) -> None
 		display_fps() -> None
 		"""
@@ -113,7 +113,7 @@ class Engine:
 			elif obj.render_type == "circle":
 				self.render_circle(obj.pos, obj.radius, obj.fill_color, obj.alpha)
 			elif obj.render_type == "image":
-				self.render_image(obj.image_name, obj.pos, obj.scale)
+				self.render_image(obj.image_name, obj.pos, obj.scale, obj.angle)
 
 	def render_rect(self, pos, size, fill_color, alpha) -> None:
 		"""
@@ -145,7 +145,7 @@ class Engine:
 		pygame.draw.circle(surface, fill_color, (rel_x, rel_y), radius)
 		self.screen.blit(surface, pos)
 
-	def render_image(self, image_name, pos, scale) -> None:
+	def render_image(self, image_name, pos, scale, angle) -> None:
 		"""
 		Blits image to screen.
 		"""
@@ -154,6 +154,8 @@ class Engine:
 			new_width = int(image.get_width()*scale/100)
 			new_height = int(image.get_height()*scale/100)
 			image = pygame.transform.scale(image, (new_width, new_height))
+		if angle != 0:
+			image = pygame.transform.rotate(image, angle)
 		self.screen.blit(image, pos)
 
 	def print_to_screen(self, text, pos, font_size, text_color, background_color=None) -> None:
