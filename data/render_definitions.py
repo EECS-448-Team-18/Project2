@@ -8,14 +8,9 @@ Description: Contains definitions for objects that contain necessary data to be 
 Classes:
 	Text
 	Rectangle
+	Circle
+	Image
 """
-
-definition_types = set()
-
-def init():
-	definition_types.add(Text)
-	definition_types.add(Rectangle)
-	definition_types.add(Circle)
 
 class Render_Definition:
 	def __init__(self):
@@ -64,4 +59,18 @@ class Circle(Render_Definition):
 		self.fill_color = fill_color
 		self.alpha = alpha
 
+class Image(Render_Definition):
+	"""
+	Image()
+
+	Definition for image graphics.
+	"""
+	def __init__(self, image_name, pos, scale=100):
+		Render_Definition.__init__(self)
+		self.render_type = "image"
+		self.image_name = image_name
+		self.pos = pos
+		self.scale = scale
+
+render_types = [Text, Rectangle, Circle, Image]
 	

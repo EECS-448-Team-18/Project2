@@ -10,8 +10,9 @@ Classes:
 """
 
 import pygame
-from data.assets import colors
+from data import assets
 from data import settings
+from core import peripherals
 
 class Engine:
 	"""
@@ -29,6 +30,7 @@ class Engine:
 		render_objects(objects_to_render) -> None
 		render_rect(pos, size, fill_color, alpha) -> None
 		render_circle(pos, radius, fill_color, alpha) -> None
+		render_image(image, pos, scale) -> None
 		print_to_screen(text, pos, font_size, text_color, background_color=None) -> None
 		display_fps() -> None
 		"""
@@ -36,17 +38,19 @@ class Engine:
 	def __init__(self):
 		pygame.init()
 		pygame.font.init()
-
-		self.running = True
+		peripherals.keys.init()
+		
+		self.screen = pygame.display.set_mode(settings.screen_size)
+		assets.image_cache.init()
 
 		self.clock = pygame.time.Clock()
 		
-		self.screen = pygame.display.set_mode(settings.screen_size)
-		self.background = self.make_background(settings.screen_size, colors["white"])
+		self.background = self.make_background(settings.screen_size, assets.colors["white"])
 		
 		self.font_cache = {}
 		self.surface_cache = {}
 
+		self.running = True
 		self.dt = None
 
 		pygame.display.set_caption(settings.game_name)
@@ -108,6 +112,8 @@ class Engine:
 				self.render_rect(obj.pos, obj.size, obj.fill_color, obj.alpha)
 			elif obj.render_type == "circle":
 				self.render_circle(obj.pos, obj.radius, obj.fill_color, obj.alpha)
+			elif obj.render_type == "image":
+				self.render_image(obj.image_name, obj.pos, obj.scale)
 
 	def render_rect(self, pos, size, fill_color, alpha) -> None:
 		"""
@@ -133,11 +139,22 @@ class Engine:
 			self.surface_cache[frame_size] = pygame.Surface(frame_size)
 
 		surface = self.surface_cache[frame_size]
-		surface.fill(colors["white"])
-		surface.set_colorkey(colors["white"])
+		surface.fill(assets.colors["white"])
+		surface.set_colorkey(assets.colors["white"])
 
 		pygame.draw.circle(surface, fill_color, (rel_x, rel_y), radius)
 		self.screen.blit(surface, pos)
+
+	def render_image(self, image_name, pos, scale) -> None:
+		"""
+		Blits image to screen.
+		"""
+		image = assets.image_cache[image_name]["image"]
+		if scale != 100:
+			new_width = int(image.get_width()*scale/100)
+			new_height = int(image.get_height()*scale/100)
+			image = pygame.transform.scale(image, (new_width, new_height))
+		self.screen.blit(image, pos)
 
 	def print_to_screen(self, text, pos, font_size, text_color, background_color=None) -> None:
 		"""
@@ -164,5 +181,5 @@ class Engine:
 		"""
 		fps = "FPS: " + str(int(self.clock.get_fps()))
 		pos = (int((settings.screen_size[0]/1.25)), int(settings.screen_size[1]/10))
-		self.print_to_screen(fps, pos, 36, colors["red"], colors["blue"])
+		self.print_to_screen(fps, pos, 36, assets.colors["red"], assets.colors["blue"])
 		

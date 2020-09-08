@@ -18,10 +18,10 @@ class Keys(dict):
 	Method:
 		initialize() -> None
 	"""
-	def __init(self):
+	def __init__(self):
 		dict.__init__(self)
 
-	def initialize(self) -> None:
+	def init(self) -> None:
 		self["w"] = lambda: pygame.key.get_pressed()[pygame.K_w]
 		self["s"] = lambda: pygame.key.get_pressed()[pygame.K_s]
 		self["a"] = lambda: pygame.key.get_pressed()[pygame.K_a]

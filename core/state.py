@@ -12,9 +12,8 @@ Classes:
 """
 
 # from core.board import Board
-from core import peripherals  # checks for mouse and keyboard stuff
+from core.peripherals import *  # checks for mouse and keyboard stuff
 from data.assets import colors
-from data import render_definitions
 from data.render_definitions import *
 from time import time
 
@@ -36,9 +35,6 @@ class State:
 	"""
 
 	def __init__(self):
-		peripherals.keys.initialize()
-		render_definitions.init()
-
 		# main game components
 		# self.p1_board = Board()
 		# self.p2_board = Board()
@@ -105,9 +101,10 @@ class State:
 
 	def loop(self):
 		# these are random examples, delete and do acutal stuff
-		space_pressed = peripherals.get_key("space")
+		space_pressed = get_key("space")
 		if space_pressed:
 			print("Space is pressed: "+str(self.get_time_since_start()))
+		self.render_queue.add(Image("ship", (300, 300), 95))
 		if self.curr_event == "loop" and int(self.get_time_since_start())%2==0:
 			self.render_queue.add(Text("test_1", (100, 100), 36, colors["green"]))
 			self.render_queue.add(Text("test_2", (200, 175), 30, (255, 0, 255)))
@@ -130,7 +127,7 @@ class RenderQueue(list):
 		"""
 		Makes sure render_object is correctly defined and can be rendered then adds to queue.
 		"""
-		if type(render_object) in render_definitions.definition_types:
+		if type(render_object) in render_types:
 			self.append(render_object)
 		else:
 			raise TypeError("Incorrectly wrapped...")
