@@ -42,11 +42,8 @@ class State:
 		self.render_queue = RenderQueue()
 
 		self.events = {  # these events are all just examples, replace with actual events as needed
-					"start": Event(self.start),
-					"end_turn": Event(self.end_turn),
-					"place_ships": Event(self.place_ships),
-					"loop": Event(self.loop),
-                                        "menu" : Event(self.menu)
+					"example": Event(self.example),
+					"menu" : Event(self.menu),
 				}
 		
 		# game state attributes
@@ -80,16 +77,10 @@ class State:
 		if self.prev_event == "menu" and self.user_selection == 0:
 			return "menu"
 		if self.prev_event == "menu" and self.user_selection != 0:
-			return "place_ships"
+			return "example"
 
-		if self.prev_event == "place_ships":
-			return "end_turn"
-
-		if self.prev_event == "end_turn":
-			return "loop"
-
-		if self.prev_event == "loop":
-			return "loop"
+		if self.prev_event == "example":
+			return "example"
 	
 	def get_objects_to_render(self) -> tuple:
 		return tuple(self.render_queue)
@@ -116,16 +107,10 @@ class State:
 		
 		self.render_queue.add(Rectangle((550,2*self.buttonHeight+150 ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
 		self.render_queue.add(Text("Five Ships", (800, 2*self.buttonHeight +250), 50, (255, 255, 255)))
-	def start(self):
-		pass
+		
+		return "example"		
 
-	def end_turn(self):
-		pass
-	
-	def place_ships(self):
-		pass
-
-	def loop(self):
+	def example(self):
 		# these are random examples, delete and do acutal stuff
 		space_pressed = get_key("space")
 		if space_pressed:
