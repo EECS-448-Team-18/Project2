@@ -12,9 +12,8 @@ Classes:
 """
 
 # from core.board import Board
-from core import peripherals  # checks for mouse and keyboard stuff
+from core.peripherals import *  # checks for mouse and keyboard stuff
 from data.assets import colors
-from data import render_definitions
 from data.render_definitions import *
 from time import time
 
@@ -36,9 +35,6 @@ class State:
 	"""
 
 	def __init__(self):
-		peripherals.keys.initialize()
-		render_definitions.init()
-
 		# main game components
 		# self.p1_board = Board()
 		# self.p2_board = Board()
@@ -46,15 +42,21 @@ class State:
 		self.render_queue = RenderQueue()
 
 		self.events = {  # these events are all just examples, replace with actual events as needed
-					"start": Event(self.start),
-					"end_turn": Event(self.end_turn),
-					"place_ships": Event(self.place_ships),
-					"loop": Event(self.loop),
+					"example": Event(self.example),
+					"menu" : Event(self.menu),
 				}
 		
 		# game state attributes
 		self.prev_event = None
-		self.curr_event = "start"
+		self.curr_event = "menu"
+
+		self.user_selection = 0
+
+		# for rectangles
+		self.buttonHeight = 200
+		self.buttonWidth = 500
+		self.x= 200 #margin in the x direction
+		self.y = 50 #margin in the y direction
 
 		self.timer = time()
 
@@ -72,17 +74,13 @@ class State:
 		Conditionals determining game event logic. Decides next event based on previous event
 			that has just been completed and any other necessary logic.
 		"""
-		if self.prev_event == "start":
-			return "place_ships"
+		if self.prev_event == "menu" and self.user_selection == 0:
+			return "menu"
+		if self.prev_event == "menu" and self.user_selection != 0:
+			return "example"
 
-		if self.prev_event == "place_ships":
-			return "end_turn"
-
-		if self.prev_event == "end_turn":
-			return "loop"
-
-		if self.prev_event == "loop":
-			return "loop"
+		if self.prev_event == "example":
+			return "example"
 	
 	def get_objects_to_render(self) -> tuple:
 		return tuple(self.render_queue)
@@ -94,20 +92,30 @@ class State:
 		return round(time()-self.timer, 3)
 
 	# events... examples right now, implement real events as needed
-	def start(self):
-		pass
+	def menu (self):
+		self.render_queue.add(Rectangle((self.x,self.y ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
+		self.render_queue.add(Text("One Ship", (self.x + 200, self.y +75), 50, (255, 255, 255)))
+		
+		self.render_queue.add(Rectangle((self.buttonWidth +400,self.y ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
+		self.render_queue.add(Text("Two Ships", (self.buttonWidth + 600, self.y +75), 50, (255, 255, 255)))
+		
+		self.render_queue.add(Rectangle((self.x,self.buttonHeight+100 ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
+		self.render_queue.add(Text("Three Ships", (self.x + 200,  self.buttonHeight +180), 50, (255, 255, 255)))
+		
+		self.render_queue.add(Rectangle((self.buttonWidth +400,self.buttonHeight+100 ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
+		self.render_queue.add(Text("Four Ships", (self.buttonWidth + 600, self.buttonHeight +180), 50, (255, 255, 255)))
+		
+		self.render_queue.add(Rectangle((550,2*self.buttonHeight+150 ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
+		self.render_queue.add(Text("Five Ships", (800, 2*self.buttonHeight +250), 50, (255, 255, 255)))
+		
+		return "example"		
 
-	def end_turn(self):
-		pass
-	
-	def place_ships(self):
-		pass
-
-	def loop(self):
+	def example(self):
 		# these are random examples, delete and do acutal stuff
-		space_pressed = peripherals.get_key("space")
+		space_pressed = get_key("space")
 		if space_pressed:
 			print("Space is pressed: "+str(self.get_time_since_start()))
+		self.render_queue.add(Image("ship", (300, 300), 95, 45))
 		if self.curr_event == "loop" and int(self.get_time_since_start())%2==0:
 			self.render_queue.add(Text("test_1", (100, 100), 36, colors["green"]))
 			self.render_queue.add(Text("test_2", (200, 175), 30, (255, 0, 255)))
@@ -130,7 +138,7 @@ class RenderQueue(list):
 		"""
 		Makes sure render_object is correctly defined and can be rendered then adds to queue.
 		"""
-		if type(render_object) in render_definitions.definition_types:
+		if type(render_object) in render_types:
 			self.append(render_object)
 		else:
 			raise TypeError("Incorrectly wrapped...")
