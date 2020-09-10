@@ -14,12 +14,12 @@ class GameBoard:
 		for row in range(num_grids[0]):
 			for column in range(num_grids[1]):
 				self.coords.add((row, column))
-    
+
         #Creates a 2D array with 0s stored in each index
 		for row in range(num_grids[0]):
 			self.grid.append([])
 			for column in range(num_grids[1]):
-				self.grid[row].append(0)  
+				self.grid[row].append(0)
 
     #Wants to return if there is a ship in that position
 	def get(self, x, y) -> int:
@@ -32,9 +32,15 @@ class GameBoard:
 				for j in range(num_grids[1]):
 					if(i == x and j == y):
 						return self.grid[i][j]
-    
-    #Changes the number in the grid to 1 in order represent that there is a ship on that positon of the board
-	def set(self, x, y):
+
+    #Changes the number in the grid to value in order represent a specific
+	#action or object within the grid position.
+	#I.E
+	#	A 0 represents Ocean
+	#	A 1 represents A Ship tile
+	#	A 2 represents A Missed Shot
+	#	A 3 represents a Hit Shot
+	def set(self, x, y,value):
 		if((x > num_grids[0] or x < 0) or (y > num_grids[1] or y < 0)):
             #checks to see if the coordinates are valid
 			return(False)
@@ -43,9 +49,7 @@ class GameBoard:
 			for i in range(num_grids[0]):
 				for j in range(num_grids[1]):
 					if(i == x and j == y):
-						self.grid[i][j] = 1
+						self.grid[i][j] = value
 
 	def __contains__(self, pt):
 		return self.coords.__contains__(pt)
-		
-
