@@ -16,7 +16,7 @@ from core.peripherals import *  # checks for mouse and keyboard stuff
 from data.assets import colors
 from data.elements import *
 from time import time
-from data.settings import *
+from data import settings
 
 class State:
 	"""
@@ -31,14 +31,18 @@ class State:
 		get_time_since_start(self) -> float
 
 		Events:
-			
-		
+
+
 	"""
 
 	def __init__(self):
 		# main game components
 		self.p1_board = GameBoard()
 		self.p2_board = GameBoard()
+
+		#testBoard initalization
+		self.p1_board.setBoard(settings.testBoard)
+		self.p2_board.setBoard(settings.testBoard)
 
 		self.render_queue = RenderQueue()
 
@@ -50,7 +54,7 @@ class State:
 					"p2_turn": Event(self.p2_turn),
 					"game_over": Event(self.end_game),
 				}
-		
+
 		# game state attributes
 		self.prev_event = None
 		self.curr_event = "menu"
@@ -64,17 +68,17 @@ class State:
 
 		self.p1_turn_over = False
 		self.p2_turn_over = False
-		
+
 		self.game_over = False
 
 		self.p1_won = False
 		self.p2_won = False
-		
+
 
 	def run_event(self, dt) -> None:
 		"""
 		Runs event from event dictionary. Updates event sequence.
-		"""	
+		"""
 		self.render_queue.clear()
 		self.events[self.curr_event](dt)
 		self.prev_event = self.curr_event
@@ -95,7 +99,7 @@ class State:
 
 		if self.prev_event == "p1_place_ships" and self.p1_ships_placed:
 			return "p2_place_ships"
-	
+
 		if self.prev_event == "p2_place_ships" and not self.p2_ships_placed:
 			return "p2_place_ships"
 
@@ -116,7 +120,7 @@ class State:
 
 		if self.prev_event == "p2_turn" and self.p2_turn_over:
 			return "p1_turn"
-		
+
 	def get_objects_to_render(self) -> tuple:
 		return tuple(self.render_queue)
 
@@ -125,7 +129,7 @@ class State:
 		Returns time passed rounded to 3 decimals since game has started
 		"""
 		return round(time()-self.timer, 3)
-	
+
 	def menu(self):
 
 		buttons = {
@@ -143,46 +147,56 @@ class State:
 
 		mouse_pos = get_mouse_pos()
 		has_clicked = get_left_click()
-		
+
 		for button in buttons.values():
 			for element in button.values():
-				self.render_queue.add(element)      
-		
+				self.render_queue.add(element)
+
 		if has_clicked:
 			for button in buttons:
 				if buttons[button]["rect"].is_clicked(mouse_pos):
 					self.user_selection = button
 					break
-	
+
+
 	def p1_place_ships(self):
 		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
+		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
+
 		mouse_pos = get_mouse_pos()
 		has_clicked = get_left_click()
-		self.render_queue.add(Text("P1 turn:", (1000, 200), 40, colors["red"], colors["white"]))	
-		self.render_queue.add(Text("Num ships: " + str(self.user_selection), (1000, 300), 40, colors["red"], colors["white"]))		
+		self.render_queue.add(Text("P1 turn:", (1000, 200), 40, colors["red"], colors["white"]))
+		self.render_queue.add(Text("Num ships: " + str(self.user_selection), (1000, 300), 40, colors["red"], colors["white"]))
 
 		if has_clicked:
 			normal_pos = ((mouse_pos[0]-p1_board_pos[0])//grid_size[0], (mouse_pos[1]-p1_board_pos[1])//grid_size[1])
 			if normal_pos in self.p1_board:
 				grid_pos = (normal_pos[0]*grid_size[0] + p1_board_pos[0], normal_pos[1]*grid_size[1] + p1_board_pos[1])
 				self.render_queue.add(Rectangle(grid_pos, grid_size, colors["red"]))
-		
+				self.p1_ships_placed = True
+
+
+
 	def p2_place_ships(self):
+		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
 		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
+		self.p2_ships_placed = True
 
 	def p1_turn(self):
-		pass
+		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
+		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
 
 	def p2_turn(self):
-		pass
-
+		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
+		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
+		
 	def end_game(self):
 		pass
 
 class RenderQueue(list):
 	"""
 	RenderQueue()
-	
+
 	Queue wrapper to store objects ready to be rendered to screen.
 
 	Methods:
@@ -213,11 +227,10 @@ class Event:
 		self.func = func
 		self.is_time_dependent = is_time_dependent
 		self.output = None
-		
+
 	def __call__(self, dt) -> None:
 		if self.is_time_dependent:
 			self.output = self.func(dt)
 		else:
 			self.output = self.func()
 		return self.output
-

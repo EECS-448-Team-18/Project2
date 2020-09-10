@@ -53,3 +53,8 @@ class GameBoard:
 
 	def __contains__(self, pt):
 		return self.coords.__contains__(pt)
+
+	def setBoard(self,testBoard):
+			for row in range(num_grids[0]):
+				for column in range(num_grids[1]):
+					self.grid[row] = testBoard[row]
