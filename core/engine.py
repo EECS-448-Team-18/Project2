@@ -11,8 +11,10 @@ Classes:
 
 import pygame
 from data import assets
+from data.assets import colors
 from data import settings
 from core import peripherals
+from data.elements import *
 
 class Engine:
 	"""
@@ -29,6 +31,7 @@ class Engine:
 		update_screen(objects) -> None
 		render_objects(objects_to_render) -> None
 		render_rect(pos, size, fill_color, alpha) -> None
+		render_board(pos, color_1, color_2) -> None
 		render_circle(pos, radius, fill_color, alpha) -> None
 		render_image(image, pos, scale, angle) -> None
 		print_to_screen(text, pos, font_size, text_color, background_color=None) -> None
@@ -45,7 +48,7 @@ class Engine:
 
 		self.clock = pygame.time.Clock()
 		
-		self.background = self.make_background(settings.screen_size, assets.colors["white"])
+		self.background = self.make_background(settings.screen_size, assets.colors["black"])
 		
 		self.font_cache = {}
 		self.surface_cache = {}
@@ -114,6 +117,8 @@ class Engine:
 				self.render_circle(obj.pos, obj.radius, obj.fill_color, obj.alpha)
 			elif obj.render_type == "image":
 				self.render_image(obj.image_name, obj.pos, obj.scale, obj.angle)
+			elif obj.render_type == "board":
+				self.render_board(obj.pos, obj.color_1, obj.color_2)
 
 	def render_rect(self, pos, size, fill_color, alpha) -> None:
 		"""
@@ -126,6 +131,19 @@ class Engine:
 		surface.set_alpha(alpha)
 		surface.fill(fill_color)
 		self.screen.blit(surface, pos)
+		
+	def render_board(self, pos, color_1, color_2) -> None:
+		rects = set()
+		offset = 1
+		for i in range(settings.num_grids[0]):
+			for j in range(settings.num_grids[1]):
+				if (offset % 2 == 0 and i%2 == 0) or (offset % 2 == 1 and i%2 == 1):
+					rects.add(Rectangle((settings.grid_size[0]*j + pos[0], settings.grid_size[1]*i + pos[1]), settings.grid_size, colors["light_blue"]))
+				else:
+					rects.add(Rectangle((settings.grid_size[0]*j + pos[0], settings.grid_size[1]*i + pos[1]), settings.grid_size, colors["dark_blue"]))
+				offset+=1
+			offset-=1
+		self.render_objects(rects)
 
 	def render_circle(self, pos, radius, fill_color, alpha) -> None:
 		"""

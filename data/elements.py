@@ -8,9 +8,9 @@ Description: Contains definitions for objects that contain necessary data to be 
 Classes:
 	Text
 	Rectangle
-	Button
 	Circle
 	Image
+	Board
 """
 
 class Render_Definition:
@@ -46,6 +46,9 @@ class Rectangle(Render_Definition):
 		self.fill_color = fill_color
 		self.alpha = alpha
 
+	def is_clicked(self, pos):
+		return (self.pos[0] <= pos[0] <= (self.pos[0] + self.size[0])) and (self.pos[1] <= pos[1] <= (self.pos[1] + self.size[1]))
+
 class Circle(Render_Definition):
 	"""
 	Circle(pos, radius, fill_color, alpha=255)
@@ -74,5 +77,13 @@ class Image(Render_Definition):
 		self.scale = scale
 		self.angle = angle
 
-render_types = [Text, Rectangle, Button, Circle, Image]
+class Board(Render_Definition):
+	def __init__(self, pos, color_1, color_2):
+		Render_Definition.__init__(self)
+		self.render_type = "board"
+		self.pos = pos
+		self.color_1 = color_1
+		self.color_2 = color_2
+
+render_types = [Text, Rectangle, Circle, Image, Board]
 	

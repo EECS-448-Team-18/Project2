@@ -14,8 +14,9 @@ Classes:
 # from core.board import Board
 from core.peripherals import *  # checks for mouse and keyboard stuff
 from data.assets import colors
-from data.render_definitions import *
+from data.elements import *
 from time import time
+from data.settings import *
 
 class State:
 	"""
@@ -42,23 +43,23 @@ class State:
 		self.render_queue = RenderQueue()
 
 		self.events = {  # these events are all just examples, replace with actual events as needed
-					"example": Event(self.example),
-					"menu" : Event(self.menu),
+					"menu": Event(self.menu),
+					"p1_place_ships": Event(self.p1_place_ships),
+					"p2_place_ships": Event(self.p2_place_ships),
 				}
 		
 		# game state attributes
 		self.prev_event = None
-		self.curr_event = "example"
+		self.curr_event = "menu"
+
+		self.timer = time()
 
 		self.user_selection = 0
 
 		# for rectangles
-		self.buttonHeight = 200
-		self.buttonWidth = 500
-		self.buttonx= 200 #margin in the x direction
-		self.buttony = 50 #margin in the y direction
+		
 
-		self.timer = time()
+		
 
 	def run_event(self, dt) -> None:
 		"""
@@ -77,10 +78,10 @@ class State:
 		if self.prev_event == "menu" and self.user_selection == 0:
 			return "menu"
 		if self.prev_event == "menu" and self.user_selection != 0:
-			return "place_ships"
+			return "p1_place_ships"
 
-		if self.prev_event == "example":
-			return "example"
+		if self.prev_event == "p1_place_ships":
+			return "p1_place_ships"
 	
 	def get_objects_to_render(self) -> tuple:
 		return tuple(self.render_queue)
@@ -92,78 +93,45 @@ class State:
 		return round(time()-self.timer, 3)
 	
 	# helper functions...
-	def render_board(self):
-		
-		board_length = 9
-		grid_size = (50, 50)
-		offset = 1
-		for i in range(1,board_length+1):
-			for j in range(1,board_length+1):
-				if (offset % 2 == 0 and i%2 == 0) or (offset % 2 == 1 and i%2 == 1):
-					self.render_queue.add(Rectangle((grid_size[0]*j, grid_size[1]*i), grid_size, colors["light"]))
-				else:
-					self.render_queue.add(Rectangle((grid_size[0]*j, grid_size[1]*i), grid_size, colors["dark"]))
-				offset+=1
-			offset-=1
 	
-		pos = get_mouse()["pos"]
-		print((pos[0]//grid_size[0], pos[1]//grid_size[1]))
+	
+		#pos = get_mouse()["pos"]
+		#print((pos[0]//grid_size[0], pos[1]//grid_size[1]))
 	
 	# events... examples right now, implement real events as needed
-	def menu (self):
-		mouseX,mouseY = pygame.mouse.get_pos()
-                
-		self.render_queue.add(Rectangle((self.buttonx,self.buttony ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
-		self.render_queue.add(Text("One Ship", (self.buttonx + 200, self.buttony +75), 50, (255, 255, 255)))
-		option1 = pygame.Rect(self.buttonx,self.buttony,self.buttonWidth, self.buttonHeight)
-		
-		self.render_queue.add(Rectangle((self.buttonWidth +400,self.buttony ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
-		self.render_queue.add(Text("Two Ships", (self.buttonWidth + 600, self.buttony +75), 50, (255, 255, 255)))
-		option2 = pygame.Rect(self.buttonWidth +400,self.buttony, self.buttonWidth, self.buttonHeight)
-		
-		self.render_queue.add(Rectangle((self.buttonx,self.buttonHeight+100 ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
-		self.render_queue.add(Text("Three Ships", (self.buttonx + 200,  self.buttonHeight +180), 50, (255, 255, 255)))
-		option3 = pygame.Rect(self.buttonx,self.buttonHeight+100, self.buttonWidth, self.buttonHeight)
-		
-		self.render_queue.add(Rectangle((self.buttonWidth +400,self.buttonHeight+100 ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
-		self.render_queue.add(Text("Four Ships", (self.buttonWidth + 600, self.buttonHeight +180), 50, (255, 255, 255)))
-		option4 = pygame.Rect(self.buttonWidth +400,self.buttonHeight+100 , self.buttonWidth, self.buttonHeight)
-		
-		self.render_queue.add(Rectangle((550,2*self.buttonHeight+150 ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
-		self.render_queue.add(Text("Five Ships", (800, 2*self.buttonHeight +250), 50, (255, 255, 255)))
+	def menu(self):
 
-		option5 = pygame.Rect(550,2*self.buttonHeight+150, self.buttonWidth, self.buttonHeight)
+		buttons = {
+				1: {"rect": Rectangle((buttonx, buttony), (buttonWidth, buttonHeight), colors["blue"]),
+						"text": Text("One Ship", (buttonx + 200, buttony +75), 50, colors["white"]) },
+				2: {"rect": Rectangle((buttonWidth +400, buttony), (buttonWidth, buttonHeight), colors["blue"]),
+						"text": Text("Two Ships", (buttonWidth + 600, buttony +75), 50, colors["white"]) },
+				3:  {"rect": Rectangle((buttonx, buttonHeight+100), (buttonWidth, buttonHeight), colors["blue"]),
+						"text": Text("Three Ships", (buttonx + 200,  buttonHeight +180), 50, colors["white"]) },
+				4:  {"rect": Rectangle((buttonWidth +400,buttonHeight+100 ), (buttonWidth, buttonHeight), colors["blue"]),
+						"text": Text("Four Ships", (buttonWidth + 600, buttonHeight +180), 50, colors["white"]) },
+				5:  {"rect": Rectangle((550,2*buttonHeight+150 ), (buttonWidth, buttonHeight), colors["blue"], 255),
+						"text": Text("Five Ships", (800, 2*buttonHeight +250), 50, colors["white"]) },
+			}
 
-		if option1.collidepoint((mouseX,mouseY)):
-			if get_left_click():
-				self.user_selection =1
-		if option2.collidepoint((mouseX,mouseY)):
-			if get_left_click():
-				self.user_selection =2
-		if option3.collidepoint((mouseX,mouseY)):
-			if get_left_click():
-				self.user_selection =3
-		if option4.collidepoint((mouseX,mouseY)):
-			if get_left_click():
-				self.user_selection =4
-		if option5.collidepoint((mouseX,mouseY)):
-			if get_left_click():
-				self.user_selection =5
-
-	def example(self):
-		# these are random examples, delete and do acutal stuff
-		space_pressed = get_key("space")
-		if space_pressed:
-			print("Space is pressed: "+str(self.get_time_since_start()))
-		#self.render_queue.add(Image("ship", (300, 300), 95, 45))
-		margin = 25
-		size = (60, 60)
-		if self.curr_event == "example":
-			#self.render_queue.add(Text("test_1", (100, 100), 36, colors["green"]))
-			#self.render_queue.add(Text("test_2", (200, 175), 30, (255, 0, 255)))
-			
-			self.render_board()
-			#self.render_queue.add(Circle((400, 50), 50, colors["red"]))
+		mouse_pos = get_mouse_pos()
+		has_clicked = get_left_click()
+		
+		for button in buttons.values():
+			for element in button.values():
+				self.render_queue.add(element)      
+		
+		if has_clicked:
+			for button in buttons:
+				if buttons[button]["rect"].is_clicked(mouse_pos):
+					self.user_selection = button
+					break
+	
+	def p1_place_ships(self):
+		self.render_queue.add(Board((300, 150), colors["light_blue"], colors["dark_blue"]))
+	
+	def p2_place_ships(self):
+		self.render_queue.add(Board((300, 150), colors["light_blue"], colors["dark_blue"]))
 
 class RenderQueue(list):
 	"""
