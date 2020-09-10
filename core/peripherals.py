@@ -44,7 +44,7 @@ def get_key(key) -> bool:
 	  raise ValueError("Peripheral key not available...")
 
 def get_mouse() -> dict:
-	return {"left_click": getLeftClick(), "right_click": getRightClick(), "pos": getMousePos()}
+	return {"left_click": get_left_click(), "right_click": get_right_click(), "pos": get_mouse_pos()}
 
 keys = Keys()
 

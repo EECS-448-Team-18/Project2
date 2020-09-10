@@ -48,7 +48,7 @@ class State:
 		
 		# game state attributes
 		self.prev_event = None
-		self.curr_event = "menu"
+		self.curr_event = "example"
 
 		self.user_selection = 0
 
@@ -137,12 +137,18 @@ class State:
 		space_pressed = get_key("space")
 		if space_pressed:
 			print("Space is pressed: "+str(self.get_time_since_start()))
-		self.render_queue.add(Image("ship", (300, 300), 95, 45))
-		if self.curr_event == "loop" and int(self.get_time_since_start())%2==0:
-			self.render_queue.add(Text("test_1", (100, 100), 36, colors["green"]))
-			self.render_queue.add(Text("test_2", (200, 175), 30, (255, 0, 255)))
-			self.render_queue.add(Rectangle((200, 200), (175, 25), colors["blue"], 200))
-			self.render_queue.add(Circle((400, 50), 50, colors["red"]))
+		#self.render_queue.add(Image("ship", (300, 300), 95, 45))
+		margin = 25
+		size = (60, 60)
+		if self.curr_event == "example":
+			#self.render_queue.add(Text("test_1", (100, 100), 36, colors["green"]))
+			#self.render_queue.add(Text("test_2", (200, 175), 30, (255, 0, 255)))
+			for x in range(9):
+				for y in range(9):	
+					self.render_queue.add(Rectangle(((size[0])*x+margin, (size[1])*y+margin), size, colors["blue"]))
+			pos = get_mouse()["pos"]
+			print(((pos[0]-margin)//size[0], (pos[1]-margin)//size[1]))
+			#self.render_queue.add(Circle((400, 50), 50, colors["red"]))
 
 class RenderQueue(list):
 	"""
