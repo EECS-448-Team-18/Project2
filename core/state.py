@@ -91,10 +91,6 @@ class State:
 		"""
 		return round(time()-self.timer, 3)
 
-	# helper functions...
-	def render_board(self):
-		
-
 	# events... examples right now, implement real events as needed
 	def menu (self):
 		mouseX,mouseY = pygame.mouse.get_pos()
