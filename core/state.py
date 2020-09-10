@@ -11,7 +11,7 @@ Classes:
 	Event
 """
 
-# from core.board import Board
+from core.board import GameBoard
 from core.peripherals import *  # checks for mouse and keyboard stuff
 from data.assets import colors
 from data.elements import *
@@ -37,8 +37,8 @@ class State:
 
 	def __init__(self):
 		# main game components
-		# self.p1_board = Board()
-		# self.p2_board = Board()
+		self.p1_board = GameBoard()
+		self.p2_board = GameBoard()
 
 		self.render_queue = RenderQueue()
 
@@ -155,10 +155,20 @@ class State:
 					break
 	
 	def p1_place_ships(self):
-		self.render_queue.add(Board((300, 150), colors["light_blue"], colors["dark_blue"]))
-	
+		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
+		mouse_pos = get_mouse_pos()
+		has_clicked = get_left_click()
+		self.render_queue.add(Text("P1 turn:", (1000, 200), 40, colors["red"], colors["white"]))	
+		self.render_queue.add(Text("Num ships: " + str(self.user_selection), (1000, 300), 40, colors["red"], colors["white"]))		
+
+		if has_clicked:
+			normal_pos = ((mouse_pos[0]-p1_board_pos[0])//grid_size[0], (mouse_pos[1]-p1_board_pos[1])//grid_size[1])
+			if normal_pos in self.p1_board:
+				grid_pos = (normal_pos[0]*grid_size[0] + p1_board_pos[0], normal_pos[1]*grid_size[1] + p1_board_pos[1])
+				self.render_queue.add(Rectangle(grid_pos, grid_size, colors["red"]))
+		
 	def p2_place_ships(self):
-		self.render_queue.add(Board((300, 150), colors["light_blue"], colors["dark_blue"]))
+		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
 
 	def p1_turn(self):
 		pass

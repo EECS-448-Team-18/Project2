@@ -118,7 +118,7 @@ class Engine:
 			elif obj.render_type == "image":
 				self.render_image(obj.image_name, obj.pos, obj.scale, obj.angle)
 			elif obj.render_type == "board":
-				self.render_board(obj.pos, obj.color_1, obj.color_2)
+				self.render_board(obj.board, obj.pos, obj.color_1, obj.color_2)
 
 	def render_rect(self, pos, size, fill_color, alpha) -> None:
 		"""
@@ -132,7 +132,7 @@ class Engine:
 		surface.fill(fill_color)
 		self.screen.blit(surface, pos)
 		
-	def render_board(self, pos, color_1, color_2) -> None:
+	def render_board(self, board, pos, color_1, color_2) -> None:
 		rects = set()
 		offset = 1
 		for i in range(settings.num_grids[0]):
