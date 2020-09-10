@@ -55,8 +55,8 @@ class State:
 		# for rectangles
 		self.buttonHeight = 200
 		self.buttonWidth = 500
-		self.x= 200 #margin in the x direction
-		self.y = 50 #margin in the y direction
+		self.buttonx= 200 #margin in the x direction
+		self.buttony = 50 #margin in the y direction
 
 		self.timer = time()
 
@@ -93,22 +93,43 @@ class State:
 
 	# events... examples right now, implement real events as needed
 	def menu (self):
-		self.render_queue.add(Rectangle((self.x,self.y ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
-		self.render_queue.add(Text("One Ship", (self.x + 200, self.y +75), 50, (255, 255, 255)))
+		mouseX,mouseY = pygame.mouse.get_pos()
+                
+		self.render_queue.add(Rectangle((self.buttonx,self.buttony ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
+		self.render_queue.add(Text("One Ship", (self.buttonx + 200, self.buttony +75), 50, (255, 255, 255)))
+		option1 = pygame.Rect(self.buttonx,self.buttony,self.buttonWidth, self.buttonHeight)
 		
-		self.render_queue.add(Rectangle((self.buttonWidth +400,self.y ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
-		self.render_queue.add(Text("Two Ships", (self.buttonWidth + 600, self.y +75), 50, (255, 255, 255)))
+		self.render_queue.add(Rectangle((self.buttonWidth +400,self.buttony ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
+		self.render_queue.add(Text("Two Ships", (self.buttonWidth + 600, self.buttony +75), 50, (255, 255, 255)))
+		option2 = pygame.Rect(self.buttonWidth +400,self.buttony, self.buttonWidth, self.buttonHeight)
 		
-		self.render_queue.add(Rectangle((self.x,self.buttonHeight+100 ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
-		self.render_queue.add(Text("Three Ships", (self.x + 200,  self.buttonHeight +180), 50, (255, 255, 255)))
+		self.render_queue.add(Rectangle((self.buttonx,self.buttonHeight+100 ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
+		self.render_queue.add(Text("Three Ships", (self.buttonx + 200,  self.buttonHeight +180), 50, (255, 255, 255)))
+		option3 = pygame.Rect(self.buttonx,self.buttonHeight+100, self.buttonWidth, self.buttonHeight)
 		
 		self.render_queue.add(Rectangle((self.buttonWidth +400,self.buttonHeight+100 ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
 		self.render_queue.add(Text("Four Ships", (self.buttonWidth + 600, self.buttonHeight +180), 50, (255, 255, 255)))
+		option4 = pygame.Rect(self.buttonWidth +400,self.buttonHeight+100 , self.buttonWidth, self.buttonHeight)
 		
 		self.render_queue.add(Rectangle((550,2*self.buttonHeight+150 ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
 		self.render_queue.add(Text("Five Ships", (800, 2*self.buttonHeight +250), 50, (255, 255, 255)))
-		
-		return "example"		
+		option5 = pygame.Rect(550,2*self.buttonHeight+150, self.buttonWidth, self.buttonHeight)
+
+		if option1.collidepoint((mouseX,mouseY)):
+			if get_left_click():
+				self.user_selection =1
+		if option2.collidepoint((mouseX,mouseY)):
+			if get_left_click():
+				self.user_selection =2
+		if option3.collidepoint((mouseX,mouseY)):
+			if get_left_click():
+				self.user_selection =3
+		if option4.collidepoint((mouseX,mouseY)):
+			if get_left_click():
+				self.user_selection =4
+		if option5.collidepoint((mouseX,mouseY)):
+			if get_left_click():
+				self.user_selection =5		
 
 	def example(self):
 		# these are random examples, delete and do acutal stuff
