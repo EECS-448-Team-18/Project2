@@ -46,6 +46,9 @@ class State:
 					"menu": Event(self.menu),
 					"p1_place_ships": Event(self.p1_place_ships),
 					"p2_place_ships": Event(self.p2_place_ships),
+					"p1_turn": Event(self.p1_turn),
+					"p2_turn": Event(self.p2_turn),
+					"game_over": Event(self.end_game),
 				}
 		
 		# game state attributes
@@ -56,9 +59,16 @@ class State:
 
 		self.user_selection = 0
 
-		# for rectangles
-		
+		self.p1_ships_placed = False
+		self.p2_ships_placed = False
 
+		self.p1_turn_over = False
+		self.p2_turn_over = False
+		
+		self.game_over = False
+
+		self.p1_won = False
+		self.p2_won = False
 		
 
 	def run_event(self, dt) -> None:
@@ -80,9 +90,33 @@ class State:
 		if self.prev_event == "menu" and self.user_selection != 0:
 			return "p1_place_ships"
 
-		if self.prev_event == "p1_place_ships":
+		if self.prev_event == "p1_place_ships" and not self.p1_ships_placed:
 			return "p1_place_ships"
+
+		if self.prev_event == "p1_place_ships" and self.p1_ships_placed:
+			return "p2_place_ships"
 	
+		if self.prev_event == "p2_place_ships" and not self.p2_ships_placed:
+			return "p2_place_ships"
+
+		if self.prev_event == "p2_place_ships" and self.p2_ships_placed:
+			return "p1_turn"
+
+		if self.game_over:
+			return "end_game"
+
+		if self.prev_event == "p1_turn" and not self.p1_turn_over:
+			return "p1_turn"
+
+		if self.prev_event == "p1_turn" and self.p1_turn_over:
+			return "p2_turn"
+
+		if self.prev_event == "p2_turn" and not self.p2_turn_over:
+			return "p2_turn"
+
+		if self.prev_event == "p2_turn" and self.p2_turn_over:
+			return "p1_turn"
+		
 	def get_objects_to_render(self) -> tuple:
 		return tuple(self.render_queue)
 
@@ -92,13 +126,6 @@ class State:
 		"""
 		return round(time()-self.timer, 3)
 	
-	# helper functions...
-	
-	
-		#pos = get_mouse()["pos"]
-		#print((pos[0]//grid_size[0], pos[1]//grid_size[1]))
-	
-	# events... examples right now, implement real events as needed
 	def menu(self):
 
 		buttons = {
@@ -132,6 +159,15 @@ class State:
 	
 	def p2_place_ships(self):
 		self.render_queue.add(Board((300, 150), colors["light_blue"], colors["dark_blue"]))
+
+	def p1_turn(self):
+		pass
+
+	def p2_turn(self):
+		pass
+
+	def end_game(self):
+		pass
 
 class RenderQueue(list):
 	"""
