@@ -77,7 +77,7 @@ class State:
 		if self.prev_event == "menu" and self.user_selection == 0:
 			return "menu"
 		if self.prev_event == "menu" and self.user_selection != 0:
-			return "example"
+			return "place_ships"
 
 		if self.prev_event == "example":
 			return "example"
@@ -90,7 +90,25 @@ class State:
 		Returns time passed rounded to 3 decimals since game has started
 		"""
 		return round(time()-self.timer, 3)
-
+	
+	# helper functions...
+	def render_board(self):
+		
+		board_length = 9
+		grid_size = (50, 50)
+		offset = 1
+		for i in range(1,board_length+1):
+			for j in range(1,board_length+1):
+				if (offset % 2 == 0 and i%2 == 0) or (offset % 2 == 1 and i%2 == 1):
+					self.render_queue.add(Rectangle((grid_size[0]*j, grid_size[1]*i), grid_size, colors["light"]))
+				else:
+					self.render_queue.add(Rectangle((grid_size[0]*j, grid_size[1]*i), grid_size, colors["dark"]))
+				offset+=1
+			offset-=1
+	
+		pos = get_mouse()["pos"]
+		print((pos[0]//grid_size[0], pos[1]//grid_size[1]))
+	
 	# events... examples right now, implement real events as needed
 	def menu (self):
 		mouseX,mouseY = pygame.mouse.get_pos()
@@ -143,11 +161,8 @@ class State:
 		if self.curr_event == "example":
 			#self.render_queue.add(Text("test_1", (100, 100), 36, colors["green"]))
 			#self.render_queue.add(Text("test_2", (200, 175), 30, (255, 0, 255)))
-			for x in range(9):
-				for y in range(9):	
-					self.render_queue.add(Rectangle(((size[0])*x+margin, (size[1])*y+margin), size, colors["blue"]))
-			pos = get_mouse()["pos"]
-			print(((pos[0]-margin)//size[0], (pos[1]-margin)//size[1]))
+			
+			self.render_board()
 			#self.render_queue.add(Circle((400, 50), 50, colors["red"]))
 
 class RenderQueue(list):

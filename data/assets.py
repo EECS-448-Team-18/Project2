@@ -28,6 +28,8 @@ class ImageCache(dict):
 
 colors = {
 		"white": (255, 255, 255),
+		"light": (0, 188, 255),
+		"dark": (0, 146, 199),
 		"red": (255, 0, 0),
 		"green": (0, 255, 0),
 		"blue": (0, 0, 255),
