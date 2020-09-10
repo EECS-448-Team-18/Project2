@@ -91,6 +91,10 @@ class State:
 		"""
 		return round(time()-self.timer, 3)
 
+	# helper functions...
+	def render_board(self):
+		
+
 	# events... examples right now, implement real events as needed
 	def menu (self):
 		self.render_queue.add(Rectangle((self.x,self.y ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
@@ -107,8 +111,7 @@ class State:
 		
 		self.render_queue.add(Rectangle((550,2*self.buttonHeight+150 ), (self.buttonWidth, self.buttonHeight), colors["blue"], 255))
 		self.render_queue.add(Text("Five Ships", (800, 2*self.buttonHeight +250), 50, (255, 255, 255)))
-		
-		return "example"		
+				
 
 	def example(self):
 		# these are random examples, delete and do acutal stuff
