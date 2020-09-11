@@ -2,7 +2,6 @@
 
 """
 
-from data.elements import Board
 from data.settings import *
 
 class GameBoard:
@@ -38,7 +37,7 @@ class GameBoard:
 					if(i == x and j == y):
 						return self.grid[i][j]
 
-    	"""Precondition: What must be true at the start of the function is that the value being passed in
+	"""Precondition: What must be true at the start of the function is that the value being passed in
 	   needs to be either a 0, 1, 2, or 3
 	   Postcondition: This function will change a value in the 2d array. It will change the value
 	   either to a 0 for ocean, 1 for ship, 2 for hit, and 3 for miss.

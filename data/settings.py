@@ -5,7 +5,7 @@ Basic settings for game.
 game_name = "Battleship"
 
 screen_size = (1440, 900)
-grid_size = (50, 50)
+grid_size = (65, 65)
 num_grids = (9, 9)
 
 target_frame_rate = 60
