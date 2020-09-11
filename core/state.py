@@ -172,11 +172,14 @@ class State:
 			for element in button.values():
 				self.render_queue.add(element)
 
-		if has_clicked:
-			for button in buttons:
-				if buttons[button]["rect"].is_clicked(mouse_pos):
-					self.user_selection = button
-					break
+		if not has_clicked:
+			if not self.left_click_ready:
+				for button in buttons:
+					if buttons[button]["rect"].is_clicked(mouse_pos):
+						self.user_selection = button
+						break
+			self.left_click_ready = True
+		else:
 			self.left_click_ready = False
 	
 		if self.user_selection != 0:
@@ -185,6 +188,7 @@ class State:
 				for fleet in self.all_ships:
 					fleet.add(Ship(size_counter, Fleet.ship_types[size_counter]))
 				size_counter += 1
+			self.left_click_ready = True
 
 	def p1_place_ships(self):
 		mouse_pos = get_mouse_pos()
@@ -208,16 +212,18 @@ class State:
 		curr_ship.move(normal_pos)
 		curr_ship.grid_pos = grid_pos
 
-		if has_clicked:
-			if grid_pos in self.p1_board and self.left_click_ready:
-				curr_ship.placed = True
-				curr_ship.selected = False
-				self.p1_ship_counter += 1
-				self.left_click_ready = False
-				if self.p1_ship_counter > self.user_selection:
-					self.p1_ships_placed = True
-		else:
+		if not has_clicked:
+			if not self.left_click_ready:
+				if grid_pos in self.p1_board:
+					curr_ship.placed = True
+					curr_ship.selected = False
+					self.p1_ship_counter += 1
+					self.left_click_ready = False
+					if self.p1_ship_counter > self.user_selection:
+						self.p1_ships_placed = True
 			self.left_click_ready = True
+		else:
+			self.left_click_ready = False
 
 	def p2_place_ships(self):
 		self.p1_fleet.hide()
