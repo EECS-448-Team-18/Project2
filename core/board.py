@@ -20,26 +20,30 @@ class GameBoard:
 			self.grid.append([])
 			for column in range(num_grids[1]):
 				self.grid[row].append(0)
-
-    #Wants to return if there is a ship in that position
+				
+	"""Precondition: What must be true at the start of this function is that a value must be in the
+	   the cell of the array
+	   Postcondition: This function will return one of two things. If the value of x and y are anything
+	   greater than 9 or anything less than 0 it will return false. The other return will return the
+	   value that is in the position of the 2d array. The value will be used to determine if the user
+	   got a hit or a miss.
+	   Parameters: The parameters this function takes in are the x and y values of the coordinate that
+	   the user clicks on."""
 	def get(self, x, y) -> int:
-        #checks to see if the coordinates are valid
 		if((x > 9 and x < 0) or (y > 9 and y < 0)):
 			return False
 		else:
-            #Will return the value at that given coordinate
 			for i in range(num_grids[0]):
 				for j in range(num_grids[1]):
 					if(i == x and j == y):
 						return self.grid[i][j]
 
-    #Changes the number in the grid to value in order represent a specific
-	#action or object within the grid position.
-	#I.E
-	#	A 0 represents Ocean
-	#	A 1 represents A Ship tile
-	#	A 2 represents A Missed Shot
-	#	A 3 represents a Hit Shot
+    	"""Precondition: What must be true at the start of the function is that the value being passed in
+	   needs to be either a 0, 1, 2, or 3
+	   Postcondition: This function will change a value in the 2d array. It will change the value
+	   either to a 0 for ocean, 1 for ship, 2 for hit, and 3 for miss.
+	   Parameters: the parameters this funciton takes is the x and y value of the coordinate the 
+	   user clicks on, as well as the value 0, 1, 2, or 3."""
 	def set(self, x, y,value):
 		if((x > num_grids[0] or x < 0) or (y > num_grids[1] or y < 0)):
             #checks to see if the coordinates are valid
