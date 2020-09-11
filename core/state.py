@@ -214,7 +214,8 @@ class State:
 
 		if not has_clicked:
 			if not self.left_click_ready:
-				if grid_pos in self.p1_board:
+			
+				if all([(grid_pos[0] - (i*curr_ship.unit_direction[0]), grid_pos[1] + (i*curr_ship.unit_direction[1])) in self.p1_board for i in range(curr_ship.length)]):
 					curr_ship.placed = True
 					curr_ship.selected = False
 					self.p1_ship_counter += 1
