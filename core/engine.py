@@ -14,6 +14,7 @@ from data import assets
 from data.assets import colors
 from data import settings
 from core import peripherals
+from core.board import GameBoard
 from data.elements import *
 
 class Engine:
@@ -21,7 +22,7 @@ class Engine:
 	Engine()
 
 	Handles rendering and pygame specific game backend.
-	
+
 	Methods:
 		make_background(size, color) -> pygame.Surface
 		get_dt() -> float
@@ -42,14 +43,14 @@ class Engine:
 		pygame.init()
 		pygame.font.init()
 		peripherals.keys.init()
-		
+
 		self.screen = pygame.display.set_mode(settings.screen_size)
 		assets.image_cache.init()
 
 		self.clock = pygame.time.Clock()
-		
+
 		self.background = self.make_background(settings.screen_size, assets.colors["black"])
-		
+
 		self.font_cache = {}
 		self.surface_cache = {}
 
@@ -79,7 +80,7 @@ class Engine:
 		self.dt = self.clock.tick(settings.target_frame_rate) / 1000 * settings.normalized_frame_rate
 
 		return self.running
-	
+
 	def handle_events(self) -> None:
 		"""
 		Handles events from Pygame's event queue. pygame.QUIT occurs when "X" on top right
@@ -98,7 +99,7 @@ class Engine:
 
 	def update_screen(self, objects_to_render) -> None:
 		"""
-		Renders necessary components to screen. 
+		Renders necessary components to screen.
 		"""
 		self.render_objects(objects_to_render)
 		self.display_fps()
@@ -131,13 +132,18 @@ class Engine:
 		surface.set_alpha(alpha)
 		surface.fill(fill_color)
 		self.screen.blit(surface, pos)
-		
+
+	#---
 	def render_board(self, board, pos, color_1, color_2) -> None:
 		rects = set()
 		offset = 1
 		for i in range(settings.num_grids[0]):
 			for j in range(settings.num_grids[1]):
-				if (offset % 2 == 0 and i%2 == 0) or (offset % 2 == 1 and i%2 == 1):
+				if (board.get(i,j) == 2):
+					rects.add(Rectangle((settings.grid_size[0]*j + pos[0], settings.grid_size[1]*i + pos[1]), settings.grid_size, colors["yellow"]))
+				elif(board.get(i,j) == 3):
+					rects.add(Rectangle((settings.grid_size[0]*j + pos[0], settings.grid_size[1]*i + pos[1]), settings.grid_size, colors["red"]))
+				elif (offset % 2 == 0 and i%2 == 0) or (offset % 2 == 1 and i%2 == 1):
 					rects.add(Rectangle((settings.grid_size[0]*j + pos[0], settings.grid_size[1]*i + pos[1]), settings.grid_size, colors["light_blue"]))
 				else:
 					rects.add(Rectangle((settings.grid_size[0]*j + pos[0], settings.grid_size[1]*i + pos[1]), settings.grid_size, colors["dark_blue"]))
@@ -185,7 +191,7 @@ class Engine:
 
 		font = self.font_cache[font_size]
 		padded_output = " " + text + " "
-		
+
 		if background_color is not None:
 			text = font.render(padded_output, True, text_color, background_color)
 		else:
@@ -194,7 +200,7 @@ class Engine:
 		text_rect = text.get_rect()
 		text_rect.center = pos
 		self.screen.blit(text, text_rect)
-		
+
 	def display_fps(self) -> None:
 		"""
 		displays current frames per second on screen, marker of performance
@@ -202,4 +208,3 @@ class Engine:
 		fps = "FPS: " + str(int(self.clock.get_fps()))
 		pos = (int((settings.screen_size[0]/1.25)), int(settings.screen_size[1]/10))
 		self.print_to_screen(fps, pos, 36, assets.colors["red"], assets.colors["blue"])
-		

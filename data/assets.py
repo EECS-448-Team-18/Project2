@@ -11,7 +11,7 @@ Classes:
 
 import pygame
 import os
-	
+
 class ImageCache(dict):
 	"""
 	ImageCache()
@@ -34,6 +34,7 @@ colors = {
 		"green": (0, 255, 0),
 		"blue": (0, 0, 255),
 		"black": (0, 0, 0),
+		"yellow": (255,255)
 		}
 
 image_cache = ImageCache()

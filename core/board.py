@@ -24,7 +24,7 @@ class GameBoard:
     #Wants to return if there is a ship in that position
 	def get(self, x, y) -> int:
         #checks to see if the coordinates are valid
-		if((x > num_grids[0] or x < 0) or (y > num_grids[1] or y < 0)):
+		if((x > 9 and x < 0) or (y > 9 and y < 0)):
 			return False
 		else:
             #Will return the value at that given coordinate
@@ -57,4 +57,4 @@ class GameBoard:
 	def setBoard(self,testBoard):
 			for row in range(num_grids[0]):
 				for column in range(num_grids[1]):
-					self.grid[row] = testBoard[row]
+					self.grid[row][column] = testBoard[row][column]
