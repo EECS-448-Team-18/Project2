@@ -97,11 +97,13 @@ class Engine:
 		"""
 		self.screen.blit(self.background, (0, 0))
 
-	def update_screen(self, objects_to_render) -> None:
+	def update_screen(self, objects_to_render, sprites) -> None:
 		"""
 		Renders necessary components to screen.
 		"""
 		self.render_objects(objects_to_render)
+		# print(sprites)
+		[self.screen.blit(sprite.image, sprite.rect) for sprite in sprites if (sprite.placed or sprite.selected) and not sprite.hidden]
 		self.display_fps()
 		pygame.display.flip()
 
