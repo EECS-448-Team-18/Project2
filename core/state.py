@@ -189,24 +189,17 @@ class State:
 		has_clicked = get_left_click()
 
 		if has_clicked:
-			normal_pos = ((mouse_pos[0]-p2_board_pos[0])//grid_size[0], (mouse_pos[1]-p2_board_pos[1])//grid_size[1])
+			normal_pos = ((mouse_pos[1]-p2_board_pos[1])//grid_size[1], (mouse_pos[0]-p2_board_pos[0])//grid_size[0])
 			if normal_pos in self.p2_board:
 				grid_pos = (normal_pos[0]*grid_size[0] + p2_board_pos[0], normal_pos[1]*grid_size[1] + p2_board_pos[1])
-
-
-				self.render_queue.add(Rectangle(grid_pos, grid_size, colors["red"]))
-
 				if(self.p2_board.get(normal_pos[0],normal_pos[1]) == 1):
 					self.p2_board.set(normal_pos[0],normal_pos[1],3)
-
 					self.p1_turn_over = True
 					self.p2_turn_over = False
 				elif(self.p2_board.get(normal_pos[0],normal_pos[1]) == 0):
-					self.p2_board.set(normal_pos[0],normal_Pos[1],2)
-
+					self.p2_board.set(normal_pos[0],normal_pos[1],2)
 					self.p1_turn_over = True
 					self.p2_turn_over = False
-
 
 	def p2_turn(self):
 		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["white"]))
@@ -218,16 +211,15 @@ class State:
 		has_clicked = get_left_click()
 
 		if has_clicked:
-			normal_pos = ((mouse_pos[0]-p1_board_pos[0])//grid_size[0], (mouse_pos[1]-p1_board_pos[1])//grid_size[1])
+			normal_pos = ((mouse_pos[1]-p1_board_pos[1])//grid_size[1], (mouse_pos[0]-p1_board_pos[0])//grid_size[0])
 			if normal_pos in self.p1_board:
 				grid_pos = (normal_pos[0]*grid_size[0] + p1_board_pos[0], normal_pos[1]*grid_size[1] + p1_board_pos[1])
-				self.render_queue.add(Rectangle(grid_pos, grid_size, colors["red"]))
 				if(self.p1_board.get(normal_pos[0],normal_pos[1]) == 1):
 					self.p1_board.set(normal_pos[0],normal_pos[1],3)
 					self.p1_turn_over = False
 					self.p2_turn_over = True
 				elif (self.p1_board.get(normal_pos[0],normal_pos[1]) == 0):
-					self.p1_board.set(grid_pos[0],grid_pos[1],2)
+					self.p1_board.set(normal_pos[0],normal_pos[1],2)
 					self.p1_turn_over = False
 					self.p2_turn_over = True
 
