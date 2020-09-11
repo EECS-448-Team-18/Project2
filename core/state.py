@@ -29,8 +29,9 @@ class State:
 	Methods:
 		run_event(dt) -> None
 		get_next_event() -> str
-		get_objects_to_render(self) -> tuple
-		get_time_since_start(self) -> float
+		get_objects_to_render() -> tuple
+		get_sprites() -> list
+		get_time_since_start() -> float
 
 		Events:
 
@@ -57,8 +58,8 @@ class State:
 		self.prev_event = None
 		self.curr_event = "menu"
 
-		self.has_unclicked_left = True
-		self.has_unclicked_right = True
+		self.left_click_ready = True
+		self.right_click_ready = True
 		self.timer = time()
 
 		# Event attributes
@@ -69,19 +70,10 @@ class State:
 
 		self.all_ships = [self.p1_fleet, self.p2_fleet]
 
+		self.curr_ship = None
+
 		self.p1_ship_counter = 1
 		self.p2_ship_counter = 1
-	
-		self.orientation = (0, 1)
-
-		self.rotate_orientation = lambda: (self.orientation[1], -self.orientation[0])
-
-		self.rotation = {
-						(0, 1): 0,
-						(1, 0): 90,
-						(0, -1): 180,
-						(-1, 0): 270,
-					}
 
 		self.p1_ships_placed = False
 		self.p2_ships_placed = False
@@ -144,6 +136,10 @@ class State:
 	def get_objects_to_render(self) -> tuple:
 		return tuple(self.render_queue)
 
+	def get_sprites(self) -> list:
+		# print(self.p1_fleet + self.p2_fleet)
+		return self.p1_fleet + self.p2_fleet
+
 	def get_time_since_start(self) -> float:
 		"""
 		Returns time passed rounded to 3 decimals since game has started
@@ -169,22 +165,30 @@ class State:
 		has_clicked = get_left_click()
 
 		for button in buttons.values():
+			if button["rect"].is_clicked(mouse_pos):
+				button["rect"].fill_color = colors["light_blue"]
+			else:
+				button["rect"].fill_color = colors["blue"]
 			for element in button.values():
 				self.render_queue.add(element)
 
-		if has_clicked:
-			for button in buttons:
-				if buttons[button]["rect"].is_clicked(mouse_pos):
-					self.user_selection = button
-					break
-			self.has_unclicked_left = False
+		if not has_clicked:
+			if not self.left_click_ready:
+				for button in buttons:
+					if buttons[button]["rect"].is_clicked(mouse_pos):
+						self.user_selection = button
+						break
+			self.left_click_ready = True
+		else:
+			self.left_click_ready = False
 	
 		if self.user_selection != 0:
-			counter = 1
+			size_counter = 1
 			for i in range(self.user_selection):
 				for fleet in self.all_ships:
-					fleet.add((1, counter))
-				counter += 1
+					fleet.add(Ship(size_counter, Fleet.ship_types[size_counter]))
+				size_counter += 1
+			self.left_click_ready = True
 
 	def p1_place_ships(self):
 		mouse_pos = get_mouse_pos()
@@ -192,36 +196,38 @@ class State:
 		normal_pos = (grid_pos[0]*grid_size[0] + p1_board_pos[0], grid_pos[1]*grid_size[1] + p1_board_pos[1])
 		has_clicked = get_left_click()
 
+		curr_ship = self.p1_fleet[self.p1_ship_counter]
+		curr_ship.selected = True
+
 		if get_right_click():
-			if self.has_unclicked_right:
-				self.orientation = self.rotate_orientation()
-				self.has_unclicked_right = False
+			if self.right_click_ready:
+				curr_ship.rotate()
+				self.right_click_ready = False
 		else:
-			self.has_unclicked_right = True
+			self.right_click_ready = True
 
 		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
 		self.render_queue.add(Text("Player 1's turn:", (700, 50), 40, colors["red"], colors["white"]))
 		self.render_queue.add(Text("Num ships: " + str(self.user_selection), (1000, 300), 40, colors["red"], colors["white"]))
-		self.render_queue.add(Image(Fleet.ship_types[(1, self.p1_ship_counter)], normal_pos, scale=17, angle=self.rotation[self.orientation]))
+		curr_ship.move(normal_pos)
+		curr_ship.grid_pos = grid_pos
 
-		for ship in self.p1_fleet.values():
-			if ship.placed:
-				self.render_queue.add(Image(Fleet.ship_types[(1, ship.length)], ship.origin, scale=17, angle=ship.orientation))
-
-		if has_clicked:
-			if grid_pos in self.p1_board and self.has_unclicked_left:
-				self.p1_fleet[(1, self.p1_ship_counter)].origin = normal_pos
-				self.p1_fleet[(1, self.p1_ship_counter)].normal_origin = normal_pos
-				self.p1_fleet[(1, self.p1_ship_counter)].placed = True
-				self.p1_fleet[(1, self.p1_ship_counter)].orientation = self.rotation[self.orientation]
-				self.p1_ship_counter += 1
-				self.has_unclicked_left = False
-				if self.p1_ship_counter > self.user_selection:
-					self.p1_ships_placed = True
+		if not has_clicked:
+			if not self.left_click_ready:
+			
+				if all([(grid_pos[0] - (i*curr_ship.unit_direction[0]), grid_pos[1] + (i*curr_ship.unit_direction[1])) in self.p1_board for i in range(curr_ship.length)]):
+					curr_ship.placed = True
+					curr_ship.selected = False
+					self.p1_ship_counter += 1
+					self.left_click_ready = False
+					if self.p1_ship_counter > self.user_selection:
+						self.p1_ships_placed = True
+			self.left_click_ready = True
 		else:
-			self.has_unclicked_left = True
+			self.left_click_ready = False
 
 	def p2_place_ships(self):
+		self.p1_fleet.hide()
 		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["white"]))
 
 		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))

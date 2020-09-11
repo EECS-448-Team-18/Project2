@@ -6,6 +6,10 @@ from data.settings import *
 
 class GameBoard:
 
+	"""Definition: The purpose of this function is to create a list of lists, or 2D array, that is meat to hold values.
+	   When the array is created, each cell is given a 0 to hold.
+	   Postcondition: The purpose of creating this 2D array is for it to act as an abstract representaiton of the game board the user plays on.
+	   Throughout the game, the boards values can and will be alterted to represent the different states of each square of the board"""
 	def __init__(self):
 		self.grid = []
 		self.coords = set()
