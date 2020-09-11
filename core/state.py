@@ -40,10 +40,6 @@ class State:
 		self.p1_board = GameBoard()
 		self.p2_board = GameBoard()
 
-		#testBoard initalization
-		self.p1_board.setBoard(settings.testBoard)
-		self.p2_board.setBoard(settings.testBoard)
-
 		self.render_queue = RenderQueue()
 
 		self.events = {  # these events are all just examples, replace with actual events as needed
@@ -161,7 +157,6 @@ class State:
 
 	def p1_place_ships(self):
 		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
-		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
 
 		mouse_pos = get_mouse_pos()
 		has_clicked = get_left_click()
@@ -173,19 +168,16 @@ class State:
 			if normal_pos in self.p1_board:
 				grid_pos = (normal_pos[0]*grid_size[0] + p1_board_pos[0], normal_pos[1]*grid_size[1] + p1_board_pos[1])
 				self.render_queue.add(Rectangle(grid_pos, grid_size, colors["red"]))
-				#remove when not testing
-				self.p1_ships_placed = True
+
 
 
 
 	def p2_place_ships(self):
 		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["white"]))
 
-		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
+
 		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
 
-		#remove when not testing
-		self.p2_ships_placed = True
 
 	def p1_turn(self):
 		self.render_queue.add(Text("Player 1's turn:", (700, 50), 40, colors["red"], colors["white"]))
@@ -201,25 +193,20 @@ class State:
 			if normal_pos in self.p2_board:
 				grid_pos = (normal_pos[0]*grid_size[0] + p2_board_pos[0], normal_pos[1]*grid_size[1] + p2_board_pos[1])
 
-				print("here is grid position")
-				print("(" + str(grid_pos[0]) + ", " + str(grid_pos[1]) + ")")
 
 				self.render_queue.add(Rectangle(grid_pos, grid_size, colors["red"]))
 
-				print("here is the value at this position: ")
-				print(self.p2_board.get(grid_pos[0],grid_pos[1]))
-
 				if(self.p2_board.get(normal_pos[0],normal_pos[1]) == 1):
 					self.p2_board.set(normal_pos[0],normal_pos[1],3)
-					print ("Hit")
+
 					self.p1_turn_over = True
 					self.p2_turn_over = False
 				elif(self.p2_board.get(normal_pos[0],normal_pos[1]) == 0):
 					self.p2_board.set(normal_pos[0],normal_Pos[1],2)
-					print ("Miss")
+
 					self.p1_turn_over = True
 					self.p2_turn_over = False
-				print("Player 1 Has completed their turn")
+
 
 	def p2_turn(self):
 		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["white"]))
@@ -243,7 +230,7 @@ class State:
 					self.p1_board.set(grid_pos[0],grid_pos[1],2)
 					self.p1_turn_over = False
 					self.p2_turn_over = True
-				print("Player 2 Has completed their turn")
+
 
 	def end_game(self):
 		pass
