@@ -165,6 +165,10 @@ class State:
 		has_clicked = get_left_click()
 
 		for button in buttons.values():
+			if button["rect"].is_clicked(mouse_pos):
+				button["rect"].fill_color = colors["light_blue"]
+			else:
+				button["rect"].fill_color = colors["blue"]
 			for element in button.values():
 				self.render_queue.add(element)
 
@@ -210,7 +214,6 @@ class State:
 				curr_ship.selected = False
 				self.p1_ship_counter += 1
 				self.left_click_ready = False
-				print(curr_ship.grid_pos, curr_ship.pos)
 				if self.p1_ship_counter > self.user_selection:
 					self.p1_ships_placed = True
 		else:
