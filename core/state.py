@@ -15,8 +15,10 @@ from core.board import GameBoard
 from core.peripherals import *  # checks for mouse and keyboard stuff
 from data.assets import colors
 from data.elements import *
+from core.ships import Fleet, Ship
 from time import time
 from data import settings
+from math import sin, cos
 
 class State:
 	"""
@@ -55,9 +57,31 @@ class State:
 		self.prev_event = None
 		self.curr_event = "menu"
 
+		self.has_unclicked_left = True
+		self.has_unclicked_right = True
 		self.timer = time()
 
+		# Event attributes
 		self.user_selection = 0
+
+		self.p1_fleet = Fleet()
+		self.p2_fleet = Fleet()
+
+		self.all_ships = [self.p1_fleet, self.p2_fleet]
+
+		self.p1_ship_counter = 1
+		self.p2_ship_counter = 1
+	
+		self.orientation = (0, 1)
+
+		self.rotate_orientation = lambda: (self.orientation[1], -self.orientation[0])
+
+		self.rotation = {
+						(0, 1): 0,
+						(1, 0): 90,
+						(0, -1): 180,
+						(-1, 0): 270,
+					}
 
 		self.p1_ships_placed = False
 		self.p2_ships_placed = False
@@ -153,31 +177,54 @@ class State:
 				if buttons[button]["rect"].is_clicked(mouse_pos):
 					self.user_selection = button
 					break
-
+			self.has_unclicked_left = False
+	
+		if self.user_selection != 0:
+			counter = 1
+			for i in range(self.user_selection):
+				for fleet in self.all_ships:
+					fleet.add((1, counter))
+				counter += 1
 
 	def p1_place_ships(self):
-		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
-
 		mouse_pos = get_mouse_pos()
+		grid_pos = ((mouse_pos[0]-p1_board_pos[0])//grid_size[0], (mouse_pos[1]-p1_board_pos[1])//grid_size[1])
+		normal_pos = (grid_pos[0]*grid_size[0] + p1_board_pos[0], grid_pos[1]*grid_size[1] + p1_board_pos[1])
 		has_clicked = get_left_click()
+
+		if get_right_click():
+			if self.has_unclicked_right:
+				self.orientation = self.rotate_orientation()
+				self.has_unclicked_right = False
+		else:
+			self.has_unclicked_right = True
+
+		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
 		self.render_queue.add(Text("Player 1's turn:", (700, 50), 40, colors["red"], colors["white"]))
 		self.render_queue.add(Text("Num ships: " + str(self.user_selection), (1000, 300), 40, colors["red"], colors["white"]))
+		self.render_queue.add(Image(Fleet.ship_types[(1, self.p1_ship_counter)], normal_pos, scale=17, angle=self.rotation[self.orientation]))
+
+		for ship in self.p1_fleet.values():
+			if ship.placed:
+				self.render_queue.add(Image(Fleet.ship_types[(1, ship.length)], ship.origin, scale=17, angle=ship.orientation))
 
 		if has_clicked:
-			normal_pos = ((mouse_pos[0]-p1_board_pos[0])//grid_size[0], (mouse_pos[1]-p1_board_pos[1])//grid_size[1])
-			if normal_pos in self.p1_board:
-				grid_pos = (normal_pos[0]*grid_size[0] + p1_board_pos[0], normal_pos[1]*grid_size[1] + p1_board_pos[1])
-				self.render_queue.add(Rectangle(grid_pos, grid_size, colors["red"]))
-
-
-
+			if grid_pos in self.p1_board and self.has_unclicked_left:
+				self.p1_fleet[(1, self.p1_ship_counter)].origin = normal_pos
+				self.p1_fleet[(1, self.p1_ship_counter)].normal_origin = normal_pos
+				self.p1_fleet[(1, self.p1_ship_counter)].placed = True
+				self.p1_fleet[(1, self.p1_ship_counter)].orientation = self.rotation[self.orientation]
+				self.p1_ship_counter += 1
+				self.has_unclicked_left = False
+				if self.p1_ship_counter > self.user_selection:
+					self.p1_ships_placed = True
+		else:
+			self.has_unclicked_left = True
 
 	def p2_place_ships(self):
 		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["white"]))
 
-
 		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
-
 
 	def p1_turn(self):
 		self.render_queue.add(Text("Player 1's turn:", (700, 50), 40, colors["red"], colors["white"]))

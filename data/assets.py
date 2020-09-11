@@ -18,7 +18,13 @@ class ImageCache(dict):
 	"""
 	def __init__(self):
 		dict.__init__(self)
-		self["ship"] = {"file_name": "battleship.png", "image": None}
+		self["patrol"] = {"file_name": "patrolship.png", "image": None}
+		self["cruiser"] = {"file_name": "cruiser.png", "image": None}
+		self["battleship"] = {"file_name": "battleship.png", "image": None}
+		self["submarine"] = {"file_name": "submarine.png", "image": None}
+		self["aircarrier"] = {"file_name": "aircarrier.png", "image": None}
+		
+		
 		self.resouce_path = os.path.join(os.getcwd(), "resources")
 
 	def init(self) -> None:
