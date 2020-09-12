@@ -48,7 +48,7 @@ class Rectangle(Render_Definition):
 		self.fill_color = fill_color
 		self.alpha = alpha
 
-	def is_clicked(self, pos):
+	def mouse_over(self, pos):
 		return (self.pos[0] <= pos[0] <= (self.pos[0] + self.size[0])) and (self.pos[1] <= pos[1] <= (self.pos[1] + self.size[1]))
 
 class Circle(Render_Definition):

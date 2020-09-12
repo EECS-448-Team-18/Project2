@@ -184,8 +184,10 @@ class State:
 		has_clicked = get_left_click()
 
 		for button in buttons.values():
-			if button["rect"].is_clicked(mouse_pos):
+			if button["rect"].mouse_over(mouse_pos) and not has_clicked:
 				button["rect"].fill_color = colors["light_blue"]
+			elif button["rect"].mouse_over(mouse_pos):
+				button["rect"].fill_color = colors["dark_blue"]
 			else:
 				button["rect"].fill_color = colors["blue"]
 			for element in button.values():
@@ -194,7 +196,7 @@ class State:
 		if not has_clicked:
 			if not self.left_click_ready:
 				for button in buttons:
-					if buttons[button]["rect"].is_clicked(mouse_pos):
+					if buttons[button]["rect"].mouse_over(mouse_pos):
 						self.user_selection = button
 						break
 			self.left_click_ready = True
