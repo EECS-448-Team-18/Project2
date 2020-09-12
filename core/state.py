@@ -143,6 +143,26 @@ class State:
 		# print(self.p1_fleet + self.p2_fleet)
 		return self.p1_fleet + self.p2_fleet
 
+	def valid_postion(self, playerBoard, x, y, length, direction) -> bool:
+		if(direction == (0,1)):
+			for i in range(length):
+				if(playerBoard.get(x+i,y) == 1):
+					return False
+		elif(direction == (0,-1)):
+			for i in range(length):
+				if(playerBoard.get(x-i,y) == 1):
+					return False
+		elif(direction == (1,0)):
+			for i in range(length):
+				if(playerBoard.get(x,y-i) == 1):
+					return False
+		else:
+			for i in range(length):
+				if (playerBoard.get(x,y+i) == 1):
+					return False
+		print ("check sucess")
+		return True
+
 	def get_time_since_start(self) -> float:
 		"""
 		Returns time passed rounded to 3 decimals since game has started
@@ -194,7 +214,7 @@ class State:
 				self.p2_hit_points += size_counter
 				size_counter += 1
 			self.left_click_ready = True
-		
+
 	def p1_place_ships(self):
 		mouse_pos = get_mouse_pos()
 		grid_pos = ((mouse_pos[0]-p1_board_pos[0])//grid_size[0], (mouse_pos[1]-p1_board_pos[1])//grid_size[1])
@@ -228,7 +248,7 @@ class State:
 		if not has_clicked:
 			if not self.left_click_ready:
 
-				if ship_pos_valid:
+				if ship_pos_valid and self.valid_postion(self.p1_board, curr_ship.grid_pos[1], curr_ship.grid_pos[0], curr_ship.length, curr_ship.unit_direction):
 					curr_ship.placed = True
 					curr_ship.selected = False
 					self.p1_ship_counter += 1
