@@ -81,8 +81,8 @@ class State:
 		self.p1_turn_over = False
 		self.p2_turn_over = False
 
-		self.p1_hit_points = -1
-		self.p2_hit_points = -1
+		self.p1_hit_points = 0
+		self.p2_hit_points = 0
 
 		self.game_over = False
 
@@ -122,7 +122,7 @@ class State:
 			return "p1_turn"
 
 		if self.game_over:
-			return "end_game"
+			return "game_over"
 
 		if self.prev_event == "p1_turn" and not self.p1_turn_over:
 			return "p1_turn"
@@ -190,11 +190,11 @@ class State:
 			for i in range(self.user_selection):
 				for fleet in self.all_ships:
 					fleet.add(Ship(size_counter, Fleet.ship_types[size_counter]))
-				size_counter += 1
 				self.p1_hit_points += size_counter
 				self.p2_hit_points += size_counter
+				size_counter += 1
 			self.left_click_ready = True
-
+		
 	def p1_place_ships(self):
 		mouse_pos = get_mouse_pos()
 		grid_pos = ((mouse_pos[0]-p1_board_pos[0])//grid_size[0], (mouse_pos[1]-p1_board_pos[1])//grid_size[1])
@@ -337,6 +337,7 @@ class State:
 					self.p2_turn_over = False
 		if(self.p2_hit_points == 0):
 			self.p1_won = True
+			self.game_over = True
 	def p2_turn(self):
 		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["white"]))
 
@@ -361,12 +362,13 @@ class State:
 					self.p2_turn_over = True
 		if(self.p1_hit_points == 0):
 			self.p2_won = True
+			self.game_over = True
 
 	def end_game(self):
 		if(self.p1_won):
-			print ("Player 1 has won")
+			self.render_queue.add(Text("Player 1 Has Won", (700, 50), 40, colors["red"], colors["white"]))
 		else:
-			print ("Player 2 has won")
+			self.render_queue.add(Text("Player 2 Has Won", (700, 50), 40, colors["red"], colors["white"]))
 
 class RenderQueue(list):
 	"""
