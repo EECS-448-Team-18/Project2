@@ -16,9 +16,7 @@ from core.peripherals import *  # checks for mouse and keyboard stuff
 from data.assets import colors
 from data.elements import *
 from core.ships import Fleet, Ship
-from time import time
 from data import settings
-from math import sin, cos
 
 class State:
 	"""
@@ -60,7 +58,6 @@ class State:
 
 		self.left_click_ready = True
 		self.right_click_ready = True
-		self.timer = time()
 
 		# Event attributes
 		self.user_selection = 0
@@ -187,8 +184,10 @@ class State:
 		has_clicked = get_left_click()
 
 		for button in buttons.values():
-			if button["rect"].is_clicked(mouse_pos):
+			if button["rect"].mouse_over(mouse_pos) and not has_clicked:
 				button["rect"].fill_color = colors["light_blue"]
+			elif button["rect"].mouse_over(mouse_pos):
+				button["rect"].fill_color = colors["dark_blue"]
 			else:
 				button["rect"].fill_color = colors["blue"]
 			for element in button.values():
@@ -197,7 +196,7 @@ class State:
 		if not has_clicked:
 			if not self.left_click_ready:
 				for button in buttons:
-					if buttons[button]["rect"].is_clicked(mouse_pos):
+					if buttons[button]["rect"].mouse_over(mouse_pos):
 						self.user_selection = button
 						break
 			self.left_click_ready = True

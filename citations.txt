@@ -1,2 +1,3 @@
-Mark down any links to code that are not yours or libraries you did not create.
-      Pygame
+Citations:
+	Python Standard Library including but not limited to os and sys
+	Pygame

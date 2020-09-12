@@ -4,7 +4,6 @@
 import pygame.sprite
 import pygame.transform
 from pygame import Surface, Rect
-from math import sin, cos
 from data import assets
 
 class Fleet(dict):
