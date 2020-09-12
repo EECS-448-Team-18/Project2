@@ -202,17 +202,14 @@ class State:
 		has_clicked = get_left_click()
 
 		curr_ship = self.p1_fleet[self.p1_ship_counter]
-		pos_valid = [(grid_pos[0] - (i*curr_ship.unit_direction[0]), grid_pos[1] + (i*curr_ship.unit_direction[1])) in self.p1_board for i in range(curr_ship.length)]
-		ship_pos_valid = all(pos_valid)
-		ship_pos_off_grid = not any(pos_valid)
 		curr_ship.selected = True
 
-		if not get_right_click():
-			if not self.right_click_ready:
+		if get_right_click():
+			if self.right_click_ready:
 				curr_ship.rotate()
-			self.right_click_ready = True
+				self.right_click_ready = False
 		else:
-			self.right_click_ready = False
+			self.right_click_ready = True
 
 		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
 		self.render_queue.add(Text("Player 1's turn:", (700, 50), 40, colors["red"], colors["white"]))
@@ -220,18 +217,28 @@ class State:
 		curr_ship.move(normal_pos)
 		curr_ship.grid_pos = grid_pos
 
-		if ship_pos_off_grid:
-			curr_ship.hide()
-		else:
-			curr_ship.show()
-
 		if not has_clicked:
 			if not self.left_click_ready:
-				if ship_pos_valid:
+
+				if all([(grid_pos[0] - (i*curr_ship.unit_direction[0]), grid_pos[1] + (i*curr_ship.unit_direction[1])) in self.p1_board for i in range(curr_ship.length)]):
 					curr_ship.placed = True
 					curr_ship.selected = False
 					self.p1_ship_counter += 1
 					self.left_click_ready = False
+
+					if(curr_ship.unit_direction == (0,1)):
+						for i in range(curr_ship.length):
+							self.p1_board.set(curr_ship.grid_pos[1]+i,curr_ship.grid_pos[0],1)
+					elif(curr_ship.unit_direction == (0,-1)):
+						for i in range(curr_ship.length):
+							self.p1_board.set(curr_ship.grid_pos[1]-i,curr_ship.grid_pos[0],1)
+					elif(curr_ship.unit_direction == (1,0)):
+						for i in range(curr_ship.length):
+							self.p1_board.set(curr_ship.grid_pos[1],curr_ship.grid_pos[0]-i,1)
+					else:
+						for i in range(curr_ship.length):
+							self.p1_board.set(curr_ship.grid_pos[1],curr_ship.grid_pos[0]+i,1)
+
 					if self.p1_ship_counter > self.user_selection:
 						self.p1_ships_placed = True
 			self.left_click_ready = True
@@ -246,37 +253,43 @@ class State:
 		has_clicked = get_left_click()
 
 		curr_ship = self.p2_fleet[self.p2_ship_counter]
-		pos_valid = [(grid_pos[0] - (i*curr_ship.unit_direction[0]), grid_pos[1] + (i*curr_ship.unit_direction[1])) in self.p1_board for i in range(curr_ship.length)]
-		ship_pos_valid = all(pos_valid)
-		ship_pos_off_grid = not any(pos_valid)
 		curr_ship.selected = True
 
-		if not get_right_click():
-			if not self.right_click_ready:
+		if get_right_click():
+			if self.right_click_ready:
 				curr_ship.rotate()
-			self.right_click_ready = True
+				self.right_click_ready = False
 		else:
-			self.right_click_ready = False
+			self.right_click_ready = True
 
 		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
 		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["white"]))
 		self.render_queue.add(Text("Num ships: " + str(self.user_selection), (1000, 300), 40, colors["red"], colors["white"]))
 		curr_ship.move(normal_pos)
 		curr_ship.grid_pos = grid_pos
-	
-		if ship_pos_off_grid:
-			curr_ship.hide()
-		else:
-			curr_ship.show()
 
 		if not has_clicked:
 			if not self.left_click_ready:
 
-				if ship_pos_valid:
+				if all([(grid_pos[0] - (i*curr_ship.unit_direction[0]), grid_pos[1] + (i*curr_ship.unit_direction[1])) in self.p2_board for i in range(curr_ship.length)]):
 					curr_ship.placed = True
 					curr_ship.selected = False
 					self.p2_ship_counter += 1
 					self.left_click_ready = False
+
+					if(curr_ship.unit_direction == (0,1)):
+						for i in range(curr_ship.length):
+							self.p2_board.set(curr_ship.grid_pos[1]+i,curr_ship.grid_pos[0],1)
+					elif(curr_ship.unit_direction == (0,-1)):
+						for i in range(curr_ship.length):
+							self.p2_board.set(curr_ship.grid_pos[1]-i,curr_ship.grid_pos[0],1)
+					elif(curr_ship.unit_direction == (1,0)):
+						for i in range(curr_ship.length):
+							self.p2_board.set(curr_ship.grid_pos[1],curr_ship.grid_pos[0]-i,1)
+					else:
+						for i in range(curr_ship.length):
+							self.p2_board.set(curr_ship.grid_pos[1],curr_ship.grid_pos[0]+i,1)
+
 					if self.p2_ship_counter > self.user_selection:
 						self.p2_ships_placed = True
 			self.left_click_ready = True
