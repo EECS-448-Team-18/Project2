@@ -33,9 +33,7 @@ class GameBoard:
 	   Parameters: The parameters this function takes in are the x and y values of the coordinate that
 	   the user clicks on."""
 	def get(self, x, y) -> int:
-		if((x > 9 and x < 0) or (y > 9 and y < 0)):
-			return False
-		else:
+		if not ((x > 9 and x < 0) or (y > 9 and y < 0)):
 			for i in range(num_grids[0]):
 				for j in range(num_grids[1]):
 					if(i == x and j == y):

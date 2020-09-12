@@ -18,7 +18,6 @@ from data.elements import *
 from core.ships import Fleet, Ship
 from time import time
 from data import settings
-from math import sin, cos
 
 class State:
 	"""
