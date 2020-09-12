@@ -181,7 +181,7 @@ class State:
 			self.left_click_ready = True
 		else:
 			self.left_click_ready = False
-	
+
 		if self.user_selection != 0:
 			size_counter = 1
 			for i in range(self.user_selection):
@@ -214,7 +214,7 @@ class State:
 
 		if not has_clicked:
 			if not self.left_click_ready:
-			
+
 				if all([(grid_pos[0] - (i*curr_ship.unit_direction[0]), grid_pos[1] + (i*curr_ship.unit_direction[1])) in self.p1_board for i in range(curr_ship.length)]):
 					curr_ship.placed = True
 					curr_ship.selected = False
@@ -228,11 +228,43 @@ class State:
 
 	def p2_place_ships(self):
 		self.p1_fleet.hide()
-		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["white"]))
+		mouse_pos = get_mouse_pos()
+		grid_pos = ((mouse_pos[0]-p2_board_pos[0])//grid_size[0], (mouse_pos[1]-p2_board_pos[1])//grid_size[1])
+		normal_pos = (grid_pos[0]*grid_size[0] + p2_board_pos[0], grid_pos[1]*grid_size[1] + p2_board_pos[1])
+		has_clicked = get_left_click()
+
+		curr_ship = self.p2_fleet[self.p2_ship_counter]
+		curr_ship.selected = True
+
+		if get_right_click():
+			if self.right_click_ready:
+				curr_ship.rotate()
+				self.right_click_ready = False
+		else:
+			self.right_click_ready = True
 
 		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
+		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["white"]))
+		self.render_queue.add(Text("Num ships: " + str(self.user_selection), (1000, 300), 40, colors["red"], colors["white"]))
+		curr_ship.move(normal_pos)
+		curr_ship.grid_pos = grid_pos
+
+		if not has_clicked:
+			if not self.left_click_ready:
+
+				if all([(grid_pos[0] - (i*curr_ship.unit_direction[0]), grid_pos[1] + (i*curr_ship.unit_direction[1])) in self.p2_board for i in range(curr_ship.length)]):
+					curr_ship.placed = True
+					curr_ship.selected = False
+					self.p2_ship_counter += 1
+					self.left_click_ready = False
+					if self.p2_ship_counter > self.user_selection:
+						self.p2_ships_placed = True
+			self.left_click_ready = True
+		else:
+			self.left_click_ready = False
 
 	def p1_turn(self):
+		self.p2_fleet.hide()
 		self.render_queue.add(Text("Player 1's turn:", (700, 50), 40, colors["red"], colors["white"]))
 
 		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
