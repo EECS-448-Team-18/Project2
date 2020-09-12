@@ -202,14 +202,17 @@ class State:
 		has_clicked = get_left_click()
 
 		curr_ship = self.p1_fleet[self.p1_ship_counter]
+		pos_valid = [(grid_pos[0] - (i*curr_ship.unit_direction[0]), grid_pos[1] + (i*curr_ship.unit_direction[1])) in self.p1_board for i in range(curr_ship.length)]
+		ship_pos_valid = all(pos_valid)
+		ship_pos_off_grid = not any(pos_valid)
 		curr_ship.selected = True
 
-		if get_right_click():
-			if self.right_click_ready:
+		if not get_right_click():
+			if not self.right_click_ready:
 				curr_ship.rotate()
-				self.right_click_ready = False
-		else:
 			self.right_click_ready = True
+		else:
+			self.right_click_ready = False
 
 		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
 		self.render_queue.add(Text("Player 1's turn:", (700, 50), 40, colors["red"], colors["white"]))
@@ -217,10 +220,15 @@ class State:
 		curr_ship.move(normal_pos)
 		curr_ship.grid_pos = grid_pos
 
+		if ship_pos_off_grid:
+			curr_ship.hide()
+		else:
+			curr_ship.show()
+
 		if not has_clicked:
 			if not self.left_click_ready:
 
-				if all([(grid_pos[0] - (i*curr_ship.unit_direction[0]), grid_pos[1] + (i*curr_ship.unit_direction[1])) in self.p1_board for i in range(curr_ship.length)]):
+				if ship_pos_valid:
 					curr_ship.placed = True
 					curr_ship.selected = False
 					self.p1_ship_counter += 1
@@ -253,14 +261,17 @@ class State:
 		has_clicked = get_left_click()
 
 		curr_ship = self.p2_fleet[self.p2_ship_counter]
+		pos_valid = [(grid_pos[0] - (i*curr_ship.unit_direction[0]), grid_pos[1] + (i*curr_ship.unit_direction[1])) in self.p1_board for i in range(curr_ship.length)]
+		ship_pos_valid = all(pos_valid)
+		ship_pos_off_grid = not any(pos_valid)
 		curr_ship.selected = True
 
-		if get_right_click():
-			if self.right_click_ready:
+		if not get_right_click():
+			if not self.right_click_ready:
 				curr_ship.rotate()
-				self.right_click_ready = False
-		else:
 			self.right_click_ready = True
+		else:
+			self.right_click_ready = False
 
 		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
 		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["white"]))
@@ -268,10 +279,15 @@ class State:
 		curr_ship.move(normal_pos)
 		curr_ship.grid_pos = grid_pos
 
+		if ship_pos_off_grid:
+			curr_ship.hide()
+		else:
+			curr_ship.show()
+
 		if not has_clicked:
 			if not self.left_click_ready:
 
-				if all([(grid_pos[0] - (i*curr_ship.unit_direction[0]), grid_pos[1] + (i*curr_ship.unit_direction[1])) in self.p2_board for i in range(curr_ship.length)]):
+				if ship_pos_valid:
 					curr_ship.placed = True
 					curr_ship.selected = False
 					self.p2_ship_counter += 1
