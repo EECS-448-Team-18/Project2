@@ -159,7 +159,6 @@ class State:
 			for i in range(length):
 				if (playerBoard.get(x,y+i) == 1):
 					return False
-		print ("check sucess")
 		return True
 
 	def get_time_since_start(self) -> float:
@@ -306,7 +305,7 @@ class State:
 		if not has_clicked:
 			if not self.left_click_ready:
 
-				if ship_pos_valid:
+				if ship_pos_valid and self.valid_postion(self.p2_board, curr_ship.grid_pos[1], curr_ship.grid_pos[0], curr_ship.length, curr_ship.unit_direction):
 					curr_ship.placed = True
 					curr_ship.selected = False
 					self.p2_ship_counter += 1
@@ -357,6 +356,7 @@ class State:
 		if(self.p2_hit_points == 0):
 			self.p1_won = True
 			self.game_over = True
+			
 	def p2_turn(self):
 		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["white"]))
 

@@ -23,7 +23,7 @@ class GameBoard:
 			self.grid.append([])
 			for column in range(num_grids[1]):
 				self.grid[row].append(0)
-				
+
 	"""Precondition: What must be true at the start of this function is that a value must be in the
 	   the cell of the array
 	   Postcondition: This function will return one of two things. If the value of x and y are anything
@@ -43,7 +43,7 @@ class GameBoard:
 	   needs to be either a 0, 1, 2, or 3
 	   Postcondition: This function will change a value in the 2d array. It will change the value
 	   either to a 0 for ocean, 1 for ship, 2 for hit, and 3 for miss.
-	   Parameters: the parameters this funciton takes is the x and y value of the coordinate the 
+	   Parameters: the parameters this funciton takes is the x and y value of the coordinate the
 	   user clicks on, as well as the value 0, 1, 2, or 3."""
 	def set(self, x, y,value):
 		if((x > num_grids[0] or x < 0) or (y > num_grids[1] or y < 0)):
