@@ -16,7 +16,6 @@ from core.peripherals import *  # checks for mouse and keyboard stuff
 from data.assets import colors
 from data.elements import *
 from core.ships import Fleet, Ship
-from time import time
 from data import settings
 
 class State:
