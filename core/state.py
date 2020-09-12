@@ -58,7 +58,6 @@ class State:
 
 		self.left_click_ready = True
 		self.right_click_ready = True
-		self.timer = time()
 
 		# Event attributes
 		self.user_selection = 0
