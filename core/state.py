@@ -227,6 +227,20 @@ class State:
 					curr_ship.selected = False
 					self.p1_ship_counter += 1
 					self.left_click_ready = False
+
+					if(curr_ship.unit_direction == (0,1)):
+						for i in range(curr_ship.length):
+							self.p1_board.set(curr_ship.grid_pos[1]+i,curr_ship.grid_pos[0],1)
+					elif(curr_ship.unit_direction == (0,-1)):
+						for i in range(curr_ship.length):
+							self.p1_board.set(curr_ship.grid_pos[1]-i,curr_ship.grid_pos[0],1)
+					elif(curr_ship.unit_direction == (1,0)):
+						for i in range(curr_ship.length):
+							self.p1_board.set(curr_ship.grid_pos[1],curr_ship.grid_pos[0]-i,1)
+					else:
+						for i in range(curr_ship.length):
+							self.p1_board.set(curr_ship.grid_pos[1],curr_ship.grid_pos[0]+i,1)
+
 					if self.p1_ship_counter > self.user_selection:
 						self.p1_ships_placed = True
 			self.left_click_ready = True
@@ -272,6 +286,20 @@ class State:
 					curr_ship.selected = False
 					self.p2_ship_counter += 1
 					self.left_click_ready = False
+
+					if(curr_ship.unit_direction == (0,1)):
+						for i in range(curr_ship.length):
+							self.p2_board.set(curr_ship.grid_pos[1]+i,curr_ship.grid_pos[0],1)
+					elif(curr_ship.unit_direction == (0,-1)):
+						for i in range(curr_ship.length):
+							self.p2_board.set(curr_ship.grid_pos[1]-i,curr_ship.grid_pos[0],1)
+					elif(curr_ship.unit_direction == (1,0)):
+						for i in range(curr_ship.length):
+							self.p2_board.set(curr_ship.grid_pos[1],curr_ship.grid_pos[0]-i,1)
+					else:
+						for i in range(curr_ship.length):
+							self.p2_board.set(curr_ship.grid_pos[1],curr_ship.grid_pos[0]+i,1)
+
 					if self.p2_ship_counter > self.user_selection:
 						self.p2_ships_placed = True
 			self.left_click_ready = True

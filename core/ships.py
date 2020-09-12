@@ -20,7 +20,7 @@ class Fleet(dict):
 	def __init__(self):
 		dict.__init__(self)
 		self.hidden = False
-	
+
 	def add(self, ship):
 		self[ship.length] = ship
 
@@ -42,7 +42,7 @@ class Ship(pygame.sprite.Sprite):
 
 	def __init__(self, length, ship_type):
 		pygame.sprite.Sprite.__init__(self)
-		
+
 		self.image = assets.image_cache[ship_type]["image"]
 
 		new_width = int(self.image.get_width()*Ship.scale/100)
@@ -52,14 +52,14 @@ class Ship(pygame.sprite.Sprite):
 		self.image = pygame.transform.rotate(self.image, -90)
 		self.rect = self.image.get_rect()
 
-		self.length = length	
+		self.length = length
 
 		self.pos = None
 		self.grid_pos = None
 
 		self.unit_direction = (0, 1)
 
-		self.placed = False		
+		self.placed = False
 		self.selected = False
 		self.hidden = False
 
@@ -78,13 +78,12 @@ class Ship(pygame.sprite.Sprite):
 		elif self.unit_direction == (1, 0):
 			self.pos = (pos[0]-int((self.length-1)*self.image.get_width()/self.length), pos[1])
 		else:
-			self.pos = pos		
+			self.pos = pos
 		self.rect.x = self.pos[0]
 		self.rect.y = self.pos[1]
 
 	def rotate(self):
 		self.image = pygame.transform.rotate(self.image, -90)
 		self.rect = self.image.get_rect(center=self.rect.center)
-		
+
 		self.unit_direction = (self.unit_direction[1], -self.unit_direction[0])
-	
