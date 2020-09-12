@@ -357,6 +357,7 @@ class State:
 		if(self.p2_hit_points == 0):
 			self.p1_won = True
 			self.game_over = True
+			
 	def p2_turn(self):
 		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["white"]))
 
