@@ -1,9 +1,9 @@
 """
-File name:
-Authors:
-Description:
-Date:
-Description:
+File name: peripherals.py
+Authors: Grant Holmes, Luke Less'Ard-Springett, Fares Elattar, Peyton Doherty, Luke Beesley
+Description: This file creates classes and functions which allow for the capture of
+			 mouse and keyboard inputs.
+Date: 09/13/2020
 
 classes:
 	Keys
@@ -57,4 +57,3 @@ def get_mouse() -> dict:
 	return {"left_click": get_left_click(), "right_click": get_right_click(), "pos": get_mouse_pos()}
 
 keys = Keys()
-

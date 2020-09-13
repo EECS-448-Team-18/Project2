@@ -1,8 +1,7 @@
 """
 File name: Engine.py
-Authors:
-Description:
-Date:
+Authors: Grant Holmes, Luke Less'Ard-Springett, Fares Elattar, Peyton Doherty, Luke Beesley
+Date: 09/13/2020
 Description: Handles rendering and pygame specific game backend.
 
 Classes:
