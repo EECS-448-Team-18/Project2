@@ -252,6 +252,7 @@ class State:
 		else:
 			self.right_click_ready = False
 
+		self.render_queue.add(Image("grid",(5,135)))
 		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
 		self.render_queue.add(Text("Player 1's turn:", (700, 50), 40, colors["red"], colors["white"]))
 		self.render_queue.add(Text("Num ships: " + str(self.user_selection), (1000, 300), 40, colors["red"], colors["white"]))
@@ -314,6 +315,7 @@ class State:
 		else:
 			self.right_click_ready = False
 
+		self.render_queue.add(Image("grid",(720,135)))
 		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
 		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["white"]))
 		self.render_queue.add(Text("Num ships: " + str(self.user_selection), (1000, 300), 40, colors["red"], colors["white"]))
@@ -358,6 +360,8 @@ class State:
 
 		self.render_queue.add(Text("Player 1's turn:", (700, 50), 40, colors["red"], colors["white"]))
 
+		self.render_queue.add(Image("grid",(5,135)))
+		self.render_queue.add(Image("grid",(720,135)))
 		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
 		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
 
@@ -373,14 +377,15 @@ class State:
 					self.p1_turn_over = True
 					self.p2_turn_over = False
 					self.p2_hit_points -=1
+					self.p1_fleet.hide()
 				elif(self.p2_board.get(normal_pos[0],normal_pos[1]) == 0):
 					self.p2_board.set(normal_pos[0],normal_pos[1],2)
 					self.p1_turn_over = True
 					self.p2_turn_over = False
+					self.p1_fleet.hide()
 		if(self.p2_hit_points == 0):
 			self.p1_won = True
 			self.game_over = True
-		self.p1_fleet.hide()
 		self.turnReady = False
 
 	def p2_turn(self):
@@ -388,6 +393,8 @@ class State:
 
 		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["white"]))
 
+		self.render_queue.add(Image("grid",(5,135)))
+		self.render_queue.add(Image("grid",(720,135)))
 		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
 		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
 
@@ -403,14 +410,15 @@ class State:
 					self.p1_turn_over = False
 					self.p2_turn_over = True
 					self.p1_hit_points -=1
+					self.p2_fleet.hide()
 				elif (self.p1_board.get(normal_pos[0],normal_pos[1]) == 0):
 					self.p1_board.set(normal_pos[0],normal_pos[1],2)
 					self.p1_turn_over = False
 					self.p2_turn_over = True
+					self.p2_fleet.hide()
 		if(self.p1_hit_points == 0):
 			self.p2_won = True
 			self.game_over = True
-		self.p2_fleet.hide()
 		self.turnReady = False
 
 
@@ -421,6 +429,8 @@ class State:
 		mouse_pos = get_mouse_pos()
 		has_clicked = get_left_click()
 
+		self.render_queue.add(Image("grid",(5,135)))
+		self.render_queue.add(Image("grid",(720,135)))
 		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
 		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
 
