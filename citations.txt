@@ -1,3 +1,10 @@
 Citations:
 	Python Standard Library including but not limited to os and sys
+	
 	Pygame
+	Author(s) name: Pygame Community
+	Date: 09/13/20
+	Title of program: Pygame
+	Code version: 1.9.6
+	Type: Library
+	Web address: https://www.pygame.org/news
