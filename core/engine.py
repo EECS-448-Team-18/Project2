@@ -63,9 +63,10 @@ class Engine:
 		"""
 		Generates background of game window.
 		"""
-		surface = pygame.Surface(size)
-		surface.fill(color)
-		return surface
+		#surface = pygame.Surface(size)
+		#surface.fill(color)
+		#return surface
+		return assets.image_cache["background"]["image"]
 
 	def get_dt(self) -> float:
 		return self.dt
@@ -135,7 +136,6 @@ class Engine:
 		surface.fill(fill_color)
 		self.screen.blit(surface, pos)
 
-	#---
 	def render_board(self, board, pos, color_1, color_2) -> None:
 		rects = set()
 		offset = 1
