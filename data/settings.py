@@ -18,5 +18,7 @@ buttonWidth = 500
 buttonx= 200 #margin in the x direction
 buttony = 50 #margin in the y direction
 
-p1_board_pos = (220, 200)
-p2_board_pos = (820, 200)
+#A board is 585 pixels wide
+#p1_board ends  at x: 665
+p1_board_pos = (70, 200)
+p2_board_pos = (785, 200)

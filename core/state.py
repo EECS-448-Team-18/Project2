@@ -49,6 +49,7 @@ class State:
 					"p2_place_ships": Event(self.p2_place_ships),
 					"p1_turn": Event(self.p1_turn),
 					"p2_turn": Event(self.p2_turn),
+					"next_turn": Event(self.next_turn),
 					"game_over": Event(self.end_game),
 				}
 
@@ -77,6 +78,7 @@ class State:
 
 		self.p1_turn_over = False
 		self.p2_turn_over = False
+		self.turnReady = False
 
 		self.p1_hit_points = 0
 		self.p2_hit_points = 0
@@ -125,13 +127,25 @@ class State:
 			return "p1_turn"
 
 		if self.prev_event == "p1_turn" and self.p1_turn_over:
+			return "next_turn"
+
+		if self.prev_event == "next_turn" and self.p1_turn_over and self.turnReady:
 			return "p2_turn"
+
+		if self.prev_event == "next_turn" and self.p1_turn_over and not (self.turnReady):
+			return "next_turn"
 
 		if self.prev_event == "p2_turn" and not self.p2_turn_over:
 			return "p2_turn"
 
 		if self.prev_event == "p2_turn" and self.p2_turn_over:
+			return "next_turn"
+
+		if self.prev_event == "next_turn" and self.p2_turn_over and self.turnReady:
 			return "p1_turn"
+
+		if self.prev_event == "next_turn" and self.p2_turn_over and not (self.turnReady):
+			return "next_turn"
 
 	def get_objects_to_render(self) -> tuple:
 		return tuple(self.render_queue)
@@ -214,6 +228,7 @@ class State:
 			self.left_click_ready = True
 
 	def p1_place_ships(self):
+
 		mouse_pos = get_mouse_pos()
 		grid_pos = ((mouse_pos[0]-p1_board_pos[0])//grid_size[0], (mouse_pos[1]-p1_board_pos[1])//grid_size[1])
 		normal_pos = (grid_pos[0]*grid_size[0] + p1_board_pos[0], grid_pos[1]*grid_size[1] + p1_board_pos[1])
@@ -267,12 +282,15 @@ class State:
 
 					if self.p1_ship_counter > self.user_selection:
 						self.p1_ships_placed = True
+						self.p1_fleet.hide()
 			self.left_click_ready = True
 		else:
 			self.left_click_ready = False
 
+
+
 	def p2_place_ships(self):
-		self.p1_fleet.hide()
+
 		mouse_pos = get_mouse_pos()
 		grid_pos = ((mouse_pos[0]-p2_board_pos[0])//grid_size[0], (mouse_pos[1]-p2_board_pos[1])//grid_size[1])
 		normal_pos = (grid_pos[0]*grid_size[0] + p2_board_pos[0], grid_pos[1]*grid_size[1] + p2_board_pos[1])
@@ -301,7 +319,6 @@ class State:
 			curr_ship.hide()
 		else:
 			curr_ship.show()
-
 		if not has_clicked:
 			if not self.left_click_ready:
 
@@ -326,12 +343,14 @@ class State:
 
 					if self.p2_ship_counter > self.user_selection:
 						self.p2_ships_placed = True
+						self.p2_fleet.hide()
 			self.left_click_ready = True
 		else:
 			self.left_click_ready = False
 
 	def p1_turn(self):
-		self.p2_fleet.hide()
+		self.p1_fleet.show()
+
 		self.render_queue.add(Text("Player 1's turn:", (700, 50), 40, colors["red"], colors["white"]))
 
 		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
@@ -356,8 +375,12 @@ class State:
 		if(self.p2_hit_points == 0):
 			self.p1_won = True
 			self.game_over = True
-			
+		self.p1_fleet.hide()
+		self.turnReady = False
+
 	def p2_turn(self):
+		self.p2_fleet.show()
+
 		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["white"]))
 
 		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
@@ -382,6 +405,31 @@ class State:
 		if(self.p1_hit_points == 0):
 			self.p2_won = True
 			self.game_over = True
+		self.p2_fleet.hide()
+		self.turnReady = False
+
+
+	def next_turn(self):
+		self.p1_fleet.hide()
+		self.p2_fleet.hide()
+
+		mouse_pos = get_mouse_pos()
+		has_clicked = get_left_click()
+
+		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
+		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
+
+		next_turn_button = Rectangle((615,800), (200, 75), colors["blue"])
+		self.render_queue.add(next_turn_button)
+		self.render_queue.add(Text("Next Players Turn", (715, 835), 20, colors["red"], colors["white"]))
+
+		if not has_clicked:
+			if not self.left_click_ready:
+				if next_turn_button.mouse_over(mouse_pos):
+					self.turnReady = True
+			self.left_click_ready = True
+		else:
+			self.left_click_ready = False
 
 	def end_game(self):
 		if(self.p1_won):
