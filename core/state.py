@@ -118,7 +118,7 @@ class State:
 			return "p2_place_ships"
 
 		if self.prev_event == "p2_place_ships" and self.p2_ships_placed:
-			return "p1_turn"
+			return "next_turn"
 
 		if self.game_over:
 			return "game_over"
@@ -154,31 +154,67 @@ class State:
 		# print(self.p1_fleet + self.p2_fleet)
 		return self.p1_fleet + self.p2_fleet
 
-	def valid_postion(self, playerBoard, x, y, length, direction) -> bool:
+# ----------------------Ship Placement Helper Functions------------------------#
+	"""
+	Parameters	:player_board - a defined board object
+				 x - The x coordinate on the board
+				 y - The y coordinate on the board
+				 length - How long the ship to be checked is
+				 direction which direction the ship is facing
+	Description :This function checks the values that are on playerBoard to see
+				 if a new ship can be assigned to the coordinates based off the
+				 direction and length of the ship.
+	Returns	    :This function returns a bool if a ship can be placed.
+	"""
+	def valid_position(self, player_board, x, y, length, direction) -> bool:
 		if(direction == (0,1)):
 			for i in range(length):
-				if(playerBoard.get(x+i,y) == 1):
+				if(player_board.get(x+i,y) == 1):
 					return False
 		elif(direction == (0,-1)):
 			for i in range(length):
-				if(playerBoard.get(x-i,y) == 1):
+				if(player_board.get(x-i,y) == 1):
 					return False
 		elif(direction == (1,0)):
 			for i in range(length):
-				if(playerBoard.get(x,y-i) == 1):
+				if(player_board.get(x,y-i) == 1):
 					return False
 		else:
 			for i in range(length):
-				if (playerBoard.get(x,y+i) == 1):
+				if (player_board.get(x,y+i) == 1):
 					return False
 		return True
 
+	"""
+	Parameters	:board - A defined board object
+				 curr_ship - A ship object to be placed
+	Description :This function changes the values on board to reflect where the
+				 current ship will be placed.
+	"""
+	def map_Ships(self,board, curr_ship):
+		if(curr_ship.unit_direction == (0,1)):
+			for i in range(curr_ship.length):
+				board.set(curr_ship.grid_pos[1]+i,curr_ship.grid_pos[0],1)
+		elif(curr_ship.unit_direction == (0,-1)):
+			for i in range(curr_ship.length):
+				board.set(curr_ship.grid_pos[1]-i,curr_ship.grid_pos[0],1)
+		elif(curr_ship.unit_direction == (1,0)):
+			for i in range(curr_ship.length):
+				board.set(curr_ship.grid_pos[1],curr_ship.grid_pos[0]-i,1)
+		else:
+			for i in range(curr_ship.length):
+				board.set(curr_ship.grid_pos[1],curr_ship.grid_pos[0]+i,1)
+#------------------------------------------------------------------------------#
 	def get_time_since_start(self) -> float:
 		"""
 		Returns time passed rounded to 3 decimals since game has started
 		"""
 		return round(time()-self.timer, 3)
 
+	"""
+		Description: This function handles the selection of how many ships the players
+					 want to play with.
+	"""
 	def menu(self):
 
 		buttons = {
@@ -227,6 +263,12 @@ class State:
 				size_counter += 1
 			self.left_click_ready = True
 
+	"""
+		Description: This function is responsible for having player 1 place their Ships
+					 on their board. If a player tries to place a ship it is checked
+					 if it is on the grid and does not collide with other ships.
+		Helper Functions: valid_position and map_Ships
+	"""
 	def p1_place_ships(self):
 
 		mouse_pos = get_mouse_pos()
@@ -262,24 +304,13 @@ class State:
 		if not has_clicked:
 			if not self.left_click_ready:
 
-				if ship_pos_valid and self.valid_postion(self.p1_board, curr_ship.grid_pos[1], curr_ship.grid_pos[0], curr_ship.length, curr_ship.unit_direction):
+				if ship_pos_valid and self.valid_position(self.p1_board, curr_ship.grid_pos[1], curr_ship.grid_pos[0], curr_ship.length, curr_ship.unit_direction):
 					curr_ship.placed = True
 					curr_ship.selected = False
 					self.p1_ship_counter += 1
 					self.left_click_ready = False
 
-					if(curr_ship.unit_direction == (0,1)):
-						for i in range(curr_ship.length):
-							self.p1_board.set(curr_ship.grid_pos[1]+i,curr_ship.grid_pos[0],1)
-					elif(curr_ship.unit_direction == (0,-1)):
-						for i in range(curr_ship.length):
-							self.p1_board.set(curr_ship.grid_pos[1]-i,curr_ship.grid_pos[0],1)
-					elif(curr_ship.unit_direction == (1,0)):
-						for i in range(curr_ship.length):
-							self.p1_board.set(curr_ship.grid_pos[1],curr_ship.grid_pos[0]-i,1)
-					else:
-						for i in range(curr_ship.length):
-							self.p1_board.set(curr_ship.grid_pos[1],curr_ship.grid_pos[0]+i,1)
+					self.map_Ships(self.p1_board,curr_ship)
 
 					if self.p1_ship_counter > self.user_selection:
 						self.p1_ships_placed = True
@@ -289,7 +320,12 @@ class State:
 			self.left_click_ready = False
 
 
-
+	"""
+		Description: This function is responsible for having player 2 place their Ships
+					 on their board. If a player tries to place a ship it is checked
+					 if it is on the grid and does not collide with other ships.
+		Helper Functions: valid_position and map_Ships
+	"""
 	def p2_place_ships(self):
 
 		mouse_pos = get_mouse_pos()
@@ -324,32 +360,27 @@ class State:
 		if not has_clicked:
 			if not self.left_click_ready:
 
-				if ship_pos_valid and self.valid_postion(self.p2_board, curr_ship.grid_pos[1], curr_ship.grid_pos[0], curr_ship.length, curr_ship.unit_direction):
+				if ship_pos_valid and self.valid_position(self.p2_board, curr_ship.grid_pos[1], curr_ship.grid_pos[0], curr_ship.length, curr_ship.unit_direction):
 					curr_ship.placed = True
 					curr_ship.selected = False
 					self.p2_ship_counter += 1
 					self.left_click_ready = False
 
-					if(curr_ship.unit_direction == (0,1)):
-						for i in range(curr_ship.length):
-							self.p2_board.set(curr_ship.grid_pos[1]+i,curr_ship.grid_pos[0],1)
-					elif(curr_ship.unit_direction == (0,-1)):
-						for i in range(curr_ship.length):
-							self.p2_board.set(curr_ship.grid_pos[1]-i,curr_ship.grid_pos[0],1)
-					elif(curr_ship.unit_direction == (1,0)):
-						for i in range(curr_ship.length):
-							self.p2_board.set(curr_ship.grid_pos[1],curr_ship.grid_pos[0]-i,1)
-					else:
-						for i in range(curr_ship.length):
-							self.p2_board.set(curr_ship.grid_pos[1],curr_ship.grid_pos[0]+i,1)
+					self.map_Ships(self.p2_board,curr_ship)
 
 					if self.p2_ship_counter > self.user_selection:
 						self.p2_ships_placed = True
-						self.p2_fleet.hide()
+						self.p2_fleet.hide
+						self.p2_turn_over = True
 			self.left_click_ready = True
 		else:
 			self.left_click_ready = False
 
+	"""
+		Description: This function handles player 1's turn after both players have placed their ships
+					 and allows them to click the other players board to make shots and then transitions
+					 into the next event stage until a player wins.
+	"""
 	def p1_turn(self):
 		self.p1_fleet.show()
 
@@ -383,6 +414,11 @@ class State:
 			self.game_over = True
 		self.turnReady = False
 
+	"""
+		Description: This function handles player 2's turn after both players have placed their ships
+					 and allows them to click the other players board to make shots and then transitions
+					 into the next event stage until a player wins.
+	"""
 	def p2_turn(self):
 		self.p2_fleet.show()
 
@@ -416,7 +452,11 @@ class State:
 			self.game_over = True
 		self.turnReady = False
 
-
+	"""
+		Description: This function handles the end of either players turn to allow
+					 for a change of player without revealing the other players ship
+					 locations.
+	"""
 	def next_turn(self):
 		self.p1_fleet.hide()
 		self.p2_fleet.hide()
@@ -441,6 +481,9 @@ class State:
 		else:
 			self.left_click_ready = False
 
+	"""
+		Description: This function Declares a winner for the current game state.
+	"""
 	def end_game(self):
 		if(self.p1_won):
 			self.render_queue.add(Text("Player 1 Has Won", (700, 50), 40, colors["red"], colors["white"]))
