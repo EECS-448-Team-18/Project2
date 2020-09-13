@@ -1,9 +1,8 @@
 """
-File name:
-Authors:
-Description:
-Date:
+File name: assets.py
+Authors: Grant Holmes, Luke Less'Ard-Springett, Fares Elattar, Peyton Doherty, Luke Beesley
 Description: Visual and other aesthetic/ stylistic components such as colors and images.
+Date: 09/13/20
 
 Classes:
 	ImageCache

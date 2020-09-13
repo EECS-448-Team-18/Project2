@@ -1,5 +1,8 @@
 """
-
+File name: ships.py
+Authors: Grant Holmes, Luke Less'Ard-Springett, Peyton Doherty
+Description: This file creates the fleet and ship classes
+Date: 09/13/2020
 """
 import pygame.sprite
 import pygame.transform
@@ -20,11 +23,11 @@ class Fleet(dict):
 		dict.__init__(self)
 		self.hidden = False
 
-	
+
 	def add(self, ship):
 		self[ship.length] = ship
 
-	"""Description: The purpose of this function is to hide the ships during the game so that the oppsing 
+	"""Description: The purpose of this function is to hide the ships during the game so that the oppsing
 	   player cannot see the other players ships while playing the game.
 	   Postcondition: This function will call a helper function called show that makes the ship visible"""
 	def hide(self):
@@ -32,7 +35,7 @@ class Fleet(dict):
 		for ship in self.values():
 			ship.hide()
 
-	"""Description: The puropse of this function is for the player to see their ships during the placing 
+	"""Description: The puropse of this function is for the player to see their ships during the placing
 	   phase before the game starts.
 	   Postcondition: This function will call a helper function called hide that makes the ship hidden"""
 	def show(self):
@@ -47,7 +50,7 @@ class Ship(pygame.sprite.Sprite):
 	scale = 17
 
 	"""Description: This function deals with the ship sprite itself.
-	   Postcondition: The user will have a ship sprite to interact with. 
+	   Postcondition: The user will have a ship sprite to interact with.
 	   Preconditon: This function takes in a length and ship type. The length is the size of the ship(1x1, 1x2, 1x3,
 	   1x4, 1x5) and and the ship_type deals with what kind of ship sprite correlates with the length.  """
 	def __init__(self, length, ship_type):
@@ -100,8 +103,8 @@ class Ship(pygame.sprite.Sprite):
 		self.rect.x = self.pos[0]
 		self.rect.y = self.pos[1]
 
-	"""Descritption: This function allows the user to rotate their ship. 
-	   Postcondition: The user will be able to rotate their ship by 90 degrees to their desired direction 
+	"""Descritption: This function allows the user to rotate their ship.
+	   Postcondition: The user will be able to rotate their ship by 90 degrees to their desired direction
 	   and later, will be able to set the ship in that position """
 	def rotate(self):
 		self.image = pygame.transform.rotate(self.image, -90)

@@ -1,9 +1,8 @@
 """
-File name:
-Authors:
-Description:
-Date:
+File name: elements.py
+Authors: Grant Holmes, Luke Less'Ard-Springett, Fares Elattar, Peyton Doherty, Luke Beesley
 Description: Contains definitions for objects that contain necessary data to be rendered to screen.
+Date: 09/13/2020
 
 Classes:
 	Text
@@ -37,7 +36,7 @@ class Text(Render_Definition):
 class Rectangle(Render_Definition):
 	"""
 	Rectangle(pos, size, fill_color, alpha=255)
-	
+
 	Definition for rectangle.
 	"""
 	def __init__(self, pos, size, fill_color, alpha=255):
@@ -89,4 +88,3 @@ class Board(Render_Definition):
 		self.color_2 = color_2
 
 render_types = [Text, Rectangle, Circle, Image, Board]
-	

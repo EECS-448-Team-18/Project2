@@ -1,8 +1,7 @@
 """
 File name: Engine.py
-Authors:
-Description:
-Date:
+Authors: Grant Holmes, Luke Less'Ard-Springett, Fares Elattar, Peyton Doherty, Luke Beesley
+Date: 09/13/2020
 Description: Handles rendering and pygame specific game backend.
 
 Classes:
@@ -105,7 +104,7 @@ class Engine:
 		self.render_objects(objects_to_render)
 		# print(sprites)
 		[self.screen.blit(sprite.image, sprite.rect) for sprite in sprites if (sprite.placed or sprite.selected) and not sprite.hidden]
-		self.display_fps()
+		#self.display_fps()
 		pygame.display.flip()
 
 	def render_objects(self, objects_to_render) -> None:

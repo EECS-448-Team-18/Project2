@@ -1,5 +1,8 @@
 """
-
+File name: board.py
+Authors: Grant Holmes, Luke Less'Ard-Springett, Fares Elattar, Peyton Doherty, Luke Beesley
+Description: This file creates a 9x9 array and functions to allow interactions with the array.
+Date: 09/13/2020
 """
 
 from data.settings import *

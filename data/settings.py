@@ -1,5 +1,8 @@
 """
-Basic settings for game.
+File name: settings.py
+Authors: Grant Holmes, Luke Less'Ard-Springett, Fares Elattar, Peyton Doherty, Luke Beesley
+Description: Standard settings for the game.
+Date: 09/13/20
 """
 
 game_name = "Battleship"

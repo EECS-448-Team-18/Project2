@@ -2,10 +2,9 @@
 
 """
 File name: __main__.py
-Authors:
-Description:
-Date:
-Description: Entrypoint to game.
+Authors: Grant Holmes, Luke Less'Ard-Springett, Fares Elattar, Peyton Doherty, Luke Beesley
+Description: Entrypoint to the game.
+Date: 09/13/20
 """
 
 import sys

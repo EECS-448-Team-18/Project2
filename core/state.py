@@ -1,9 +1,8 @@
 """
-File name:
-Authors:
-Description:
-Date:
+File name: state.py
+Authors: Grant Holmes, Luke Less'Ard-Springett, Fares Elattar, Peyton Doherty, Luke Beesley
 Description: Tracks game state and implements game events. Handles game logic.
+Date: 09/13/2020
 
 Classes:
 	State
@@ -441,7 +440,7 @@ class State:
 		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
 		self.render_queue.add(Text("Yellow is a miss", (300, 850), 40, colors["black"], colors["yellow"]))
 		self.render_queue.add(Text("Red is a hit", (1100, 850), 40, colors["black"], colors["red"]))
-		
+
 		mouse_pos = get_mouse_pos()
 		has_clicked = get_left_click()
 

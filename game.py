@@ -1,9 +1,8 @@
 """
 File name: game.py
-Authors:
-Description:
-Date:
+Authors: Grant Holmes, Luke Less'Ard-Springett, Fares Elattar, Peyton Doherty, Luke Beesley
 Description: Game driver
+Date: 09/13/20
 
 Classes:
 	Game
@@ -15,7 +14,7 @@ from core.state import State
 class Game:
 	"""
 	Game()
-	
+
 	Provides a game entity that represents the entirety of the game. Game is composed of engine
 		to render graphics and to maintain frame rate and a state which handles game logic.
 
