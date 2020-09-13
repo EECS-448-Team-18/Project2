@@ -146,6 +146,9 @@ class State:
 		if self.prev_event == "next_turn" and self.p2_turn_over and not (self.turnReady):
 			return "next_turn"
 
+		if self.prev_event == "game_over" and not self.game_over:
+                        return "menu"
+
 	def get_objects_to_render(self) -> tuple:
 		return tuple(self.render_queue)
 
@@ -236,6 +239,11 @@ class State:
 
 		mouse_pos = get_mouse_pos()
 		has_clicked = get_left_click()
+
+		if(self.prev_event == "game_over"):
+			has_clicked = False
+			self.left_click_ready = True
+			self.right_click_ready = True
 
 		for button in buttons.values():
 			if button["rect"].mouse_over(mouse_pos) and not has_clicked:
@@ -481,9 +489,9 @@ class State:
 		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
 		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
 
-		next_turn_button = Rectangle((615,800), (200, 75), colors["blue"])
+		next_turn_button = Rectangle((615,200), (200, 75), colors["blue"])
 		self.render_queue.add(next_turn_button)
-		self.render_queue.add(Text("Next Players Turn", (715, 835), 20, colors["red"], colors["white"]))
+		self.render_queue.add(Text("Next Players Turn", (715, 235), 20, colors["red"], colors["white"]))
 
 		if not has_clicked:
 			if not self.left_click_ready:
@@ -501,6 +509,46 @@ class State:
 			self.render_queue.add(Text("Player 1 Has Won", (700, 50), 40, colors["red"], colors["white"]))
 		else:
 			self.render_queue.add(Text("Player 2 Has Won", (700, 50), 40, colors["red"], colors["white"]))
+
+		again_button = {"rect": Rectangle((470,450),(buttonWidth,buttonHeight),colors["blue"]),
+				"text": Text("Play again?", (buttonWidth + 235, buttonHeight + 325), 40, colors["blue"], colors["white"])}
+		self.render_queue.add(again_button["rect"])
+		self.render_queue.add(again_button["text"])
+
+
+		mouse_pos = get_mouse_pos()
+		has_clicked = get_left_click()
+
+		if again_button["rect"].mouse_over(mouse_pos):
+			again_button["rect"].fill_color = colors["light_blue"]
+		else:
+			again_button["rect"].fill_color = colors["blue"]
+
+		if not has_clicked:
+			if not self.left_click_ready:
+				if again_button["rect"].mouse_over(mouse_pos):
+					self.game_over = False
+					self.p1_won = False
+					self.p2_won = False
+					self.p1_fleet = Fleet()
+					self.p2_fleet = Fleet()
+					self.all_ships = [self.p1_fleet, self.p2_fleet]
+					self.curr_ship = None
+					self.p1_ship_counter = 1
+					self.p2_ship_counter = 1
+					self.p1_ships_placed = False
+					self.p2_ships_placed = False
+					self.p1_turn_over = False
+					self.p2_turn_over = False
+					self.p1_hit_points = 0
+					self.p2_hit_points = 0
+					self.p1_board = GameBoard()
+					self.p2_board = GameBoard()
+					self.user_selection = 0
+					self.menu()
+				self.left_click_ready = True
+		else:
+			self.left_click_ready = False
 
 class RenderQueue(list):
 	"""
