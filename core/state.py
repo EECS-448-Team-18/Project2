@@ -183,15 +183,20 @@ class State:
 
 		buttons = {
 				1: {"rect": Rectangle((buttonx, buttony), (buttonWidth, buttonHeight), colors["blue"]),
-						"text": Text("One Ship", (buttonx + 200, buttony +75), 50, colors["white"]) },
+						"text": Text("One Ship", (buttonx + 150, buttony +75), 50, colors["white"]),
+                                                    "Image": Image("patrol", (buttonx + 310, buttony +30), 20, -90)},
 				2: {"rect": Rectangle((buttonWidth +400, buttony), (buttonWidth, buttonHeight), colors["blue"]),
-						"text": Text("Two Ships", (buttonWidth + 600, buttony +75), 50, colors["white"]) },
+						"text": Text("Two Ships", (buttonWidth + 575, buttony +75), 50, colors["white"]),
+                                                    "Image": Image("submarine", (buttonWidth + 710, buttony +20), 20, -90) },
 				3:  {"rect": Rectangle((buttonx, buttonHeight+100), (buttonWidth, buttonHeight), colors["blue"]),
-						"text": Text("Three Ships", (buttonx + 200,  buttonHeight +180), 50, colors["white"]) },
+						"text": Text("Three Ships", (buttonx + 180,  buttonHeight +180), 50, colors["white"]) ,
+                                                    "Image": Image("cruiser", (buttonx + 325, buttonHeight +110), 15, -90)},
 				4:  {"rect": Rectangle((buttonWidth +400,buttonHeight+100 ), (buttonWidth, buttonHeight), colors["blue"]),
-						"text": Text("Four Ships", (buttonWidth + 600, buttonHeight +180), 50, colors["white"]) },
+						"text": Text("Four Ships", (buttonWidth + 575, buttonHeight +180), 50, colors["white"]),
+                                                    "Image": Image("battleship", (buttonWidth + 720, buttonHeight +105), 12, -90) },
 				5:  {"rect": Rectangle((550,2*buttonHeight+150 ), (buttonWidth, buttonHeight), colors["blue"], 255),
-						"text": Text("Five Ships", (800, 2*buttonHeight +250), 50, colors["white"]) },
+						"text": Text("Five Ships", (720, 2*buttonHeight +250), 50, colors["white"]),
+                                                    "Image": Image("aircarrier", (855, 2*buttonHeight +150), 10, -90) },
 			}
 
 		mouse_pos = get_mouse_pos()
