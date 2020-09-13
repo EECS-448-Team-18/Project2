@@ -87,7 +87,7 @@ class Ship(pygame.sprite.Sprite):
 		self.hidden = True
 
 	"""Description: This function deals with moving the ship around with your mouse.
-	   Precondition: This function will take in a positon. 
+	   Precondition: This function will take in a positon that is used to move the ship with the mouse
 	   Postconditon: While this function doesn't return anything, it will allow user to move their
 	   ship to the location that they want so they can later click and cement the location."""
 	def move(self, pos):
