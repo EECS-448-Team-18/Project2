@@ -11,6 +11,7 @@ import sys
 from game import Game
 
 
+
 def main(argv):
 	game = Game()
 	game.run()

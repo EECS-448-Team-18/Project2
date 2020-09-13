@@ -3,9 +3,6 @@ File name: Engine.py
 Authors: Grant Holmes, Luke Less'Ard-Springett, Fares Elattar, Peyton Doherty, Luke Beesley
 Date: 09/13/2020
 Description: Handles rendering and pygame specific game backend.
-
-Classes:
-	Engine
 """
 
 import pygame
@@ -21,22 +18,7 @@ class Engine:
 	Engine()
 
 	Handles rendering and pygame specific game backend.
-
-	Methods:
-		make_background(size, color) -> pygame.Surface
-		get_dt() -> float
-		should_run() -> bool
-		handle_events() -> None
-		clear_screen() -> None
-		update_screen(objects) -> None
-		render_objects(objects_to_render) -> None
-		render_rect(pos, size, fill_color, alpha) -> None
-		render_board(pos, color_1, color_2) -> None
-		render_circle(pos, radius, fill_color, alpha) -> None
-		render_image(image, pos, scale, angle) -> None
-		print_to_screen(text, pos, font_size, text_color, background_color=None) -> None
-		display_fps() -> None
-		"""
+	"""
 
 	def __init__(self):
 		pygame.init()
@@ -138,6 +120,12 @@ class Engine:
 		self.screen.blit(surface, pos)
 
 	def render_board(self, board, pos, color_1, color_2) -> None:
+		"""
+			Description: Renders the board to the screen
+			Parameters: board - A board object containing values of the ship locations
+						pos - the position on which the board is rendered
+						color_1 and color_2 are the default colors for the board where nothing resides in the tile
+		"""
 		rects = set()
 		offset = 1
 		for i in range(settings.num_grids[0]):

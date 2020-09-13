@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module engine</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>engine</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cdev%5Ceecs%20448%5Cbattleship%5Ccore%5Cengine.py">c:\dev\eecs 448\battleship\core\engine.py</a></font></td></tr></table>
+    <p><tt>File&nbsp;name:&nbsp;<a href="#Engine">Engine</a>.py<br>
+Authors:&nbsp;Grant&nbsp;Holmes,&nbsp;Luke&nbsp;Less'Ard-Springett,&nbsp;Fares&nbsp;Elattar,&nbsp;Peyton&nbsp;Doherty,&nbsp;Luke&nbsp;Beesley<br>
+Date:&nbsp;09/13/2020<br>
+Description:&nbsp;Handles&nbsp;rendering&nbsp;and&nbsp;pygame&nbsp;specific&nbsp;game&nbsp;backend.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="data.assets.html">data.assets</a><br>
+</td><td width="25%" valign=top><a href="peripherals.html">peripherals</a><br>
+</td><td width="25%" valign=top><a href="pygame.html">pygame</a><br>
+</td><td width="25%" valign=top><a href="data.settings.html">data.settings</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="engine.html#Engine">Engine</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Engine">class <strong>Engine</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Engine">Engine</a>()<br>
+&nbsp;<br>
+Handles&nbsp;rendering&nbsp;and&nbsp;pygame&nbsp;specific&nbsp;game&nbsp;backend.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Engine-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="Engine-clear_screen"><strong>clear_screen</strong></a>(self) -&gt; None</dt><dd><tt>Removes&nbsp;everything&nbsp;blitted&nbsp;on&nbsp;screen&nbsp;by&nbsp;covering&nbsp;everything&nbsp;with&nbsp;background.</tt></dd></dl>
+
+<dl><dt><a name="Engine-display_fps"><strong>display_fps</strong></a>(self) -&gt; None</dt><dd><tt>displays&nbsp;current&nbsp;frames&nbsp;per&nbsp;second&nbsp;on&nbsp;screen,&nbsp;marker&nbsp;of&nbsp;performance</tt></dd></dl>
+
+<dl><dt><a name="Engine-get_dt"><strong>get_dt</strong></a>(self) -&gt; float</dt></dl>
+
+<dl><dt><a name="Engine-handle_events"><strong>handle_events</strong></a>(self) -&gt; None</dt><dd><tt>Handles&nbsp;events&nbsp;from&nbsp;Pygame's&nbsp;event&nbsp;queue.&nbsp;pygame.QUIT&nbsp;occurs&nbsp;when&nbsp;"X"&nbsp;on&nbsp;top&nbsp;right<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corner&nbsp;is&nbsp;clicked.</tt></dd></dl>
+
+<dl><dt><a name="Engine-make_background"><strong>make_background</strong></a>(self, size, color) -&gt; pygame.Surface</dt><dd><tt>Generates&nbsp;background&nbsp;of&nbsp;game&nbsp;window.</tt></dd></dl>
+
+<dl><dt><a name="Engine-print_to_screen"><strong>print_to_screen</strong></a>(self, text, pos, font_size, text_color, background_color=None) -&gt; None</dt><dd><tt>Blits&nbsp;text&nbsp;to&nbsp;screen.&nbsp;"background_color"&nbsp;is&nbsp;a&nbsp;colored&nbsp;rect&nbsp;behind&nbsp;text.</tt></dd></dl>
+
+<dl><dt><a name="Engine-render_board"><strong>render_board</strong></a>(self, board, pos, color_1, color_2) -&gt; None</dt><dd><tt>Description:&nbsp;Renders&nbsp;the&nbsp;board&nbsp;to&nbsp;the&nbsp;screen<br>
+Parameters:&nbsp;board&nbsp;-&nbsp;A&nbsp;board&nbsp;<a href="builtins.html#object">object</a>&nbsp;containing&nbsp;values&nbsp;of&nbsp;the&nbsp;ship&nbsp;locations<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pos&nbsp;-&nbsp;the&nbsp;position&nbsp;on&nbsp;which&nbsp;the&nbsp;board&nbsp;is&nbsp;rendered<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color_1&nbsp;and&nbsp;color_2&nbsp;are&nbsp;the&nbsp;default&nbsp;colors&nbsp;for&nbsp;the&nbsp;board&nbsp;where&nbsp;nothing&nbsp;resides&nbsp;in&nbsp;the&nbsp;tile</tt></dd></dl>
+
+<dl><dt><a name="Engine-render_circle"><strong>render_circle</strong></a>(self, pos, radius, fill_color, alpha) -&gt; None</dt><dd><tt>Blits&nbsp;circle&nbsp;to&nbsp;screen.&nbsp;Alpha&nbsp;is&nbsp;opacity&nbsp;and&nbsp;ranges&nbsp;from&nbsp;0-255.</tt></dd></dl>
+
+<dl><dt><a name="Engine-render_image"><strong>render_image</strong></a>(self, image_name, pos, scale, angle) -&gt; None</dt><dd><tt>Blits&nbsp;image&nbsp;to&nbsp;screen.</tt></dd></dl>
+
+<dl><dt><a name="Engine-render_objects"><strong>render_objects</strong></a>(self, objects_to_render) -&gt; None</dt><dd><tt>Renders&nbsp;objects&nbsp;to&nbsp;screen&nbsp;in&nbsp;appropriate&nbsp;manner.</tt></dd></dl>
+
+<dl><dt><a name="Engine-render_rect"><strong>render_rect</strong></a>(self, pos, size, fill_color, alpha) -&gt; None</dt><dd><tt>Blits&nbsp;rect&nbsp;to&nbsp;screen.&nbsp;Alpha&nbsp;is&nbsp;opacity&nbsp;and&nbsp;ranges&nbsp;from&nbsp;0-255.</tt></dd></dl>
+
+<dl><dt><a name="Engine-should_run"><strong>should_run</strong></a>(self) -&gt; bool</dt><dd><tt>Makes&nbsp;call&nbsp;to&nbsp;handle_events.&nbsp;Returns&nbsp;self.<strong>running</strong>.</tt></dd></dl>
+
+<dl><dt><a name="Engine-update_screen"><strong>update_screen</strong></a>(self, objects_to_render, sprites) -&gt; None</dt><dd><tt>Renders&nbsp;necessary&nbsp;components&nbsp;to&nbsp;screen.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>buttonHeight</strong> = 200<br>
+<strong>buttonWidth</strong> = 500<br>
+<strong>button_size</strong> = (500, 200)<br>
+<strong>buttonx</strong> = 43.199999999999996<br>
+<strong>buttony</strong> = 50<br>
+<strong>colors</strong> = {'black': (0, 0, 0), 'blue': (0, 0, 255), 'dark_blue': (0, 146, 199), 'green': (0, 255, 0), 'light_blue': (0, 188, 255), 'red': (255, 0, 0), 'white': (255, 255, 255), 'yellow': (255, 255, 0)}<br>
+<strong>font_style</strong> = 'impact'<br>
+<strong>game_name</strong> = 'Battleship'<br>
+<strong>grid_size</strong> = (65, 65)<br>
+<strong>normalized_frame_rate</strong> = 60<br>
+<strong>num_grids</strong> = (9, 9)<br>
+<strong>p1_board_pos</strong> = (70, 200)<br>
+<strong>p2_board_pos</strong> = (785, 200)<br>
+<strong>render_types</strong> = [&lt;class 'data.elements.Text'&gt;, &lt;class 'data.elements.Rectangle'&gt;, &lt;class 'data.elements.Circle'&gt;, &lt;class 'data.elements.Image'&gt;, &lt;class 'data.elements.Board'&gt;]<br>
+<strong>screen_size</strong> = (1440, 900)<br>
+<strong>target_frame_rate</strong> = 60</td></tr></table>
+</body></html>
