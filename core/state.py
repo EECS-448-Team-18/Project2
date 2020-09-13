@@ -296,8 +296,10 @@ class State:
 
 		self.render_queue.add(Image("grid",(5,135)))
 		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
-		self.render_queue.add(Text("Player 1's turn:", (700, 50), 40, colors["red"], colors["white"]))
+		self.render_queue.add(Text("Player 1's turn:", (700, 50), 40, colors["red"], colors["green"]))
 		self.render_queue.add(Text("Num ships: " + str(self.user_selection), (1000, 300), 40, colors["red"], colors["white"]))
+		self.render_queue.add(Text("use left mouse button to place and use right mouse button to rotate", (700, 850), 40, colors["white"], colors["black"]))
+
 		curr_ship.move(normal_pos)
 		curr_ship.grid_pos = grid_pos
 
@@ -353,8 +355,10 @@ class State:
 
 		self.render_queue.add(Image("grid",(720,135)))
 		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
-		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["white"]))
-		self.render_queue.add(Text("Num ships: " + str(self.user_selection), (1000, 300), 40, colors["red"], colors["white"]))
+		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["green"]))
+		self.render_queue.add(Text("Num ships: " + str(self.user_selection), (200, 300), 40, colors["red"], colors["white"]))
+		self.render_queue.add(Text("use left mouse button to place and use right mouse button to rotate", (700, 850), 40, colors["white"], colors["black"]))
+
 		curr_ship.move(normal_pos)
 		curr_ship.grid_pos = grid_pos
 
@@ -389,12 +393,14 @@ class State:
 	def p1_turn(self):
 		self.p1_fleet.show()
 
-		self.render_queue.add(Text("Player 1's turn:", (700, 50), 40, colors["red"], colors["white"]))
+		self.render_queue.add(Text("Player 1's turn:", (700, 50), 40, colors["red"], colors["green"]))
 
 		self.render_queue.add(Image("grid",(5,135)))
 		self.render_queue.add(Image("grid",(720,135)))
 		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
 		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
+		self.render_queue.add(Text("Yellow is a miss", (300, 850), 40, colors["black"], colors["yellow"]))
+		self.render_queue.add(Text("Red is a hit", (1100, 850), 40, colors["black"], colors["red"]))
 
 		mouse_pos = get_mouse_pos()
 		has_clicked = get_left_click()
@@ -427,13 +433,15 @@ class State:
 	def p2_turn(self):
 		self.p2_fleet.show()
 
-		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["white"]))
+		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["green"]))
 
 		self.render_queue.add(Image("grid",(5,135)))
 		self.render_queue.add(Image("grid",(720,135)))
 		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
 		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
-
+		self.render_queue.add(Text("Yellow is a miss", (300, 850), 40, colors["black"], colors["yellow"]))
+		self.render_queue.add(Text("Red is a hit", (1100, 850), 40, colors["black"], colors["red"]))
+		
 		mouse_pos = get_mouse_pos()
 		has_clicked = get_left_click()
 
