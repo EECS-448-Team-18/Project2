@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module state</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>state</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cdev%5Ceecs%20448%5Cbattleship%5Ccore%5Cstate.py">c:\dev\eecs 448\battleship\core\state.py</a></font></td></tr></table>
+    <p><tt>File&nbsp;name:&nbsp;state.py<br>
+Authors:&nbsp;Grant&nbsp;Holmes,&nbsp;Luke&nbsp;Less'Ard-Springett,&nbsp;Fares&nbsp;Elattar,&nbsp;Peyton&nbsp;Doherty,&nbsp;Luke&nbsp;Beesley<br>
+Description:&nbsp;Tracks&nbsp;game&nbsp;state&nbsp;and&nbsp;implements&nbsp;game&nbsp;events.&nbsp;Handles&nbsp;game&nbsp;logic.<br>
+Date:&nbsp;09/13/2020<br>
+&nbsp;<br>
+Classes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#State">State</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#RenderQueue">RenderQueue</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Event">Event</a></tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="pygame.html">pygame</a><br>
+</td><td width="25%" valign=top><a href="data.settings.html">data.settings</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#list">builtins.list</a>(<a href="builtins.html#object">builtins.object</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="state.html#RenderQueue">RenderQueue</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="state.html#Event">Event</a>
+</font></dt><dt><font face="helvetica, arial"><a href="state.html#State">State</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Event">class <strong>Event</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Event">Event</a>(func,&nbsp;is_time_dependent=False)<br>
+&nbsp;<br>
+<a href="#Event">Event</a>(func,&nbsp;is_time_dependent)<br>
+&nbsp;<br>
+Wrapper&nbsp;for&nbsp;function&nbsp;to&nbsp;be&nbsp;used&nbsp;as&nbsp;event.<br>
+&nbsp;<br>
+Methods:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Event-__call__">__call__</a>(dt)&nbsp;-&gt;&nbsp;None<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Event-__call__"><strong>__call__</strong></a>(self, dt) -&gt; None</dt><dd><tt>Call&nbsp;self&nbsp;as&nbsp;a&nbsp;function.</tt></dd></dl>
+
+<dl><dt><a name="Event-__init__"><strong>__init__</strong></a>(self, func, is_time_dependent=False)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="RenderQueue">class <strong>RenderQueue</strong></a>(<a href="builtins.html#list">builtins.list</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#RenderQueue">RenderQueue</a>()<br>
+&nbsp;<br>
+Queue&nbsp;wrapper&nbsp;to&nbsp;store&nbsp;objects&nbsp;ready&nbsp;to&nbsp;be&nbsp;rendered&nbsp;to&nbsp;screen.<br>
+&nbsp;<br>
+Methods:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#RenderQueue-add">add</a>()&nbsp;-&gt;&nbsp;None<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="state.html#RenderQueue">RenderQueue</a></dd>
+<dd><a href="builtins.html#list">builtins.list</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="RenderQueue-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-add"><strong>add</strong></a>(self, render_object) -&gt; None</dt><dd><tt>Makes&nbsp;sure&nbsp;render_object&nbsp;is&nbsp;correctly&nbsp;defined&nbsp;and&nbsp;can&nbsp;be&nbsp;rendered&nbsp;then&nbsp;adds&nbsp;to&nbsp;queue.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="builtins.html#list">builtins.list</a>:<br>
+<dl><dt><a name="RenderQueue-__add__"><strong>__add__</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;self+value.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__contains__"><strong>__contains__</strong></a>(self, key, /)</dt><dd><tt>Return&nbsp;key&nbsp;in&nbsp;self.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__delitem__"><strong>__delitem__</strong></a>(self, key, /)</dt><dd><tt>Delete&nbsp;self[key].</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__eq__"><strong>__eq__</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;self==value.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__ge__"><strong>__ge__</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;self&gt;=value.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__getattribute__"><strong>__getattribute__</strong></a>(self, name, /)</dt><dd><tt>Return&nbsp;getattr(self,&nbsp;name).</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#RenderQueue-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__gt__"><strong>__gt__</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;self&gt;value.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__iadd__"><strong>__iadd__</strong></a>(self, value, /)</dt><dd><tt>Implement&nbsp;self+=value.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__imul__"><strong>__imul__</strong></a>(self, value, /)</dt><dd><tt>Implement&nbsp;self*=value.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__iter__"><strong>__iter__</strong></a>(self, /)</dt><dd><tt>Implement&nbsp;iter(self).</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__le__"><strong>__le__</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;self&lt;=value.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__len__"><strong>__len__</strong></a>(self, /)</dt><dd><tt>Return&nbsp;len(self).</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__lt__"><strong>__lt__</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;self&lt;value.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__mul__"><strong>__mul__</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;self*value.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__ne__"><strong>__ne__</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;self!=value.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__repr__"><strong>__repr__</strong></a>(self, /)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__reversed__"><strong>__reversed__</strong></a>(self, /)</dt><dd><tt>Return&nbsp;a&nbsp;reverse&nbsp;iterator&nbsp;over&nbsp;the&nbsp;<a href="builtins.html#list">list</a>.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__rmul__"><strong>__rmul__</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;value*self.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__setitem__"><strong>__setitem__</strong></a>(self, key, value, /)</dt><dd><tt>Set&nbsp;self[key]&nbsp;to&nbsp;value.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-__sizeof__"><strong>__sizeof__</strong></a>(self, /)</dt><dd><tt>Return&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;<a href="builtins.html#list">list</a>&nbsp;in&nbsp;memory,&nbsp;in&nbsp;bytes.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-append"><strong>append</strong></a>(self, object, /)</dt><dd><tt>Append&nbsp;<a href="builtins.html#object">object</a>&nbsp;to&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;<a href="builtins.html#list">list</a>.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-clear"><strong>clear</strong></a>(self, /)</dt><dd><tt>Remove&nbsp;all&nbsp;items&nbsp;from&nbsp;<a href="builtins.html#list">list</a>.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-copy"><strong>copy</strong></a>(self, /)</dt><dd><tt>Return&nbsp;a&nbsp;shallow&nbsp;copy&nbsp;of&nbsp;the&nbsp;<a href="builtins.html#list">list</a>.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-count"><strong>count</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;number&nbsp;of&nbsp;occurrences&nbsp;of&nbsp;value.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-extend"><strong>extend</strong></a>(self, iterable, /)</dt><dd><tt>Extend&nbsp;<a href="builtins.html#list">list</a>&nbsp;by&nbsp;appending&nbsp;elements&nbsp;from&nbsp;the&nbsp;iterable.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-index"><strong>index</strong></a>(self, value, start=0, stop=9223372036854775807, /)</dt><dd><tt>Return&nbsp;first&nbsp;index&nbsp;of&nbsp;value.<br>
+&nbsp;<br>
+Raises&nbsp;ValueError&nbsp;if&nbsp;the&nbsp;value&nbsp;is&nbsp;not&nbsp;present.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-insert"><strong>insert</strong></a>(self, index, object, /)</dt><dd><tt>Insert&nbsp;<a href="builtins.html#object">object</a>&nbsp;before&nbsp;index.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-pop"><strong>pop</strong></a>(self, index=-1, /)</dt><dd><tt>Remove&nbsp;and&nbsp;return&nbsp;item&nbsp;at&nbsp;index&nbsp;(default&nbsp;last).<br>
+&nbsp;<br>
+Raises&nbsp;IndexError&nbsp;if&nbsp;<a href="builtins.html#list">list</a>&nbsp;is&nbsp;empty&nbsp;or&nbsp;index&nbsp;is&nbsp;out&nbsp;of&nbsp;range.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-remove"><strong>remove</strong></a>(self, value, /)</dt><dd><tt>Remove&nbsp;first&nbsp;occurrence&nbsp;of&nbsp;value.<br>
+&nbsp;<br>
+Raises&nbsp;ValueError&nbsp;if&nbsp;the&nbsp;value&nbsp;is&nbsp;not&nbsp;present.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-reverse"><strong>reverse</strong></a>(self, /)</dt><dd><tt>Reverse&nbsp;*IN&nbsp;PLACE*.</tt></dd></dl>
+
+<dl><dt><a name="RenderQueue-sort"><strong>sort</strong></a>(self, /, *, key=None, reverse=False)</dt><dd><tt>Sort&nbsp;the&nbsp;<a href="builtins.html#list">list</a>&nbsp;in&nbsp;ascending&nbsp;order&nbsp;and&nbsp;return&nbsp;None.<br>
+&nbsp;<br>
+The&nbsp;sort&nbsp;is&nbsp;in-place&nbsp;(i.e.&nbsp;the&nbsp;<a href="builtins.html#list">list</a>&nbsp;itself&nbsp;is&nbsp;modified)&nbsp;and&nbsp;stable&nbsp;(i.e.&nbsp;the<br>
+order&nbsp;of&nbsp;two&nbsp;equal&nbsp;elements&nbsp;is&nbsp;maintained).<br>
+&nbsp;<br>
+If&nbsp;a&nbsp;key&nbsp;function&nbsp;is&nbsp;given,&nbsp;apply&nbsp;it&nbsp;once&nbsp;to&nbsp;each&nbsp;<a href="builtins.html#list">list</a>&nbsp;item&nbsp;and&nbsp;sort&nbsp;them,<br>
+ascending&nbsp;or&nbsp;descending,&nbsp;according&nbsp;to&nbsp;their&nbsp;function&nbsp;values.<br>
+&nbsp;<br>
+The&nbsp;reverse&nbsp;flag&nbsp;can&nbsp;be&nbsp;set&nbsp;to&nbsp;sort&nbsp;in&nbsp;descending&nbsp;order.</tt></dd></dl>
+
+<hr>
+Static methods inherited from <a href="builtins.html#list">builtins.list</a>:<br>
+<dl><dt><a name="RenderQueue-__new__"><strong>__new__</strong></a>(*args, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Create&nbsp;and&nbsp;return&nbsp;a&nbsp;new&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;See&nbsp;help(type)&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Data and other attributes inherited from <a href="builtins.html#list">builtins.list</a>:<br>
+<dl><dt><strong>__hash__</strong> = None</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="State">class <strong>State</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#State">State</a>()<br>
+&nbsp;<br>
+Tracks&nbsp;and&nbsp;manages&nbsp;state&nbsp;of&nbsp;game.&nbsp;Handles&nbsp;game&nbsp;logic.<br>
+&nbsp;<br>
+Methods:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#State-run_event">run_event</a>(dt)&nbsp;-&gt;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#State-get_next_event">get_next_event</a>()&nbsp;-&gt;&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#State-get_objects_to_render">get_objects_to_render</a>()&nbsp;-&gt;&nbsp;tuple<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#State-get_sprites">get_sprites</a>()&nbsp;-&gt;&nbsp;<a href="builtins.html#list">list</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#State-get_time_since_start">get_time_since_start</a>()&nbsp;-&gt;&nbsp;float<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Events:<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="State-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="State-end_game"><strong>end_game</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="State-get_next_event"><strong>get_next_event</strong></a>(self) -&gt; str</dt><dd><tt>Conditionals&nbsp;determining&nbsp;game&nbsp;event&nbsp;logic.&nbsp;Decides&nbsp;next&nbsp;event&nbsp;based&nbsp;on&nbsp;previous&nbsp;event<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;has&nbsp;just&nbsp;been&nbsp;completed&nbsp;and&nbsp;any&nbsp;other&nbsp;necessary&nbsp;logic.</tt></dd></dl>
+
+<dl><dt><a name="State-get_objects_to_render"><strong>get_objects_to_render</strong></a>(self) -&gt; tuple</dt></dl>
+
+<dl><dt><a name="State-get_sprites"><strong>get_sprites</strong></a>(self) -&gt; list</dt></dl>
+
+<dl><dt><a name="State-get_time_since_start"><strong>get_time_since_start</strong></a>(self) -&gt; float</dt><dd><tt>Returns&nbsp;time&nbsp;passed&nbsp;rounded&nbsp;to&nbsp;3&nbsp;decimals&nbsp;since&nbsp;game&nbsp;has&nbsp;started</tt></dd></dl>
+
+<dl><dt><a name="State-map_Ships"><strong>map_Ships</strong></a>(self, board, curr_ship)</dt></dl>
+
+<dl><dt><a name="State-menu"><strong>menu</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="State-next_turn"><strong>next_turn</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="State-p1_place_ships"><strong>p1_place_ships</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="State-p1_turn"><strong>p1_turn</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="State-p2_place_ships"><strong>p2_place_ships</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="State-p2_turn"><strong>p2_turn</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="State-run_event"><strong>run_event</strong></a>(self, dt) -&gt; None</dt><dd><tt>Runs&nbsp;event&nbsp;from&nbsp;event&nbsp;dictionary.&nbsp;Updates&nbsp;event&nbsp;sequence.</tt></dd></dl>
+
+<dl><dt><a name="State-valid_position"><strong>valid_position</strong></a>(self, player_board, x, y, length, direction) -&gt; bool</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>buttonHeight</strong> = 200<br>
+<strong>buttonWidth</strong> = 500<br>
+<strong>button_size</strong> = (500, 200)<br>
+<strong>buttonx</strong> = 43.199999999999996<br>
+<strong>buttony</strong> = 50<br>
+<strong>colors</strong> = {'black': (0, 0, 0), 'blue': (0, 0, 255), 'dark_blue': (0, 146, 199), 'green': (0, 255, 0), 'light_blue': (0, 188, 255), 'red': (255, 0, 0), 'white': (255, 255, 255), 'yellow': (255, 255, 0)}<br>
+<strong>font_style</strong> = 'impact'<br>
+<strong>game_name</strong> = 'Battleship'<br>
+<strong>grid_size</strong> = (65, 65)<br>
+<strong>keys</strong> = {}<br>
+<strong>normalized_frame_rate</strong> = 60<br>
+<strong>num_grids</strong> = (9, 9)<br>
+<strong>p1_board_pos</strong> = (70, 200)<br>
+<strong>p2_board_pos</strong> = (785, 200)<br>
+<strong>render_types</strong> = [&lt;class 'data.elements.Text'&gt;, &lt;class 'data.elements.Rectangle'&gt;, &lt;class 'data.elements.Circle'&gt;, &lt;class 'data.elements.Image'&gt;, &lt;class 'data.elements.Board'&gt;]<br>
+<strong>screen_size</strong> = (1440, 900)<br>
+<strong>target_frame_rate</strong> = 60</td></tr></table>
+</body></html>
