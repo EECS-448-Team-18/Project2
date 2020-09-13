@@ -220,8 +220,8 @@ class State:
 						"text": Text("Four Ships", (0.95*(screen_size[0]-buttonWidth), buttonHeight +180), 50, colors["white"]),
                                                     "Image": Image("battleship", (0.95*(screen_size[0]-buttonWidth)+200, buttonHeight +105), 12, -90) },
 				5:  {"rect": RoundedRect((550,2*buttonHeight+150 ), (buttonWidth, buttonHeight), colors["blue"], 255),
-						"text": Text("Five Ships", (720, 2*buttonHeight +250), 50, colors["white"]),
-                                                    "Image": Image("aircarrier", (855, 2*buttonHeight +150), 10, -90) },
+						"text": Text("Five Ships", (660, 2*buttonHeight +250), 50, colors["white"]),
+                                                    "Image": Image("aircarrier", (825, 2*buttonHeight +150), 10, -90) },
 			}
 
 		mouse_pos = get_mouse_pos()
