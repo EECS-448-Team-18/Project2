@@ -5,19 +5,11 @@ Description: This file creates classes and functions which allow for the capture
 			 mouse and keyboard inputs.
 Date: 09/13/2020
 
-classes:
-	Keys
 """
 
 import pygame
 
 class Keys(dict):
-	"""
-	Keys()
-
-	Method:
-		initialize() -> None
-	"""
 	def __init__(self):
 		dict.__init__(self)
 
