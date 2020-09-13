@@ -15,7 +15,7 @@ font_style = "impact"
 button_size = (500, 200)
 buttonHeight = 200
 buttonWidth = 500
-buttonx= 200 #margin in the x direction
+buttonx= 0.03*screen_size[0] #margin in the x direction
 buttony = 50 #margin in the y direction
 
 #A board is 585 pixels wide

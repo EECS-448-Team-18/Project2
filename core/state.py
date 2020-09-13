@@ -227,7 +227,7 @@ class State:
 				3:  {"rect": Rectangle((buttonx, buttonHeight+100), (buttonWidth, buttonHeight), colors["blue"]),
 						"text": Text("Three Ships", (buttonx + 180,  buttonHeight +180), 50, colors["white"]) ,
                                                     "Image": Image("cruiser", (buttonx + 325, buttonHeight +110), 15, -90)},
-				4:  {"rect": Rectangle((buttonWidth +400,buttonHeight+100 ), (buttonWidth, buttonHeight), colors["blue"]),
+				4:  {"rect": Rectangle((0.95*(screen_size[0]-buttonWidth),buttonHeight+100 ), (buttonWidth, buttonHeight), colors["blue"]),
 						"text": Text("Four Ships", (buttonWidth + 575, buttonHeight +180), 50, colors["white"]),
                                                     "Image": Image("battleship", (buttonWidth + 720, buttonHeight +105), 12, -90) },
 				5:  {"rect": Rectangle((550,2*buttonHeight+150 ), (buttonWidth, buttonHeight), colors["blue"], 255),

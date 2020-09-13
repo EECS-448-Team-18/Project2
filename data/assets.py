@@ -23,15 +23,15 @@ class ImageCache(dict):
 		self["battleship"] = {"file_name": "battleship.png", "image": None}
 		self["submarine"] = {"file_name": "submarine.png", "image": None}
 		self["aircarrier"] = {"file_name": "aircarrier.png", "image": None}
+		self["background"] = {"file_name": "background.png", "image": None}
 		self["grid"] = {"file_name": "Grid.png", "image": None}
 
 		self.resouce_path = os.path.join(os.getcwd(), "resources")
 
 	def init(self) -> None:
 		for image in self:
-			self[image]["image"] = pygame.image.load(os.path.join(self.resouce_path, self[image]["file_name"]))
-			self[image]["image"].convert_alpha()
-		self["background"] = {"file_name": "background.png", "image": pygame.image.load(self.resouce_path+"/background.png").convert()}
+			self[image]["image"] = pygame.image.load(os.path.join(self.resouce_path, self[image]["file_name"])).convert_alpha()
+		
 
 colors = {
 		"white": (255, 255, 255),
