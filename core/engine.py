@@ -118,6 +118,12 @@ class Engine:
 		self.screen.blit(surface, pos)
 
 	def render_board(self, board, pos, color_1, color_2) -> None:
+		"""
+			Description: Renders the board to the screen
+			Parameters: board - A board object containing values of the ship locations
+						pos - the position on which the board is rendered
+						color_1 and color_2 are the default colors for the board where nothing resides in the tile
+		"""
 		rects = set()
 		offset = 1
 		for i in range(settings.num_grids[0]):

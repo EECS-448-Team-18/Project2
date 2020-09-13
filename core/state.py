@@ -3,11 +3,6 @@ File name: state.py
 Authors: Grant Holmes, Luke Less'Ard-Springett, Fares Elattar, Peyton Doherty, Luke Beesley
 Description: Tracks game state and implements game events. Handles game logic.
 Date: 09/13/2020
-
-Classes:
-	State
-	RenderQueue
-	Event
 """
 
 from core.board import GameBoard
@@ -22,20 +17,12 @@ class State:
 	State()
 
 	Tracks and manages state of game. Handles game logic.
-
-	Methods:
-		run_event(dt) -> None
-		get_next_event() -> str
-		get_objects_to_render() -> tuple
-		get_sprites() -> list
-		get_time_since_start() -> float
-
-		Events:
-
-
 	"""
 
 	def __init__(self):
+		"""
+			Post condition: Instantiates a brand new game state with all values to their defaults.
+		"""
 		# main game components
 		self.p1_board = GameBoard()
 		self.p2_board = GameBoard()
@@ -157,18 +144,18 @@ class State:
 		return self.p1_fleet + self.p2_fleet
 
 # ----------------------Ship Placement Helper Functions------------------------#
-	"""
-	Parameters	:player_board - a defined board object
-				 x - The x coordinate on the board
-				 y - The y coordinate on the board
-				 length - How long the ship to be checked is
-				 direction which direction the ship is facing
-	Description :This function checks the values that are on playerBoard to see
-				 if a new ship can be assigned to the coordinates based off the
-				 direction and length of the ship.
-	Returns	    :This function returns a bool if a ship can be placed.
-	"""
 	def valid_position(self, player_board, x, y, length, direction) -> bool:
+		"""
+		Parameters	:player_board - a defined board object
+					 x - The x coordinate on the board
+					 y - The y coordinate on the board
+					 length - How long the ship to be checked is
+					 direction which direction the ship is facing
+		Description :This function checks the values that are on playerBoard to see
+					 if a new ship can be assigned to the coordinates based off the
+					 direction and length of the ship.
+		Returns	    :This function returns a bool if a ship can be placed.
+		"""
 		if(direction == (0,1)):
 			for i in range(length):
 				if(player_board.get(x+i,y) == 1):
@@ -187,13 +174,14 @@ class State:
 					return False
 		return True
 
-	"""
-	Parameters	:board - A defined board object
-				 curr_ship - A ship object to be placed
-	Description :This function changes the values on board to reflect where the
-				 current ship will be placed.
-	"""
+
 	def map_Ships(self,board, curr_ship):
+		"""
+		Parameters	:board - A defined board object
+					 curr_ship - A ship object to be placed
+		Description :This function changes the values on board to reflect where the
+					 current ship will be placed.
+		"""
 		if(curr_ship.unit_direction == (0,1)):
 			for i in range(curr_ship.length):
 				board.set(curr_ship.grid_pos[1]+i,curr_ship.grid_pos[0],1)
@@ -213,12 +201,11 @@ class State:
 		"""
 		return round(time()-self.timer, 3)
 
-	"""
-		Description: This function handles the selection of how many ships the players
-					 want to play with.
-	"""
 	def menu(self):
-
+		"""
+			Description: This function handles the selection of how many ships the players
+						 want to play with.
+		"""
 		buttons = {
 				1: {"rect": Rectangle((buttonx, buttony), (buttonWidth, buttonHeight), colors["blue"]),
 						"text": Text("One Ship", (buttonx + 150, buttony +75), 50, colors["white"]),
@@ -275,13 +262,13 @@ class State:
 				size_counter += 1
 			self.left_click_ready = True
 
-	"""
-		Description: This function is responsible for having player 1 place their Ships
-					 on their board. If a player tries to place a ship it is checked
-					 if it is on the grid and does not collide with other ships.
-		Helper Functions: valid_position and map_Ships
-	"""
 	def p1_place_ships(self):
+		"""
+			Description: This function is responsible for having player 1 place their Ships
+						 on their board. If a player tries to place a ship it is checked
+						 if it is on the grid and does not collide with other ships.
+			Helper Functions: valid_position and map_Ships
+		"""
 
 		mouse_pos = get_mouse_pos()
 		grid_pos = ((mouse_pos[0]-p1_board_pos[0])//grid_size[0], (mouse_pos[1]-p1_board_pos[1])//grid_size[1])
@@ -334,13 +321,13 @@ class State:
 			self.left_click_ready = False
 
 
-	"""
-		Description: This function is responsible for having player 2 place their Ships
-					 on their board. If a player tries to place a ship it is checked
-					 if it is on the grid and does not collide with other ships.
-		Helper Functions: valid_position and map_Ships
-	"""
 	def p2_place_ships(self):
+		"""
+			Description: This function is responsible for having player 2 place their Ships
+						 on their board. If a player tries to place a ship it is checked
+						 if it is on the grid and does not collide with other ships.
+			Helper Functions: valid_position and map_Ships
+		"""
 
 		mouse_pos = get_mouse_pos()
 		grid_pos = ((mouse_pos[0]-p2_board_pos[0])//grid_size[0], (mouse_pos[1]-p2_board_pos[1])//grid_size[1])
@@ -392,12 +379,12 @@ class State:
 		else:
 			self.left_click_ready = False
 
-	"""
+	def p1_turn(self):
+		"""
 		Description: This function handles player 1's turn after both players have placed their ships
 					 and allows them to click the other players board to make shots and then transitions
 					 into the next event stage until a player wins.
-	"""
-	def p1_turn(self):
+		"""
 		self.p1_fleet.show()
 
 		self.render_queue.add(Text("Player 1's turn:", (700, 50), 40, colors["red"], colors["green"]))
@@ -432,12 +419,12 @@ class State:
 			self.game_over = True
 		self.turnReady = False
 
-	"""
+	def p2_turn(self):
+		"""
 		Description: This function handles player 2's turn after both players have placed their ships
 					 and allows them to click the other players board to make shots and then transitions
 					 into the next event stage until a player wins.
-	"""
-	def p2_turn(self):
+		"""
 		self.p2_fleet.show()
 
 		self.render_queue.add(Text("Player 2's turn:", (700, 50), 40, colors["red"], colors["green"]))
@@ -472,12 +459,13 @@ class State:
 			self.game_over = True
 		self.turnReady = False
 
-	"""
-		Description: This function handles the end of either players turn to allow
-					 for a change of player without revealing the other players ship
-					 locations.
-	"""
 	def next_turn(self):
+		"""
+			Description: This function handles the end of either players turn to allow
+						 for a change of player without revealing the other players ship
+						 locations.
+		"""
+
 		self.p1_fleet.hide()
 		self.p2_fleet.hide()
 
@@ -501,10 +489,10 @@ class State:
 		else:
 			self.left_click_ready = False
 
-	"""
-		Description: This function Declares a winner for the current game state.
-	"""
 	def end_game(self):
+		"""
+			Description: This function Declares a winner for the current game state.
+		"""
 		if(self.p1_won):
 			self.render_queue.add(Text("Player 1 Has Won", (700, 50), 40, colors["red"], colors["white"]))
 		else:
@@ -556,8 +544,6 @@ class RenderQueue(list):
 
 	Queue wrapper to store objects ready to be rendered to screen.
 
-	Methods:
-		add() -> None
 	"""
 	def __init__(self):
 		list.__init__(self)
@@ -577,8 +563,6 @@ class Event:
 
 	Wrapper for function to be used as event.
 
-	Methods:
-		__call__(dt) -> None
 	"""
 	def __init__(self, func, is_time_dependent=False):
 		self.func = func

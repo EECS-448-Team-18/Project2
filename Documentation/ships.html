@@ -71,11 +71,15 @@ Methods defined here:<br>
 
 <dl><dt><a name="Fleet-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
 
-<dl><dt><a name="Fleet-add"><strong>add</strong></a>(self, ship)</dt></dl>
+<dl><dt><a name="Fleet-add"><strong>add</strong></a>(self, ship)</dt><dd><tt>Description:&nbsp;adds&nbsp;a&nbsp;ship&nbsp;to&nbsp;the&nbsp;fleet</tt></dd></dl>
 
-<dl><dt><a name="Fleet-hide"><strong>hide</strong></a>(self)</dt></dl>
+<dl><dt><a name="Fleet-hide"><strong>hide</strong></a>(self)</dt><dd><tt>Description:&nbsp;The&nbsp;purpose&nbsp;of&nbsp;this&nbsp;function&nbsp;is&nbsp;to&nbsp;hide&nbsp;the&nbsp;ships&nbsp;during&nbsp;the&nbsp;game&nbsp;so&nbsp;that&nbsp;the&nbsp;oppsing<br>
+player&nbsp;cannot&nbsp;see&nbsp;the&nbsp;other&nbsp;players&nbsp;ships&nbsp;while&nbsp;playing&nbsp;the&nbsp;game.<br>
+Postcondition:&nbsp;This&nbsp;function&nbsp;will&nbsp;call&nbsp;a&nbsp;helper&nbsp;function&nbsp;called&nbsp;show&nbsp;that&nbsp;makes&nbsp;the&nbsp;ship&nbsp;visible</tt></dd></dl>
 
-<dl><dt><a name="Fleet-show"><strong>show</strong></a>(self)</dt></dl>
+<dl><dt><a name="Fleet-show"><strong>show</strong></a>(self)</dt><dd><tt>Description:&nbsp;The&nbsp;puropse&nbsp;of&nbsp;this&nbsp;function&nbsp;is&nbsp;for&nbsp;the&nbsp;player&nbsp;to&nbsp;see&nbsp;their&nbsp;ships&nbsp;during&nbsp;the&nbsp;placing<br>
+phase&nbsp;before&nbsp;the&nbsp;game&nbsp;starts.<br>
+Postcondition:&nbsp;This&nbsp;function&nbsp;will&nbsp;call&nbsp;a&nbsp;helper&nbsp;function&nbsp;called&nbsp;hide&nbsp;that&nbsp;makes&nbsp;the&nbsp;ship&nbsp;hidden</tt></dd></dl>
 
 <hr>
 Data descriptors defined here:<br>
@@ -192,15 +196,25 @@ before&nbsp;adding&nbsp;the&nbsp;<a href="pygame.sprite.html#Sprite">Sprite</a>&
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="Ship-__init__"><strong>__init__</strong></a>(self, length, ship_type)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+<dl><dt><a name="Ship-__init__"><strong>__init__</strong></a>(self, length, ship_type)</dt><dd><tt>Description:&nbsp;This&nbsp;function&nbsp;deals&nbsp;with&nbsp;the&nbsp;ship&nbsp;sprite&nbsp;itself.<br>
+Postcondition:&nbsp;The&nbsp;user&nbsp;will&nbsp;have&nbsp;a&nbsp;ship&nbsp;sprite&nbsp;to&nbsp;interact&nbsp;with.<br>
+Preconditon:&nbsp;This&nbsp;function&nbsp;takes&nbsp;in&nbsp;a&nbsp;length&nbsp;and&nbsp;ship&nbsp;type.&nbsp;The&nbsp;length&nbsp;is&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;ship(1x1,&nbsp;1x2,&nbsp;1x3,<br>
+1x4,&nbsp;1x5)&nbsp;and&nbsp;and&nbsp;the&nbsp;ship_type&nbsp;deals&nbsp;with&nbsp;what&nbsp;kind&nbsp;of&nbsp;ship&nbsp;sprite&nbsp;correlates&nbsp;with&nbsp;the&nbsp;length.</tt></dd></dl>
 
-<dl><dt><a name="Ship-hide"><strong>hide</strong></a>(self)</dt></dl>
+<dl><dt><a name="Ship-hide"><strong>hide</strong></a>(self)</dt><dd><tt>Description:&nbsp;This&nbsp;funciton&nbsp;is&nbsp;what&nbsp;makes&nbsp;the&nbsp;ship&nbsp;hidden.<br>
+Postcodition:&nbsp;Will&nbsp;only&nbsp;return&nbsp;true.&nbsp;Returning&nbsp;true&nbsp;will&nbsp;make&nbsp;the&nbsp;ship&nbsp;disappear&nbsp;on&nbsp;screen.</tt></dd></dl>
 
-<dl><dt><a name="Ship-move"><strong>move</strong></a>(self, pos)</dt></dl>
+<dl><dt><a name="Ship-move"><strong>move</strong></a>(self, pos)</dt><dd><tt>Description:&nbsp;This&nbsp;function&nbsp;deals&nbsp;with&nbsp;moving&nbsp;the&nbsp;ship&nbsp;around&nbsp;with&nbsp;your&nbsp;mouse.<br>
+Precondition:&nbsp;This&nbsp;function&nbsp;will&nbsp;take&nbsp;in&nbsp;a&nbsp;positon&nbsp;that&nbsp;is&nbsp;used&nbsp;to&nbsp;move&nbsp;the&nbsp;ship&nbsp;with&nbsp;the&nbsp;mouse<br>
+Postconditon:&nbsp;While&nbsp;this&nbsp;function&nbsp;doesn't&nbsp;return&nbsp;anything,&nbsp;it&nbsp;will&nbsp;allow&nbsp;user&nbsp;to&nbsp;move&nbsp;their<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ship&nbsp;to&nbsp;the&nbsp;location&nbsp;that&nbsp;they&nbsp;want&nbsp;so&nbsp;they&nbsp;can&nbsp;later&nbsp;click&nbsp;and&nbsp;cement&nbsp;the&nbsp;location.</tt></dd></dl>
 
-<dl><dt><a name="Ship-rotate"><strong>rotate</strong></a>(self)</dt></dl>
+<dl><dt><a name="Ship-rotate"><strong>rotate</strong></a>(self)</dt><dd><tt>Descritption:&nbsp;This&nbsp;function&nbsp;allows&nbsp;the&nbsp;user&nbsp;to&nbsp;rotate&nbsp;their&nbsp;ship.<br>
+Postcondition:&nbsp;The&nbsp;user&nbsp;will&nbsp;be&nbsp;able&nbsp;to&nbsp;rotate&nbsp;their&nbsp;ship&nbsp;by&nbsp;90&nbsp;degrees&nbsp;to&nbsp;their&nbsp;desired&nbsp;direction<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;later,&nbsp;will&nbsp;be&nbsp;able&nbsp;to&nbsp;set&nbsp;the&nbsp;ship&nbsp;in&nbsp;that&nbsp;position</tt></dd></dl>
 
-<dl><dt><a name="Ship-show"><strong>show</strong></a>(self)</dt></dl>
+<dl><dt><a name="Ship-show"><strong>show</strong></a>(self)</dt><dd><tt>Description:&nbsp;This&nbsp;funciton&nbsp;is&nbsp;what&nbsp;makes&nbsp;the&nbsp;ship&nbsp;visible.<br>
+Postcodition:&nbsp;Will&nbsp;only&nbsp;return&nbsp;false.&nbsp;Returning&nbsp;false&nbsp;will&nbsp;make&nbsp;the&nbsp;ship&nbsp;visible&nbsp;on&nbsp;screen.</tt></dd></dl>
 
 <hr>
 Data and other attributes defined here:<br>

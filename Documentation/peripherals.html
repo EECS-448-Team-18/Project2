@@ -155,11 +155,17 @@ Data and other attributes inherited from <a href="builtins.html#dict">builtins.d
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-get_key"><strong>get_key</strong></a>(key) -&gt; bool</dt></dl>
- <dl><dt><a name="-get_left_click"><strong>get_left_click</strong></a>() -&gt; bool</dt></dl>
- <dl><dt><a name="-get_mouse"><strong>get_mouse</strong></a>() -&gt; dict</dt></dl>
- <dl><dt><a name="-get_mouse_pos"><strong>get_mouse_pos</strong></a>() -&gt; tuple</dt></dl>
- <dl><dt><a name="-get_right_click"><strong>get_right_click</strong></a>() -&gt; bool</dt></dl>
+<td width="100%"><dl><dt><a name="-get_key"><strong>get_key</strong></a>(key) -&gt; bool</dt><dd><tt>Postcondition:&nbsp;Returns&nbsp;a&nbsp;key&nbsp;inside&nbsp;dictionary&nbsp;keys.&nbsp;If&nbsp;that&nbsp;fails,&nbsp;it&nbsp;will&nbsp;raise&nbsp;an&nbsp;exception.<br>
+Precondition:&nbsp;Key&nbsp;needs&nbsp;to&nbsp;exist&nbsp;in&nbsp;the&nbsp;dicitonary.</tt></dd></dl>
+ <dl><dt><a name="-get_left_click"><strong>get_left_click</strong></a>() -&gt; bool</dt><dd><tt>Postcondition:&nbsp;The&nbsp;function&nbsp;will&nbsp;return&nbsp;if&nbsp;the&nbsp;left&nbsp;click&nbsp;when&nbsp;pressed.<br>
+Precondition:&nbsp;The&nbsp;user&nbsp;has&nbsp;to&nbsp;click&nbsp;the&nbsp;the&nbsp;left&nbsp;click&nbsp;on&nbsp;the&nbsp;mouse.<br>
+Description:&nbsp;Meant&nbsp;to&nbsp;return&nbsp;if&nbsp;the&nbsp;left&nbsp;mouse&nbsp;click&nbsp;was&nbsp;pressed.</tt></dd></dl>
+ <dl><dt><a name="-get_mouse"><strong>get_mouse</strong></a>() -&gt; dict</dt><dd><tt>Description:&nbsp;returns&nbsp;the&nbsp;where&nbsp;a&nbsp;mouse&nbsp;click&nbsp;has&nbsp;happened&nbsp;on&nbsp;the&nbsp;screen</tt></dd></dl>
+ <dl><dt><a name="-get_mouse_pos"><strong>get_mouse_pos</strong></a>() -&gt; tuple</dt><dd><tt>Postcondition:&nbsp;The&nbsp;function&nbsp;will&nbsp;return&nbsp;the&nbsp;position&nbsp;of&nbsp;the&nbsp;mouse.<br>
+Description:&nbsp;Meant&nbsp;to&nbsp;return&nbsp;if&nbsp;the&nbsp;right&nbsp;mouse&nbsp;click&nbsp;was&nbsp;pressed.</tt></dd></dl>
+ <dl><dt><a name="-get_right_click"><strong>get_right_click</strong></a>() -&gt; bool</dt><dd><tt>Postcondition:&nbsp;The&nbsp;function&nbsp;will&nbsp;return&nbsp;if&nbsp;the&nbsp;right&nbsp;click&nbsp;when&nbsp;pressed.<br>
+Precondition:&nbsp;The&nbsp;user&nbsp;has&nbsp;to&nbsp;click&nbsp;the&nbsp;the&nbsp;right&nbsp;click&nbsp;on&nbsp;the&nbsp;mouse.<br>
+Description:&nbsp;Meant&nbsp;to&nbsp;return&nbsp;if&nbsp;the&nbsp;right&nbsp;mouse&nbsp;click&nbsp;was&nbsp;pressed.</tt></dd></dl>
 </td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#55aa55">
