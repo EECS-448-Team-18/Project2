@@ -122,7 +122,9 @@ class Engine:
 				self.render_image(obj.image_name, obj.pos, obj.scale, obj.angle)
 			elif obj.render_type == "board":
 				self.render_board(obj.board, obj.pos, obj.color_1, obj.color_2)
-
+			elif obj.render_type == "roundrect":
+                                self.render_roundedRect(obj.pos, obj.size, obj.fill_color, obj.alpha)
+                                
 	def render_rect(self, pos, size, fill_color, alpha) -> None:
 		"""
 		Blits rect to screen. Alpha is opacity and ranges from 0-255.
@@ -156,7 +158,7 @@ class Engine:
 		"""
 		Blits circle to screen. Alpha is opacity and ranges from 0-255.
 		"""
-		frame_size = (radius*2, radius*2)
+		frame_size = (radius * 2, radius* 2)
 		rel_x = radius
 		rel_y = radius
 
@@ -169,6 +171,20 @@ class Engine:
 
 		pygame.draw.circle(surface, fill_color, (rel_x, rel_y), radius)
 		self.screen.blit(surface, pos)
+	def render_roundedRect(self, pos, size, fill_color, alpha) -> None:
+		"""
+		Blits rounded rectangle to screen. Alpha is opacity and ranges from 0-255.
+		"""
+		rectangle = (pos, size)
+		width, height = size
+		x,y = pos
+		rel_x =int(x)
+		rel_y =int(height/2) +y
+		radius = height/2
+		pygame.draw.circle(self.screen, fill_color, (rel_x, rel_y), int (radius) )
+		pygame.draw.rect(self.screen, fill_color, rectangle)
+		rel_x = int(x)+width
+		pygame.draw.circle(self.screen, fill_color, (rel_x, rel_y), int (radius) )
 
 	def render_image(self, image_name, pos, scale, angle) -> None:
 		"""

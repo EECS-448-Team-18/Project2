@@ -32,6 +32,18 @@ class Text(Render_Definition):
 		self.font_size = font_size
 		self.text_color = text_color
 		self.text_background = text_background
+		
+class RoundedRect(Render_Definition):
+        def __init__(self, pos, size, fill_color, roundness=0, alpha=255):
+                Render_Definition.__init__(self)
+                self.render_type = "roundrect"
+                self.pos = pos
+                self.size = size
+                self.fill_color = fill_color
+                self.alpha = alpha
+                self.roundness = roundness
+        def mouse_over(self, pos):
+                return (self.pos[0] <= pos[0] <= (self.pos[0] + self.size[0])) and (self.pos[1] <= pos[1] <= (self.pos[1] + self.size[1]))   
 
 class Rectangle(Render_Definition):
 	"""
@@ -87,4 +99,4 @@ class Board(Render_Definition):
 		self.color_1 = color_1
 		self.color_2 = color_2
 
-render_types = [Text, Rectangle, Circle, Image, Board]
+render_types = [Text, Rectangle, Circle, Image, Board, RoundedRect]
