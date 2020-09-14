@@ -477,9 +477,9 @@ class State:
 		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
 		self.render_queue.add(Board(self.p2_board, p2_board_pos, colors["light_blue"], colors["dark_blue"]))
 
-		next_turn_button = Rectangle((615,200), (200, 75), colors["blue"])
+		next_turn_button = RoundedRect((615,800), (200, 75), colors["blue"])
 		self.render_queue.add(next_turn_button)
-		self.render_queue.add(Text("Next Players Turn", (715, 235), 20, colors["red"], colors["white"]))
+		self.render_queue.add(Text("Next Players Turn", (715, 835), 20, colors["red"], colors["white"]))
 
 		if not has_clicked:
 			if not self.left_click_ready:
