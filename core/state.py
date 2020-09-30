@@ -479,7 +479,7 @@ class State:
 
 		next_turn_button = RoundedRect((615,800), (200, 75), colors["blue"])
 		self.render_queue.add(next_turn_button)
-		self.render_queue.add(Text("Next Players Turn", (715, 835), 20, colors["red"], colors["white"]))
+		self.render_queue.add(Text("Next Turn", (715, 835), 20, colors["red"], colors["white"]))
 
 		if not has_clicked:
 			if not self.left_click_ready:
@@ -498,8 +498,8 @@ class State:
 		else:
 			self.render_queue.add(Text("Player 2 Has Won", (700, 50), 40, colors["red"], colors["white"]))
 
-		again_button = {"rect": Rectangle((470,450),(buttonWidth,buttonHeight),colors["blue"]),
-				"text": Text("Play again?", (buttonWidth + 235, buttonHeight + 325), 40, colors["blue"], colors["white"])}
+		again_button = {"rect": Rectangle((560,450),(buttonWidth,buttonHeight),colors["blue"]),
+				"text": Text("Play again?", (buttonWidth + 400, buttonHeight + 325), 40, colors["blue"], colors["white"])}
 		self.render_queue.add(again_button["rect"])
 		self.render_queue.add(again_button["text"])
 
