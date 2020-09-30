@@ -8,9 +8,14 @@ Date: 09/13/20
 """
 
 import sys
+from pygame import mixer
 from game import Game
 
 
+#background sound
+
+mixer.music.load('background.mp3')
+mixer.music.play(-1)
 
 def main(argv):
 	game = Game()
