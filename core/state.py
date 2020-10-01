@@ -26,6 +26,9 @@ class State:
 		# main game components
 		self.p1_board = GameBoard()
 		self.p2_board = GameBoard()
+		""" (LN) Create another game board for AI
+		self.AI_board = GameBoard()
+		"""
 
 		self.render_queue = RenderQueue()
 
@@ -33,8 +36,12 @@ class State:
 					"menu": Event(self.menu),
 					"p1_place_ships": Event(self.p1_place_ships),
 					"p2_place_ships": Event(self.p2_place_ships),
+					"""
+					"AI_place_ships": Event(self.AI_place_ships),
+					"""
 					"p1_turn": Event(self.p1_turn),
 					"p2_turn": Event(self.p2_turn),
+					""""AI_turn": Event(self.AI_turn),"""
 					"next_turn": Event(self.next_turn),
 					"game_over": Event(self.end_game),
 				}
@@ -51,6 +58,7 @@ class State:
 
 		self.p1_fleet = Fleet()
 		self.p2_fleet = Fleet()
+		self.AI_fleet = Fleet()
 
 		self.all_ships = [self.p1_fleet, self.p2_fleet]
 
@@ -58,21 +66,26 @@ class State:
 
 		self.p1_ship_counter = 1
 		self.p2_ship_counter = 1
+		self.AI_ship_counter = 1
 
 		self.p1_ships_placed = False
 		self.p2_ships_placed = False
+		"""self.AI_ships_placed = False"""
 
 		self.p1_turn_over = False
 		self.p2_turn_over = False
+		"""self.AI_turn_over = False"""
 		self.turnReady = False
 
 		self.p1_hit_points = 0
 		self.p2_hit_points = 0
+		"""self.AI_hit_points = 0"""
 
 		self.game_over = False
 
 		self.p1_won = False
 		self.p2_won = False
+		"""self.AI_won = False"""
 
 
 	def run_event(self, dt) -> None:
@@ -88,6 +101,10 @@ class State:
 		"""
 		Conditionals determining game event logic. Decides next event based on previous event
 			that has just been completed and any other necessary logic.
+		"""
+		"""(LN) 2 scenarios: 
+		1. check the prev.event == dashboard and they choose single mode->menu(user_selection)->p1_place_ship->...
+		2. multiple mode
 		"""
 		if self.prev_event == "menu" and self.user_selection == 0:
 			return "menu"
@@ -200,6 +217,23 @@ class State:
 		Returns time passed rounded to 3 decimals since game has started
 		"""
 		return round(time()-self.timer, 3)
+	
+	""" (LN) the user can choose single player mode (with AI) and choose multi-players mode (2 players)
+	 so we need 2 buttons: single player and multi-players
+	 3 more buttons about levels of difficulties
+
+	"""
+	def dashboard(self):
+		button: {
+			1: {"rect": RoundedRect((buttonx, buttony), (buttonWidth, buttonHeight), colors["blue"]),
+						"text": Text("Single Player", (buttonx + 100, buttony +75), 50, colors["white"]),
+                                                    "Image": Image("patrol", (buttonx + 250, buttony +30), 20, -90)},
+			2: {"rect": RoundedRect((0.87*(screen_size[0]-buttonWidth), buttony), (buttonWidth, buttonHeight), colors["blue"]),
+						"text": Text("Multiple Players", (0.95*(screen_size[0]-buttonWidth), buttony +75), 50, colors["white"]),
+                                                    "Image": Image("submarine", (0.95*(screen_size[0]-buttonWidth)+180, buttony +20), 20, -90) },
+		}
+	
+	
 
 	def menu(self):
 		"""
@@ -289,6 +323,7 @@ class State:
 			self.right_click_ready = False
 
 		self.render_queue.add(Image("grid",(5,135)))
+		""" keep track ship position"""
 		self.render_queue.add(Board(self.p1_board, p1_board_pos, colors["light_blue"], colors["dark_blue"]))
 		self.render_queue.add(Text("Player 1's turn:", (700, 50), 40, colors["red"], colors["green"]))
 		self.render_queue.add(Text("Num ships: " + str(self.user_selection), (1000, 300), 40, colors["red"], colors["white"]))
@@ -310,7 +345,7 @@ class State:
 					curr_ship.selected = False
 					self.p1_ship_counter += 1
 					self.left_click_ready = False
-
+					""" keep track ship position """
 					self.map_Ships(self.p1_board,curr_ship)
 
 					if self.p1_ship_counter > self.user_selection:
@@ -378,6 +413,11 @@ class State:
 			self.left_click_ready = True
 		else:
 			self.left_click_ready = False
+	"""(LN) there is a random function of python, AI can set random ships, make sure to check. 
+	Check the valid position, it's ok return true
+	
+	def AI_place_ships(self):
+	"""
 
 	def p1_turn(self):
 		"""
@@ -403,14 +443,15 @@ class State:
 			normal_pos = ((mouse_pos[1]-p2_board_pos[1])//grid_size[1], (mouse_pos[0]-p2_board_pos[0])//grid_size[0])
 			if normal_pos in self.p2_board:
 				grid_pos = (normal_pos[0]*grid_size[0] + p2_board_pos[0], normal_pos[1]*grid_size[1] + p2_board_pos[1])
+				"""Check is there anything there"""
 				if(self.p2_board.get(normal_pos[0],normal_pos[1]) == 1):
-					self.p2_board.set(normal_pos[0],normal_pos[1],3)
+					self.p2_board.set(normal_pos[0],normal_pos[1],3) """miss(sound effect)"""
 					self.p1_turn_over = True
 					self.p2_turn_over = False
 					self.p2_hit_points -=1
 					self.p1_fleet.hide()
 				elif(self.p2_board.get(normal_pos[0],normal_pos[1]) == 0):
-					self.p2_board.set(normal_pos[0],normal_pos[1],2)
+					self.p2_board.set(normal_pos[0],normal_pos[1],2) """hit"""
 					self.p1_turn_over = True
 					self.p2_turn_over = False
 					self.p1_fleet.hide()
@@ -458,12 +499,19 @@ class State:
 			self.p2_won = True
 			self.game_over = True
 		self.turnReady = False
+	
+	""" (LN)
+	def AI_turn(self): 3 levels 
+	parameter describe levels 1: easy, 2 medium, 3 is hard
+
+	"""
 
 	def next_turn(self):
 		"""
 			Description: This function handles the end of either players turn to allow
 						 for a change of player without revealing the other players ship
 						 locations.
+			(LN) do it after done with AI place ship and level
 		"""
 
 		self.p1_fleet.hide()
