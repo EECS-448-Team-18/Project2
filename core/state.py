@@ -290,21 +290,12 @@ class State:
 				2: {"rect": RoundedRect((0.87*(screen_size[0]-buttonWidth), buttony), (buttonWidth, buttonHeight), colors["blue"]),
 						"text": Text("AI Easy", (0.95*(screen_size[0]-buttonWidth), buttony +95), 50, colors["white"]),
                                                     "Image": Image("submarine", (0.95*(screen_size[0]-buttonWidth)+180, buttony +20), 20, -90) },
-<<<<<<< HEAD
 				3:  {"rect": RoundedRect((buttonx, buttonHeight+100), (buttonWidth, buttonHeight), colors["blue"]),
 						"text": Text("AI Medium", (buttonx + 100,  buttonHeight +180), 50, colors["white"]) ,
                                                     "Image": Image("cruiser", (buttonx + 260, buttonHeight +110), 15, -90)},
 				4:  {"rect": RoundedRect((0.87*(screen_size[0]-buttonWidth),buttonHeight+100 ), (buttonWidth, buttonHeight), colors["blue"]),
 						"text": Text("AI Hard", (0.95*(screen_size[0]-buttonWidth), buttonHeight +180), 50, colors["white"]),
                                                     "Image": Image("battleship", (0.95*(screen_size[0]-buttonWidth)+200, buttonHeight +105), 12, -90) },
-=======
-				3:  {"rect": RoundedRect((buttonx, buttonHeight+340), (buttonWidth, buttonHeight), colors["blue"]),
-						"text": Text("AI medium", (buttonx + 100,  buttonHeight + 445), 50, colors["white"]) ,
-                                                    "Image": Image("cruiser", (buttonx + 260, buttonHeight +350), 15, -90)},
-				4:  {"rect": RoundedRect((0.87*(screen_size[0]-buttonWidth),buttonHeight+340), (buttonWidth, buttonHeight), colors["blue"]),
-						"text": Text("AI hard", (0.95*(screen_size[0]-buttonWidth), buttonHeight + 445), 50, colors["white"]),
-                                                    "Image": Image("battleship", (0.95*(screen_size[0]-buttonWidth)+200, buttonHeight + 345), 12, -90) },
->>>>>>> 3ed09fed1690ca8eed808f64b495b7f47fe09d6b
 				
 			}
 			
