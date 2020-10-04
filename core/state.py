@@ -1,7 +1,7 @@
 """
 File name: state.py
 Authors: Grant Holmes, Luke Less'Ard-Springett, Fares Elattar, Peyton Doherty, Luke Beesley
-Contributor: Xiaoyi Lu, Linh Nguyen, Achyut Paudel, Evelyn Thomas, Abhigyan Saxena
+Maintainers: Xiaoyi Lu, Linh Nguyen, Achyut Paudel, Evelyn Thomas, Abhigyan Saxena
 Description: Tracks game state and implements game events. Handles game logic. Add the AI feature and custom feature.
 Date: 10/4/2020
 """
@@ -550,8 +550,8 @@ class State:
 	def p2_turn(self):
 		"""
 		Description: With multiple player mode: this function handles player 2's turn after both players have placed their ships
-					 and allows them to click the other players board to make shots and then transitions
-					 into the next event stage until a player wins.
+					 and allows them to click the other players board to make shots and then transitions into the next event stage 
+					 until a player wins.
 					 With AI mode: three levels of difficuty based on the player's choice, allows AI make shots and then transitions
 					 into the next event stage until a player wins.
 		"""

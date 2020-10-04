@@ -3,8 +3,9 @@
 """
 File name: __main__.py
 Authors: Grant Holmes, Luke Less'Ard-Springett, Fares Elattar, Peyton Doherty, Luke Beesley
-Description: Entrypoint to the game.
-Date: 09/13/20
+Maintainer: Abhigyan Saxena
+Description: Entrypoint to the game and update the background effect.
+Date: 10/4/20
 """
 
 import sys
@@ -13,7 +14,6 @@ from game import Game
 
 
 #background sound
-
 mixer.music.load('background.mp3')
 mixer.music.play(-1)
 

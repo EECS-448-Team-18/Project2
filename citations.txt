@@ -1,5 +1,7 @@
 Citations:
 	Python Standard Library including but not limited to os and sys
+
+	Python Random Function
 	
 	Pygame
 	Author(s) name: Pygame Community
@@ -8,3 +10,5 @@ Citations:
 	Code version: 1.9.6
 	Type: Library
 	Web address: https://www.pygame.org/news
+
+	
