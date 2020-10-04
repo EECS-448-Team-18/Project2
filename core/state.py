@@ -11,6 +11,7 @@ from core.peripherals import *  # checks for mouse and keyboard stuff
 from data.assets import colors
 from data.elements import *
 from core.ships import Fleet, Ship
+from pygame import mixer
 from data import settings
 from itertools import product
 from random import choice 
@@ -290,21 +291,12 @@ class State:
 				2: {"rect": RoundedRect((0.87*(screen_size[0]-buttonWidth), buttony), (buttonWidth, buttonHeight), colors["blue"]),
 						"text": Text("AI Easy", (0.95*(screen_size[0]-buttonWidth), buttony +95), 50, colors["white"]),
                                                     "Image": Image("submarine", (0.95*(screen_size[0]-buttonWidth)+180, buttony +20), 20, -90) },
-<<<<<<< HEAD
 				3:  {"rect": RoundedRect((buttonx, buttonHeight+100), (buttonWidth, buttonHeight), colors["blue"]),
 						"text": Text("AI Medium", (buttonx + 100,  buttonHeight +180), 50, colors["white"]) ,
                                                     "Image": Image("cruiser", (buttonx + 260, buttonHeight +110), 15, -90)},
 				4:  {"rect": RoundedRect((0.87*(screen_size[0]-buttonWidth),buttonHeight+100 ), (buttonWidth, buttonHeight), colors["blue"]),
 						"text": Text("AI Hard", (0.95*(screen_size[0]-buttonWidth), buttonHeight +180), 50, colors["white"]),
                                                     "Image": Image("battleship", (0.95*(screen_size[0]-buttonWidth)+200, buttonHeight +105), 12, -90) },
-=======
-				3:  {"rect": RoundedRect((buttonx, buttonHeight+340), (buttonWidth, buttonHeight), colors["blue"]),
-						"text": Text("AI medium", (buttonx + 100,  buttonHeight + 445), 50, colors["white"]) ,
-                                                    "Image": Image("cruiser", (buttonx + 260, buttonHeight +350), 15, -90)},
-				4:  {"rect": RoundedRect((0.87*(screen_size[0]-buttonWidth),buttonHeight+340), (buttonWidth, buttonHeight), colors["blue"]),
-						"text": Text("AI hard", (0.95*(screen_size[0]-buttonWidth), buttonHeight + 445), 50, colors["white"]),
-                                                    "Image": Image("battleship", (0.95*(screen_size[0]-buttonWidth)+200, buttonHeight + 345), 12, -90) },
->>>>>>> 3ed09fed1690ca8eed808f64b495b7f47fe09d6b
 				
 			}
 			
@@ -528,6 +520,8 @@ class State:
 			if normal_pos in self.p2_board:
 				grid_pos = (normal_pos[0]*grid_size[0] + p2_board_pos[0], normal_pos[1]*grid_size[1] + p2_board_pos[1])
 				if(self.p2_board.get(normal_pos[0],normal_pos[1]) == 1):
+					canonsound = mixer.Sound('canonshot.wav')
+					canonsound.play()
 					self.p2_board.set(normal_pos[0],normal_pos[1],3)
 					self.p1_turn_over = True
 					self.p2_turn_over = False
@@ -537,6 +531,8 @@ class State:
 					
 
 				elif(self.p2_board.get(normal_pos[0],normal_pos[1]) == 0):
+					miss = mixer.Sound('miss.wav')
+					miss.play()
 					self.p2_board.set(normal_pos[0],normal_pos[1],2)
 					self.p1_turn_over = True
 					self.p2_turn_over = False
@@ -545,6 +541,8 @@ class State:
 
 					
 		if(self.p2_hit_points == 0):
+			victory = mixer.Sound('victory.wav')
+			victory.play()
 			self.p1_won = True
 			self.game_over = True
 		self.turnReady = False
@@ -578,17 +576,23 @@ class State:
 				if normal_pos in self.p1_board:
 					grid_pos = (normal_pos[0]*grid_size[0] + p1_board_pos[0], normal_pos[1]*grid_size[1] + p1_board_pos[1])
 					if(self.p1_board.get(normal_pos[0],normal_pos[1]) == 1):
+						canonsound = mixer.Sound('canonshot.wav')
+						canonsound.play()
 						self.p1_board.set(normal_pos[0],normal_pos[1],3)
 						self.p1_turn_over = False
 						self.p2_turn_over = True
 						self.p1_hit_points -=1
 						self.p2_fleet.hide()
 					elif (self.p1_board.get(normal_pos[0],normal_pos[1]) == 0):
+						miss = mixer.Sound('miss.wav')
+						miss.play()
 						self.p1_board.set(normal_pos[0],normal_pos[1],2)
 						self.p1_turn_over = False
 						self.p2_turn_over = True
 						self.p2_fleet.hide()
 			if(self.p1_hit_points == 0):
+				victory = mixer.Sound('victory.wav')
+				victory.play()
 				self.p2_won = True
 				self.game_over = True
 			self.turnReady = False
@@ -609,6 +613,8 @@ class State:
 				self.p2_fleet.hide()			
 
 			if(self.p1_hit_points == 0):
+				victory = mixer.Sound('victory.wav')
+				victory.play()
 				self.p2_won = True
 				self.game_over = True
 			self.turnReady = False	
@@ -631,6 +637,8 @@ class State:
 					break
 
 			if(self.p1_hit_points == 0):
+				victory = mixer.Sound('victory.wav')
+				victory.play()
 				self.p2_won = True
 				self.game_over = True
 			self.turnReady = False
@@ -751,3 +759,4 @@ class Event:
 		else:
 			self.output = self.func()
 		return self.output
+
