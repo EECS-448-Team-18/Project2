@@ -1,8 +1,9 @@
 """
 File name: state.py
 Authors: Grant Holmes, Luke Less'Ard-Springett, Fares Elattar, Peyton Doherty, Luke Beesley
-Description: Tracks game state and implements game events. Handles game logic.
-Date: 09/13/2020
+Contributor: Xiaoyi Lu, Linh Nguyen, Achyut Paudel, Evelyn Thomas, Abhigyan Saxena
+Description: Tracks game state and implements game events. Handles game logic. Add the AI feature and custom feature.
+Date: 10/4/2020
 """
 
 from core.board import GameBoard
@@ -278,8 +279,8 @@ class State:
 	
 	def diff_selection(self):
 		"""
-			Description: This function handles the selection of how many ships the players
-						 want to play with.
+			Description: This function handles the selection of mode the player choose: Multiplayer and AI with
+			three levels of difficuty
 		"""
 
 		buttons = {
@@ -290,10 +291,10 @@ class State:
 						"text": Text("AI Easy", (0.95*(screen_size[0]-buttonWidth), buttony +75), 50, colors["white"]),
                                                     "Image": Image("submarine", (0.95*(screen_size[0]-buttonWidth)+180, buttony +20), 20, -90) },
 				3:  {"rect": RoundedRect((buttonx, buttonHeight+100), (buttonWidth, buttonHeight), colors["blue"]),
-						"text": Text("AI medium", (buttonx + 100,  buttonHeight +180), 50, colors["white"]) ,
+						"text": Text("AI Medium", (buttonx + 100,  buttonHeight +180), 50, colors["white"]) ,
                                                     "Image": Image("cruiser", (buttonx + 260, buttonHeight +110), 15, -90)},
 				4:  {"rect": RoundedRect((0.87*(screen_size[0]-buttonWidth),buttonHeight+100 ), (buttonWidth, buttonHeight), colors["blue"]),
-						"text": Text("AI hard", (0.95*(screen_size[0]-buttonWidth), buttonHeight +180), 50, colors["white"]),
+						"text": Text("AI Hard", (0.95*(screen_size[0]-buttonWidth), buttonHeight +180), 50, colors["white"]),
                                                     "Image": Image("battleship", (0.95*(screen_size[0]-buttonWidth)+200, buttonHeight +105), 12, -90) },
 				
 			}
@@ -388,11 +389,13 @@ class State:
 
 	def p2_place_ships(self):
 		"""
-			Description: This function is responsible for having player 2 place their Ships
+			Description: This function is responsible for having player 2 (or AI) place their Ships
 						 on their board. If a player tries to place a ship it is checked
-						 if it is on the grid and does not collide with other ships.
+						 if it is on the grid and does not collide with other ships. AI will randomly
+						 place a ship with valid position.
 			Helper Functions: valid_position and map_Ships
 		"""
+		#Multiple player mode
 		if self.diff_selection == 1:
 			mouse_pos = get_mouse_pos()
 			grid_pos = ((mouse_pos[0]-p2_board_pos[0])//grid_size[0], (mouse_pos[1]-p2_board_pos[1])//grid_size[1])
@@ -443,7 +446,7 @@ class State:
 				self.left_click_ready = True
 			else:
 				self.left_click_ready = False
-		elif self.diff_selection == 4:
+		elif self.diff_selection != 1:
 
 			# randomly choose a tuple coordinates from the list
 			grid_pos = choice(self.list_of_p2_coords)
@@ -497,7 +500,7 @@ class State:
 					 into the next event stage until a player wins.
 		"""
 		self.p1_fleet.show()
-		# self.p2_fleet.show()
+		self.p2_fleet.show()
 
 		self.render_queue.add(Text("Player 1's turn:", (700, 50), 40, colors["red"], colors["green"]))
 
@@ -539,10 +542,13 @@ class State:
 
 	def p2_turn(self):
 		"""
-		Description: This function handles player 2's turn after both players have placed their ships
+		Description: With multiple player mode: this function handles player 2's turn after both players have placed their ships
 					 and allows them to click the other players board to make shots and then transitions
 					 into the next event stage until a player wins.
+					 With AI mode: three levels of difficuty based on the player's choice, allows AI make shots and then transitions
+					 into the next event stage until a player wins.
 		"""
+		# Multiple player mode
 		if self.diff_selection == 1:
 			self.p2_fleet.show()
 
@@ -578,8 +584,28 @@ class State:
 				self.game_over = True
 			self.turnReady = False
 
-		elif self.diff_selection == 4:
+		# AI level of difficuty: easy
+		elif self.diff_selection == 2:
+			(x,y) = choice(self.list_of_p2_coords)
+			if(self.p1_board.get(x,y) == 1):
+				self.p1_board.set(x,y,3)
+				self.p1_turn_over = False
+				self.p2_turn_over = True
+				self.p1_hit_points -=1
+				self.p2_fleet.hide()
+			elif (self.p1_board.get(x,y) == 0):
+				self.p1_board.set(x,y,2)
+				self.p1_turn_over = False
+				self.p2_turn_over = True
+				self.p2_fleet.hide()			
 
+			if(self.p1_hit_points == 0):
+				self.p2_won = True
+				self.game_over = True
+			self.turnReady = False	
+
+		# AI level of difficuty: hard
+		elif self.diff_selection == 4:
 			len_of_axis = list(range(0,10)) 
 			for x in len_of_axis:
 				found = False
