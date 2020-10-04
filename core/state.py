@@ -223,16 +223,16 @@ class State:
 		"""
 		buttons = {
 				1: {"rect": RoundedRect((buttonx, buttony), (buttonWidth, buttonHeight), colors["blue"]),
-						"text": Text("One Ship", (buttonx + 100, buttony +75), 50, colors["white"]),
-                                                    "Image": Image("patrol", (buttonx + 250, buttony +30), 20, -90)},
+						"text": Text("One Ship", (buttonx + 100, buttony + 100), 50, colors["white"]),
+                                                    "Image": Image("patrol", (buttonx + 250, buttony +65), 20, -90)},
 				2: {"rect": RoundedRect((0.87*(screen_size[0]-buttonWidth), buttony), (buttonWidth, buttonHeight), colors["blue"]),
-						"text": Text("Two Ships", (0.95*(screen_size[0]-buttonWidth), buttony +75), 50, colors["white"]),
+						"text": Text("Two Ships", (0.95*(screen_size[0]-buttonWidth), buttony + 100), 50, colors["white"]),
                                                     "Image": Image("submarine", (0.95*(screen_size[0]-buttonWidth)+180, buttony +20), 20, -90) },
 				3:  {"rect": RoundedRect((buttonx, buttonHeight+100), (buttonWidth, buttonHeight), colors["blue"]),
-						"text": Text("Three Ships", (buttonx + 100,  buttonHeight +180), 50, colors["white"]) ,
+						"text": Text("Three Ships", (buttonx + 100,  buttonHeight +200), 50, colors["white"]) ,
                                                     "Image": Image("cruiser", (buttonx + 260, buttonHeight +110), 15, -90)},
 				4:  {"rect": RoundedRect((0.87*(screen_size[0]-buttonWidth),buttonHeight+100 ), (buttonWidth, buttonHeight), colors["blue"]),
-						"text": Text("Four Ships", (0.95*(screen_size[0]-buttonWidth), buttonHeight +180), 50, colors["white"]),
+						"text": Text("Four Ships", (0.95*(screen_size[0]-buttonWidth), buttonHeight +200), 50, colors["white"]),
                                                     "Image": Image("battleship", (0.95*(screen_size[0]-buttonWidth)+200, buttonHeight +105), 12, -90) },
 				5:  {"rect": RoundedRect((550,2*buttonHeight+150 ), (buttonWidth, buttonHeight), colors["blue"], 255),
 						"text": Text("Five Ships", (660, 2*buttonHeight +250), 50, colors["white"]),
@@ -285,17 +285,26 @@ class State:
 
 		buttons = {
 				1: {"rect": RoundedRect((buttonx, buttony), (buttonWidth, buttonHeight), colors["blue"]),
-						"text": Text("Multiplayer", (buttonx + 100, buttony +75), 50, colors["white"]),
-                                                    "Image": Image("patrol", (buttonx + 250, buttony +30), 20, -90)},
+						"text": Text("Multiplayer", (buttonx + 100, buttony +95), 50, colors["white"]),
+                                                    "Image": Image("patrol", (buttonx + 250, buttony +65), 20, -90)},
 				2: {"rect": RoundedRect((0.87*(screen_size[0]-buttonWidth), buttony), (buttonWidth, buttonHeight), colors["blue"]),
-						"text": Text("AI Easy", (0.95*(screen_size[0]-buttonWidth), buttony +75), 50, colors["white"]),
+						"text": Text("AI Easy", (0.95*(screen_size[0]-buttonWidth), buttony +95), 50, colors["white"]),
                                                     "Image": Image("submarine", (0.95*(screen_size[0]-buttonWidth)+180, buttony +20), 20, -90) },
+<<<<<<< HEAD
 				3:  {"rect": RoundedRect((buttonx, buttonHeight+100), (buttonWidth, buttonHeight), colors["blue"]),
 						"text": Text("AI Medium", (buttonx + 100,  buttonHeight +180), 50, colors["white"]) ,
                                                     "Image": Image("cruiser", (buttonx + 260, buttonHeight +110), 15, -90)},
 				4:  {"rect": RoundedRect((0.87*(screen_size[0]-buttonWidth),buttonHeight+100 ), (buttonWidth, buttonHeight), colors["blue"]),
 						"text": Text("AI Hard", (0.95*(screen_size[0]-buttonWidth), buttonHeight +180), 50, colors["white"]),
                                                     "Image": Image("battleship", (0.95*(screen_size[0]-buttonWidth)+200, buttonHeight +105), 12, -90) },
+=======
+				3:  {"rect": RoundedRect((buttonx, buttonHeight+340), (buttonWidth, buttonHeight), colors["blue"]),
+						"text": Text("AI medium", (buttonx + 100,  buttonHeight + 445), 50, colors["white"]) ,
+                                                    "Image": Image("cruiser", (buttonx + 260, buttonHeight +350), 15, -90)},
+				4:  {"rect": RoundedRect((0.87*(screen_size[0]-buttonWidth),buttonHeight+340), (buttonWidth, buttonHeight), colors["blue"]),
+						"text": Text("AI hard", (0.95*(screen_size[0]-buttonWidth), buttonHeight + 445), 50, colors["white"]),
+                                                    "Image": Image("battleship", (0.95*(screen_size[0]-buttonWidth)+200, buttonHeight + 345), 12, -90) },
+>>>>>>> 3ed09fed1690ca8eed808f64b495b7f47fe09d6b
 				
 			}
 			
@@ -646,7 +655,7 @@ class State:
 
 		next_turn_button = RoundedRect((615,800), (200, 75), colors["blue"])
 		self.render_queue.add(next_turn_button)
-		self.render_queue.add(Text("Next Players Turn", (715, 835), 20, colors["red"], colors["white"]))
+		self.render_queue.add(Text("Next Turn", (715, 835), 20, colors["red"], colors["white"]))
 
 		if not has_clicked:
 			if not self.left_click_ready:
@@ -661,12 +670,12 @@ class State:
 			Description: This function Declares a winner for the current game state.
 		"""
 		if(self.p1_won):
-			self.render_queue.add(Text("Player 1 Has Won", (700, 50), 40, colors["red"], colors["white"]))
+			self.render_queue.add(Text("Player 1 Has Won", (710, 250), 80, colors["red"], colors["white"]))
 		else:
-			self.render_queue.add(Text("Player 2 Has Won", (700, 50), 40, colors["red"], colors["white"]))
+			self.render_queue.add(Text("Player 2 Has Won", (710, 250), 80, colors["red"], colors["white"]))
 
-		again_button = {"rect": Rectangle((470,450),(buttonWidth,buttonHeight),colors["blue"]),
-				"text": Text("Play again?", (buttonWidth + 235, buttonHeight + 325), 40, colors["blue"], colors["white"])}
+		again_button = {"rect": Rectangle((550,450),(buttonWidth,buttonHeight),colors["blue"]),
+				"text": Text("Play again?", (buttonWidth + 400, buttonHeight + 345), 40, colors["blue"], colors["white"])}
 		self.render_queue.add(again_button["rect"])
 		self.render_queue.add(again_button["text"])
 
