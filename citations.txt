@@ -11,4 +11,8 @@ Citations:
 	Type: Library
 	Web address: https://www.pygame.org/news
 
-	
+	Sound effects:
+		Water Splash Sound Effect: 	https://www.youtube.com/watch?v=2ELkxJmA43Q&ab_channel=arival
+		Victory! - Sound Effect (HD): https://www.youtube.com/watch?v=5tvtXlrRNFI&ab_channel=MakeYourVideosOutstanding
+		Cannon Shot Sound Effect: https://www.youtube.com/watch?v=sNc8jTKxbTY&ab_channel=ToledoTorpedo
+		Battleship (2012) Soundtrack Suite - Steve Jablonsky: https://www.youtube.com/watch?v=p9vbgK2th1o&ab_channel=PrimeApollo

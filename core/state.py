@@ -501,7 +501,7 @@ class State:
 					 into the next event stage until a player wins.
 		"""
 		self.p1_fleet.show()
-		self.p2_fleet.show()
+		#self.p2_fleet.show()
 
 		self.render_queue.add(Text("Player 1's turn:", (700, 50), 40, colors["red"], colors["green"]))
 

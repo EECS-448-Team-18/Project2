@@ -1,6 +1,7 @@
 BATTLESHIP 
 ---------
 PROJECT 2 - EECS 448 at the University of Kansas (FALL 2020)
+WARNING: LOUD MUSIC  
 
 INTRODUCTION:
 ------------
