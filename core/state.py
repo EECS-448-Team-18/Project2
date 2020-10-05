@@ -70,7 +70,17 @@ class State:
 
 		x = (0,1,2,3,4,5,6,7,8,9)
 		self.list_of_p2_coords = list(product(x,x)) # [(0,0),(0,1)..(9,9)] 100 tuples
-
+		self.first_midai_turn = True
+		self.midhit_x = 0
+		self.midhit_y = 0
+		self.midprev_hitx = 0
+		self.midprev_hity = 0
+		self.midcheck_left = False
+		self.midcheck_down = False
+		self.midcheck_right = False
+		self.midcheck_up = False
+		self.listOfHits = []
+		
 		self.p1_turn_over = False
 		self.p2_turn_over = False
 		self.turnReady = False
@@ -642,7 +652,141 @@ class State:
 				self.p2_won = True
 				self.game_over = True
 			self.turnReady = False
+		
+		
+		#Start Medium Difficulty
+		elif self.diff_selection == 3:
+			if self.first_midai_turn == True:
+				rangeX = (0,9)
+				rangeY = (0,9)
+				x = random.randint(0,9)
+				y = random.randint(0,9)
+				self.listOfHits.append((x,y))
+				if (x,y) in self.p1_board:
+					if (self.p1_board.get(x,y) == 1):
+						self.p1_board.set(x,y,3)
+						self.p1_turn_over = False
+						self.p2_turn_over = True
+						self.p1_hit_points -=1
+						self.first_midai_turn = False
+						self.midcheck_left = True
+						self.midhit_x = x
+						self.midhit_y = y
+						self.midprev_hitx = x
+						self.midprev_hity = y
+					elif (self.p1_board.get(x,y) == 0):
+						self.p1_board.set(x,y,2)
+						self.p1_turn_over = False
+						self.p2_turn_over = True
+						self.first_midai_turn = True
 
+
+			elif (self.midcheck_left == True):
+				x = self.midprev_hitx - 1
+				y = self.midprev_hity
+				coord = ((x,y))
+				if (coord not in self.listOfHits):
+					if (x,y) in self.p1_board:
+						if (self.p1_board.get(x,y) == 1):
+							self.p1_board.set(x,y,3)
+							self.p1_turn_over = False
+							self.p2_turn_over = True
+							self.p1_hit_points -=1
+							self.first_midai_turn = False
+							self.midcheck_left = True
+							self.midprev_hitx = x
+							self.midprev_hity = y
+						elif (self.p1_board.get(x,y) == 0):
+							self.p1_board.set(x,y,2)
+							self.p1_turn_over = False
+							self.p2_turn_over = True
+							self.midcheck_left = False
+							self.midcheck_down = True
+							self.midprev_hitx = self.midhit_x
+							self.midprev_hity = self.midhit_y
+
+
+
+			elif (self.midcheck_down == True):
+				x = self.midprev_hitx
+				y = self.midprev_hity + 1
+				coord = ((x,y))
+				if (coord not in self.listOfHits):
+					if (x,y) in self.p1_board:
+						if (self.p1_board.get(x,y) == 1):
+							self.p1_board.set(x,y,3)
+							self.p1_turn_over = False
+							self.p2_turn_over = True
+							self.p1_hit_points -=1
+							self.first_midai_turn = False
+							self.midcheck_down = True
+							self.midprev_hitx = x
+							self.midprev_hity = y
+						elif (self.p1_board.get(x,y) == 0):
+							self.p1_board.set(x,y,2)
+							self.p1_turn_over = False
+							self.p2_turn_over = True
+							self.midcheck_down = False
+							self.midcheck_right = True
+							self.midprev_hitx = self.midhit_x
+							self.midprev_hity = self.midhit_y
+
+
+
+
+			elif (self.midcheck_right == True):
+				x = self.midprev_hitx + 1
+				y = self.midprev_hity
+				coord = ((x,y))
+				if (coord not in self.listOfHits):
+					if (x,y) in self.p1_board:
+						if (self.p1_board.get(x,y) == 1):
+							self.p1_board.set(x,y,3)
+							self.p1_turn_over = False
+							self.p2_turn_over = True
+							self.p1_hit_points -=1
+							self.first_midai_turn = False
+							self.midcheck_right = True
+							self.midprev_hitx = x
+							self.midprev_hity = y
+						elif (self.p1_board.get(x,y) == 0):
+							self.p1_board.set(x,y,2)
+							self.p1_turn_over = False
+							self.p2_turn_over = True
+							self.midcheck_right = False
+							self.midcheck_up = True
+							self.midprev_hitx = self.midhit_x
+							self.midprev_hity = self.midhit_y
+
+
+			elif (self.midcheck_up == True):
+				x = self.midprev_hitx
+				y = self.midprev_hity - 1
+				coord = ((x,y))
+				if (coord not in self.listOfHits):
+					if (x,y) in self.p1_board:
+						if (self.p1_board.get(x,y) == 1):
+							self.p1_board.set(x,y,3)
+							self.p1_turn_over = False
+							self.p2_turn_over = True
+							self.p1_hit_points -=1
+							self.first_midai_turn = False
+							self.midcheck_up = True
+							self.midprev_hitx = x
+							self.midprev_hity = y
+						elif (self.p1_board.get(x,y) == 0):
+							self.p1_board.set(x,y,2)
+							self.p1_turn_over = False
+							self.p2_turn_over = True
+							self.midcheck_up = False
+							self.first_midai_turn = True
+			if(self.p1_hit_points == 0):
+				self.p2_won = True
+				self.game_over = True
+			self.turnReady = False
+		
+		
+		
 	def next_turn(self):
 		"""
 			Description: This function handles the end of either players turn to allow
