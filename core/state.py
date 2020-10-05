@@ -15,6 +15,7 @@ from pygame import mixer
 from data import settings
 from itertools import product
 from random import choice 
+import random
 class State:
 	"""
 	State()
