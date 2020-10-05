@@ -612,12 +612,16 @@ class State:
 		elif self.diff_selection == 2:
 			(x,y) = choice(self.list_of_p2_coords)
 			if(self.p1_board.get(x,y) == 1):
+				canonsound = mixer.Sound('canonshot.wav')
+				canonsound.play()
 				self.p1_board.set(x,y,3)
 				self.p1_turn_over = False
 				self.p2_turn_over = True
 				self.p1_hit_points -=1
 				self.p2_fleet.hide()
 			elif (self.p1_board.get(x,y) == 0):
+				miss = mixer.Sound('miss.wav')
+				miss.play()
 				self.p1_board.set(x,y,2)
 				self.p1_turn_over = False
 				self.p2_turn_over = True
@@ -638,6 +642,8 @@ class State:
 				for y in len_of_axis:
 					if (x,y) in self.p1_board:
 						if (self.p1_board.get(x,y) == 1):
+							canonsound = mixer.Sound('canonshot.wav')
+							canonsound.play()
 							self.p1_board.set(x,y,3)
 							self.p1_turn_over = False
 							self.p2_turn_over = True
@@ -665,6 +671,8 @@ class State:
 				self.listOfHits.append((x,y))
 				if (x,y) in self.p1_board:
 					if (self.p1_board.get(x,y) == 1):
+						canonsound = mixer.Sound('canonshot.wav')
+						canonsound.play()
 						self.p1_board.set(x,y,3)
 						self.p1_turn_over = False
 						self.p2_turn_over = True
@@ -676,6 +684,8 @@ class State:
 						self.midprev_hitx = x
 						self.midprev_hity = y
 					elif (self.p1_board.get(x,y) == 0):
+						miss = mixer.Sound('miss.wav')
+						miss.play()
 						self.p1_board.set(x,y,2)
 						self.p1_turn_over = False
 						self.p2_turn_over = True
@@ -689,6 +699,8 @@ class State:
 				if (coord not in self.listOfHits):
 					if (x,y) in self.p1_board:
 						if (self.p1_board.get(x,y) == 1):
+							canonsound = mixer.Sound('canonshot.wav')
+							canonsound.play()
 							self.p1_board.set(x,y,3)
 							self.p1_turn_over = False
 							self.p2_turn_over = True
@@ -698,6 +710,8 @@ class State:
 							self.midprev_hitx = x
 							self.midprev_hity = y
 						elif (self.p1_board.get(x,y) == 0):
+							miss = mixer.Sound('miss.wav')
+							miss.play()
 							self.p1_board.set(x,y,2)
 							self.p1_turn_over = False
 							self.p2_turn_over = True
@@ -715,6 +729,8 @@ class State:
 				if (coord not in self.listOfHits):
 					if (x,y) in self.p1_board:
 						if (self.p1_board.get(x,y) == 1):
+							canonsound = mixer.Sound('canonshot.wav')
+							canonsound.play()
 							self.p1_board.set(x,y,3)
 							self.p1_turn_over = False
 							self.p2_turn_over = True
@@ -724,6 +740,8 @@ class State:
 							self.midprev_hitx = x
 							self.midprev_hity = y
 						elif (self.p1_board.get(x,y) == 0):
+							miss = mixer.Sound('miss.wav')
+							miss.play()
 							self.p1_board.set(x,y,2)
 							self.p1_turn_over = False
 							self.p2_turn_over = True
@@ -742,6 +760,8 @@ class State:
 				if (coord not in self.listOfHits):
 					if (x,y) in self.p1_board:
 						if (self.p1_board.get(x,y) == 1):
+							canonsound = mixer.Sound('canonshot.wav')
+							canonsound.play()
 							self.p1_board.set(x,y,3)
 							self.p1_turn_over = False
 							self.p2_turn_over = True
@@ -751,6 +771,8 @@ class State:
 							self.midprev_hitx = x
 							self.midprev_hity = y
 						elif (self.p1_board.get(x,y) == 0):
+							miss = mixer.Sound('miss.wav')
+							miss.play()
 							self.p1_board.set(x,y,2)
 							self.p1_turn_over = False
 							self.p2_turn_over = True
@@ -767,6 +789,8 @@ class State:
 				if (coord not in self.listOfHits):
 					if (x,y) in self.p1_board:
 						if (self.p1_board.get(x,y) == 1):
+							canonsound = mixer.Sound('canonshot.wav')
+							canonsound.play()
 							self.p1_board.set(x,y,3)
 							self.p1_turn_over = False
 							self.p2_turn_over = True
@@ -776,12 +800,16 @@ class State:
 							self.midprev_hitx = x
 							self.midprev_hity = y
 						elif (self.p1_board.get(x,y) == 0):
+							miss = mixer.Sound('miss.wav')
+							miss.play()
 							self.p1_board.set(x,y,2)
 							self.p1_turn_over = False
 							self.p2_turn_over = True
 							self.midcheck_up = False
 							self.first_midai_turn = True
 			if(self.p1_hit_points == 0):
+				victory = mixer.Sound('victory.wav')
+				victory.play()
 				self.p2_won = True
 				self.game_over = True
 			self.turnReady = False
